@@ -15,6 +15,8 @@ TARGET_DIR: str = f"tex/latex/{PKG_NAME}"
 r"""The target directory in the TEXMFHOME tree where the files are copied to."""
 TEXMFHOME_PATH: Path = Path(os.environ.get("TEXMFHOME", Path.home() / "texmf"))
 """Location of the TEXMFHOME directory."""
+CWD = os.getcwd()
+"""The current working directory."""
 
 
 def get_source_path() -> Path:
@@ -54,9 +56,7 @@ def make_file(
     overwrite: bool = False,
 ) -> None:
     """Copy a file from the source to the target directory."""
-    ancestor = get_common_path(source, target)
-    source_fmt = str(source.relative_to(ancestor))
-    target_fmt = str(target.relative_to(ancestor))
+    source_fmt = str(source.relative_to(CWD))
 
     if target.exists():
         # check if the files are identical via hash
@@ -64,20 +64,20 @@ def make_file(
         target_hash = hashlib.sha256(target.read_bytes()).hexdigest()
         if source_hash == target_hash:
             # get relative path of source to install.py
-            print(f"Skipping {source_fmt:<48} (binary identical file exists).")
+            print(f"Skipping {source_fmt:<64} (binary identical file exists).")
             return
 
         # ask for permission to overwrite
         if not overwrite or not ask_for_overwrite(target):
-            print(f"Skipping {source_fmt:<48}.")
+            print(f"Skipping {source_fmt:<64}.")
             return
 
     # perform the transfer
     if symbolic_link:
-        print(f"Symlinking {source_fmt:<48} -> {target_fmt}.")
+        print(f"Symlinking {source_fmt:<64} -> {target}.")
         target.symlink_to(source)
     else:
-        print(f"Copying {source_fmt:<48} -> {target_fmt}.")
+        print(f"Copying {source_fmt:<64} -> {target}.")
         target.write_text(source.read_text())
 
 
@@ -160,6 +160,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "target_dir",
         type=str,
+        nargs="?",
         default=TEXMFHOME_PATH,
         help="The directory to install the files to (default: ~/texmf or $TEXMFHOME).",
     )

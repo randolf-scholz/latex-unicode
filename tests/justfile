@@ -2,7 +2,7 @@
 default: test
 
 # Define the test task
-test outputdir="__tex__" texmf="../texmf":
+test outputdir=".build" texmf="../texmf":
     #!/usr/bin/env bash
     set -e  # Exit on error
     echo "Running tests..."
@@ -20,15 +20,3 @@ test outputdir="__tex__" texmf="../texmf":
         echo "Compiling $file";
         latexmk -pdf -output-directory={{outputdir}} $file;
     done
-
-    # # remove metadata from the pdf files
-    # for file in __tex__/*.pdf; do
-    #     qpdf --linearize $file $file.tmp;
-    #     mv $file.tmp $file;
-    # done
-
-    # # check sha256sums of the pdf files
-    # for file in __tex__/*.pdf; do
-    #     echo "Checking $file";
-    #     sha256sum $file;
-    # done

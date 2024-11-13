@@ -52,7 +52,7 @@ def ask_for_overwrite(file: Path, default: bool = True) -> bool:
 def make_file(
     source: Path,
     target: Path,
-    symbolic_link: bool = True,
+    copy: bool = True,
     overwrite: bool = False,
 ) -> None:
     """Copy a file from the source to the target directory."""
@@ -62,23 +62,28 @@ def make_file(
         # check if the files are identical via hash
         source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
         target_hash = hashlib.sha256(target.read_bytes()).hexdigest()
-        if source_hash == target_hash:
+        same_kind = target.is_symlink() == (not copy)
+        same_hash = source_hash == target_hash
+
+        if same_kind and same_hash:
             # get relative path of source to install.py
             print(f"Skipping {source_fmt:<64} (binary identical file exists).")
             return
 
         # ask for permission to overwrite
-        if not overwrite or not ask_for_overwrite(target):
+        if not overwrite and not ask_for_overwrite(target):
             print(f"Skipping {source_fmt:<64}.")
             return
 
     # perform the transfer
-    if symbolic_link:
-        print(f"Symlinking {source_fmt:<64} -> {target}.")
-        target.symlink_to(source)
-    else:
+    if copy:
         print(f"Copying {source_fmt:<64} -> {target}.")
+        target.unlink(missing_ok=True)
         target.write_text(source.read_text())
+    else:
+        print(f"Symlinking {source_fmt:<64} -> {target}.")
+        target.unlink(missing_ok=True)
+        target.symlink_to(source)
 
 
 def get_target_path(target_dir: str | Path) -> Path:
@@ -100,7 +105,7 @@ def get_target_path(target_dir: str | Path) -> Path:
     return target
 
 
-def install(target: str | Path, symbolic_link: bool, overwrite: bool) -> None:
+def install(target: str | Path, copy: bool, overwrite: bool) -> None:
     """Install the latex-unicode package."""
     source_path = get_source_path().resolve()
     target_path = get_target_path(target)
@@ -114,7 +119,7 @@ def install(target: str | Path, symbolic_link: bool, overwrite: bool) -> None:
         f"Installing files ..."
         f"\n\t{source_path=!s}"
         f"\n\t{target_path=!s}"
-        f"\n\t{symbolic_link=}"
+        f"\n\t{copy=}"
         f"\n\t{overwrite=}\n"
     )
 
@@ -128,8 +133,8 @@ def install(target: str | Path, symbolic_link: bool, overwrite: bool) -> None:
                 make_file(
                     source=file,
                     target=target,
+                    copy=copy,
                     overwrite=overwrite,
-                    symbolic_link=symbolic_link,
                 )
             except Exception as exc:
                 print(f"Error while copying {source} to {target}: {exc}")
@@ -150,12 +155,12 @@ if __name__ == "__main__":
         default=False,
         help="Overwrite existing files.",
     )
-    parser.add_argument(  # symbolic link support
-        "-l",
-        "--link",
+    parser.add_argument(
+        "-c",
+        "--copy",
         action=argparse.BooleanOptionalAction,
-        default=True,
-        help="Create symbolic links instead of copying files.",
+        default=False,
+        help="Whether to copy the files (otherwise, creates symbolic link).",
     )
     parser.add_argument(
         "target_dir",
@@ -165,4 +170,4 @@ if __name__ == "__main__":
         help="The directory to install the files to (default: ~/texmf or $TEXMFHOME).",
     )
     args = parser.parse_args()
-    install(args.target_dir, overwrite=args.overwrite, symbolic_link=args.link)
+    install(args.target_dir, overwrite=args.overwrite, copy=args.copy)

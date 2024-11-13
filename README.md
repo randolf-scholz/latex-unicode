@@ -27,7 +27,7 @@ There are two options to install the package:
   ./install.py
   ```
 
-This will copy the files into your `$TEXMFHOME` directory (usually `~/texmf`), making them available to all your LaTeX projects.
+This will symlink the files into your `$TEXMFHOME` directory (usually `~/texmf`), making them available to all your LaTeX projects. Use `--copy` to copy the files instead of linking them.
 
 ### 2. Local Installation
 

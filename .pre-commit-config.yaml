@@ -87,6 +87,7 @@ repos:
     hooks:
     - id: chktex
     - id: lacheck
+      exclude: tests/
     - id: check-separator-length
       types: [tex]
       files: '\.tex$'

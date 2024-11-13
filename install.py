@@ -11,8 +11,6 @@ SOURCE_DIRECTORY = "src"
 """The source directory where the files are located."""
 SOURCE_PATTERN = {".sty", ".tex", ".cls"}
 """The extension of the files to be copied to the target directory."""
-CWD = Path(__file__).resolve().parent
-"""The current working directory."""
 TARGET_DIR: str = f"tex/latex/{PKG_NAME}"
 r"""The target directory in the TEXMFHOME tree where the files are copied to."""
 TEXMFHOME_PATH: Path = Path(os.environ.get("TEXMFHOME", Path.home() / "texmf"))
@@ -21,9 +19,9 @@ TEXMFHOME_PATH: Path = Path(os.environ.get("TEXMFHOME", Path.home() / "texmf"))
 
 def get_source_path() -> Path:
     """Return the source directory (existence guaranteed)."""
-    source_dir = CWD / SOURCE_DIRECTORY
+    source_dir = Path(__file__).resolve().parent / SOURCE_DIRECTORY
     if source_dir.exists():
-        return source_dir.relative_to(CWD)
+        return source_dir
     raise FileNotFoundError(f"Could not find the source directory {source_dir}.")
 
 

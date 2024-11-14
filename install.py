@@ -1,21 +1,23 @@
 #!/usr/bin/env python
+# /// script
+# requires-python = ">=3.11"
+# ///
+"""Install the latex package."""
 
 import argparse
 import hashlib
 import os
 from pathlib import Path
 
-PKG_NAME: str = "unicode-symbols"
-"""The name of the package."""
 SOURCE_DIRECTORY = "src"
 """The source directory where the files are located."""
 SOURCE_PATTERN = {".sty", ".tex", ".cls"}
 """The extension of the files to be copied to the target directory."""
-TARGET_DIR: str = f"tex/latex/{PKG_NAME}"
+TARGET_DIR: str = "tex/latex/"
 r"""The target directory in the TEXMFHOME tree where the files are copied to."""
 TEXMFHOME_PATH: Path = Path(os.environ.get("TEXMFHOME", Path.home() / "texmf"))
 """Location of the TEXMFHOME directory."""
-CWD = os.getcwd()
+CWD = Path.cwd()
 """The current working directory."""
 
 
@@ -27,22 +29,18 @@ def get_source_path() -> Path:
     raise FileNotFoundError(f"Could not find the source directory {source_dir}.")
 
 
-def get_common_path(*paths: Path) -> Path:
-    return Path(os.path.commonpath(paths))
-
-
-def ask_for_overwrite(file: Path, default: bool = True) -> bool:
+def ask_for_overwrite(file: Path, *, default: bool = True) -> bool:
     """Ask the user whether to overwrite an existing file."""
     msg = f"Overwrite {file}? {'[Y/n]' if default else '[y/N]'}"
     max_retries = 3
 
-    for k in range(max_retries):
+    for _ in range(max_retries):
         overwrite = input(msg).strip().lower()
         if overwrite in {"y", "yes"}:
             return True
         if overwrite in {"n", "no"}:
             return False
-        if overwrite == "":
+        if not overwrite:
             return default
         print("Invalid input. Please enter 'y' or 'n'.")
 
@@ -52,6 +50,7 @@ def ask_for_overwrite(file: Path, default: bool = True) -> bool:
 def make_file(
     source: Path,
     target: Path,
+    *,
     copy: bool = True,
     overwrite: bool = False,
 ) -> None:
@@ -75,14 +74,16 @@ def make_file(
             print(f"Skipping {source_fmt:<64}.")
             return
 
+    # cleanup target; ensure parent directory exists
+    target.unlink(missing_ok=True)
+    target.parent.mkdir(parents=True, exist_ok=True)
+
     # perform the transfer
     if copy:
         print(f"Copying {source_fmt:<64} -> {target}.")
-        target.unlink(missing_ok=True)
         target.write_text(source.read_text())
     else:
         print(f"Symlinking {source_fmt:<64} -> {target}.")
-        target.unlink(missing_ok=True)
         target.symlink_to(source)
 
 
@@ -92,21 +93,21 @@ def get_target_path(target_dir: str | Path) -> Path:
     Ensures:
         - target path exists
         - target path is a directory
-        - target path is of the form `*/texmf/tex/latex/unicode-symbols`
+        - target path is of the form `*/texmf/tex/latex/target_dir`
     """
     target = Path(target_dir).expanduser().resolve()
     if not target.is_dir() or not target.exists():
         raise FileNotFoundError(f"Could not find the target directory {target}.")
     # check that path is a texmf directory
     if target.name != "texmf":
-        target = target / "texmf"
+        target /= "texmf"
     target /= TARGET_DIR
     target.mkdir(parents=True, exist_ok=True)
     return target
 
 
-def install(target: str | Path, copy: bool, overwrite: bool) -> None:
-    """Install the latex-unicode package."""
+def install(target: str | Path, *, copy: bool, overwrite: bool) -> None:
+    """Install the latex package."""
     source_path = get_source_path().resolve()
     target_path = get_target_path(target)
 
@@ -120,7 +121,7 @@ def install(target: str | Path, copy: bool, overwrite: bool) -> None:
         f"\n\t{source_path=!s}"
         f"\n\t{target_path=!s}"
         f"\n\t{copy=}"
-        f"\n\t{overwrite=}\n"
+        f"\n\t{overwrite=}\n",
     )
 
     # iterate over all files in the source directory
@@ -137,7 +138,7 @@ def install(target: str | Path, copy: bool, overwrite: bool) -> None:
                     overwrite=overwrite,
                 )
             except Exception as exc:
-                print(f"Error while copying {source} to {target}: {exc}")
+                print(f"Error while copying {source} to {target}:\n\t{exc}")
                 print("Aborting installation.")
                 return
 
@@ -146,7 +147,10 @@ def install(target: str | Path, copy: bool, overwrite: bool) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Install the latex-unicode package.This will add a copy of "
+        description=(
+            "Install the latex package. "
+            "Copies relevant files from the source directory to the target directory."
+        ),
     )
     parser.add_argument(
         "-o",
@@ -163,11 +167,11 @@ if __name__ == "__main__":
         help="Whether to copy the files (otherwise, creates symbolic link).",
     )
     parser.add_argument(
-        "target_dir",
+        "target",
         type=str,
         nargs="?",
         default=TEXMFHOME_PATH,
         help="The directory to install the files to (default: ~/texmf or $TEXMFHOME).",
     )
     args = parser.parse_args()
-    install(args.target_dir, overwrite=args.overwrite, copy=args.copy)
+    install(args.target, overwrite=args.overwrite, copy=args.copy)

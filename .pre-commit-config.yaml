@@ -49,15 +49,16 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.7.3
     hooks:
-      - id: ruff
+      - id: ruff-format
+        args: ["--preview"]
         types_or: [python, pyi]
       - id: ruff
         name: ruff-isort
         args: ["--select", "I", "--fix"]
         types_or: [python, pyi]
-      - id: ruff-format
-        args: ["--preview"]
+      - id: ruff
         types_or: [python, pyi]
+        args: ["--select", "W,E", "--output-format", "concise"]
   # pyright
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.389
@@ -68,26 +69,25 @@ repos:
     rev: v0.42.0
     hooks:
       - id: markdownlint
-        args:
-          [
+        args: [
             "--disable",
             "MD013", # Line length
             "MD033", # Inline HTML
-            "--"  # otherwise files are interpreted as args
+            "--", # otherwise files are interpreted as args
           ]
   # shellcheck
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
     hooks:
-    - id: shellcheck
-      args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
+      - id: shellcheck
+        args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
   # custom
   - repo: https://github.com/randolf-scholz/assorted-hooks.git
     rev: v0.3.79
     hooks:
-    - id: chktex
-    - id: lacheck
-      exclude: tests/
-    - id: check-separator-length
-      types: [tex]
-      files: '\.tex$'
+      - id: chktex
+      - id: lacheck
+        exclude: tests/
+      - id: check-separator-length
+        types: [tex]
+        files: '\.tex$'

@@ -1,6 +1,6 @@
 # `unicode-symbols` package
 
-[Usage](#usage) | [Installation](#installation) | [Changelog](#changelog) | [Contents](#contents) |
+[Usage](#usage) | [Installation](#installation) | [Changelog](CHANGELOG.md) | [License](LICENSE)
 
 This package provides a long list of Unicode symbols to be used with LaTeX.
 It is designed to work both with `pdflatex` and `lualatex`. `xelatex` is not officially supported.

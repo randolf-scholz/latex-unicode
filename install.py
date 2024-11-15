@@ -47,46 +47,6 @@ def ask_for_overwrite(file: Path, *, default: bool = True) -> bool:
     raise ValueError("Too many retries.")
 
 
-def make_file(
-    source: Path,
-    target: Path,
-    *,
-    copy: bool = True,
-    overwrite: bool = False,
-) -> None:
-    """Copy a file from the source to the target directory."""
-    source_fmt = str(source.relative_to(CWD))
-
-    if target.exists():
-        # check if the files are identical via hash
-        source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
-        target_hash = hashlib.sha256(target.read_bytes()).hexdigest()
-        same_kind = target.is_symlink() == (not copy)
-        same_hash = source_hash == target_hash
-
-        if same_kind and same_hash:
-            # get relative path of source to install.py
-            print(f"Skipping {source_fmt:<64} (binary identical file exists).")
-            return
-
-        # ask for permission to overwrite
-        if not overwrite and not ask_for_overwrite(target):
-            print(f"Skipping {source_fmt:<64}.")
-            return
-
-    # cleanup target; ensure parent directory exists
-    target.unlink(missing_ok=True)
-    target.parent.mkdir(parents=True, exist_ok=True)
-
-    # perform the transfer
-    if copy:
-        print(f"Copying {source_fmt:<64} -> {target}.")
-        target.write_text(source.read_text())
-    else:
-        print(f"Symlinking {source_fmt:<64} -> {target}.")
-        target.symlink_to(source)
-
-
 def get_target_path(target_dir: str | Path) -> Path:
     """Returns path to some texmf directory.
 
@@ -104,6 +64,46 @@ def get_target_path(target_dir: str | Path) -> Path:
     target /= TARGET_DIR
     target.mkdir(parents=True, exist_ok=True)
     return target
+
+
+def transfer_file(
+    source: Path,
+    target: Path,
+    *,
+    copy: bool = True,
+    overwrite: bool = False,
+) -> None:
+    """Copy a file from the source to the target directory."""
+    # source_fmt = str(source.relative_to(CWD))
+
+    if target.exists():
+        # check if the files are identical via hash
+        source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+        target_hash = hashlib.sha256(target.read_bytes()).hexdigest()
+        same_kind = target.is_symlink() == (not copy)
+        same_hash = source_hash == target_hash
+
+        if same_kind and same_hash:
+            # get relative path of source to install.py
+            print(f"Skipping {source!s:<64} (binary identical file exists).")
+            return
+
+        # ask for permission to overwrite
+        if not overwrite and not ask_for_overwrite(target):
+            print(f"Skipping {source!s:<64}.")
+            return
+
+    # cleanup target; ensure parent directory exists
+    target.unlink(missing_ok=True)
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    # perform the transfer
+    if copy:
+        print(f"Copying {source!s:<64} -> {target}.")
+        target.write_text(source.read_text())
+    else:
+        print(f"Symlinking {source!s:<64} -> {target}.")
+        target.symlink_to(source)
 
 
 def install(target: str | Path, *, copy: bool, overwrite: bool) -> None:
@@ -131,14 +131,14 @@ def install(target: str | Path, *, copy: bool, overwrite: bool) -> None:
             target = target_path / file.relative_to(source_path)
 
             try:
-                make_file(
+                transfer_file(
                     source=file,
                     target=target,
                     copy=copy,
                     overwrite=overwrite,
                 )
             except Exception as exc:
-                print(f"Error while copying {source} to {target}:\n\t{exc}")
+                print(f"Error while transfering {source} to {target}:\n\t{exc}")
                 print("Aborting installation.")
                 return
 

@@ -1,12 +1,11 @@
 # region custom gitignore settings -----------------------------------------------------
-# ignore all directories that start with a dot, except .idea and .vscode
+# ignore hidden/private folders
+__*/
 .*/
 !.idea/
 !.vscode/
-
-# ignore all directories that start with double underscore
-__*/
-
+# test results
+**/tests/*.pdf
 # drawio files
 *.drawio.bkp
 *.drawio.dtmp

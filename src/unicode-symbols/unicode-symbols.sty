@@ -34,22 +34,21 @@
 % Subjectively, \mathds is the most visually pleasing. However, it only covers capital latin letters.
 % Since this is the most important use case, we use \mathds with \mathbbm fallback.
 %
+% stix by default loads 12 groups, leaving only 4 groups for other fonts.
+% moreover, stix densly packs symbols to save space.
+% unfortunately, stick-mathcal, stix-mathbb and stix-mathscr are really ugly.
+%
+% Font selection:
+% bb: mathds, fallback: dsserif (requires 2 fonts)
+% cal: computer modern
 % endregion notes ----------------------------------------------------------------------
+
+
 % chktex-file 18
 % chktex-file 41
 \NeedsTeXFormat{LaTeX2e}[2024-06-01]% chktex 8
 \ProvidesPackage{unicode-symbols}[2024-11-15]% chktex 8
-
-
-% region preconditions -----------------------------------------------------------------
-\@ifpackageloaded{amsmath}{%
-	\PackageError{unicode-symbols}{Should be loaded before amsmath}{}
-}{}
-% endregion preconditions --------------------------------------------------------------
-
-
 % region options -----------------------------------------------------------------------
-% option stix/nostix (default: stix)
 \newif\ifunicode@stix\unicode@stixtrue
 \newif\ifunicode@fdsymbol\unicode@fdsymbolfalse
 \newif\ifunicode@mnsymbol\unicode@mnsymbolfalse
@@ -59,12 +58,29 @@
 \DeclareOption{nofdsymbol}{\unicode@fdsymbolfalse}
 \DeclareOption{mnsymbol}{\unicode@mnsymboltrue}
 \DeclareOption{nomnsymbol}{\unicode@mnsymbolfalse}
-\ProcessOptions\relax
+\DeclareOption*{%
+	\PackageError{unicode-symbols}{Unknown option '\CurrentOption'}{}%
+}
+\ProcessOptions\relax%
 % endregion options --------------------------------------------------------------------
 
 
+% region requirements ------------------------------------------------------------------
+% === preconditions ===
+\@ifpackageloaded{amsmath}{%
+	\PackageError{unicode-symbols}{Should be loaded before amsmath}{}
+}{}
 
-% region dependencies ------------------------------------------------------------------
+\@ifpackageloaded{bm}{%
+	\PackageError{unicode-symbols}{Should be loaded before bm}{}
+}{% apply bm patch #SEE: https://tex.stackexchange.com/q/3676
+	\ProvideDocumentCommand{\hmmax}{}{0}% @bm: prevents "too many alphabets" error
+	\ProvideDocumentCommand{\bmmax}{}{0}% @bm: prevents "too many alphabets" error
+}
+
+% === Load requiremnts ===
+% TODO: Consider using mathfont for LuaTex
+%\RequirePackage{mathfont}
 \RequirePackage{iftex}
 \RequirePackage{newunicodechar}
 \RequirePackage{unicode-subscripts}
@@ -72,21 +88,45 @@
 
 % load lmodern to get rid of font shape warning
 \RequirePackage{lmodern}% https://tex.stackexchange.com/questions/58087
+\RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
+\RequirePackage{dsfont}% provides \mathds, best looking \mathbb
+\RequirePackage{pifont}% used for checkmark and xmark http://ctan.org/pkg/pifont
+\RequirePackage{etoolbox}
+\RequirePackage{centernot}
+\RequirePackage{xcolor}
+\RequirePackage{bm}
 
-% TODO: Add switch to use mathfont (cf mathfont_user_guide) when LuaLaTeX or XeLaTeX is used.
-%\RequirePackage{mathfont}
-
-% stix by default loads 12 groups, leaving only 4 groups for other fonts.
-% moreover, stix densly packs symbols to save space.
-% unfortunately, stick-mathcal, stix-mathbb and stix-mathscr are really ugly.
-%
-% Font selection:
-% bb: mathds, fallback: dsserif (requires 2 fonts)
-% cal: computer modern
-
-% decide whether to use stix or not
-\ifunicode@stix
+\ifunicode@stix%
 	\RequirePackage{stix2}
+	% Used to get rid of dont shape warning
+	\RequirePackage{anyfontsize}% https://tex.stackexchange.com/questions/58087
+\else%
+	\RequirePackage{amsfonts}% provides \mathbb, \mathfrak
+	\RequirePackage{amssymb}% not needed with stix2
+	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
+	\RequirePackage{mathrsfs}% provides \mathscr
+	\RequirePackage{mathtools}% provides \mathclap
+\fi
+
+\ifunicode@fdsymbol%
+	% NOTE: not recommended, some symbols like 'Σ' are really ugly.
+	\RequirePackage{fdsymbol}
+\fi
+
+\ifunicode@mnsymbol%
+	\RequirePackage{MnSymbol}
+\fi
+% endregion requirements ---------------------------------------------------------------
+
+
+% region apply patches -----------------------------------------------------------------
+% FIXME: Patch centernot to support \not as macro with argument.
+% SEE: https://tex.stackexchange.com/a/424007
+\patchcmd\@centernot{\not}{\not{\hphantom{=}}}{}{\errmessage{Patching \noexpand\@centernot failed.}}
+
+% FIXME Get some missing symbols
+% NOTE: Stix has many symbols, so we use it as a fallback for missing symbols.
+\ifunicode@stix%
 	% region stix2-patch ---------------------------------------------------------------
 	% REF: https://tex.stackexchange.com/q/542795
 	\DeclareFontFamily{LS1}{stix2bb}{\skewchar\font127 }
@@ -107,56 +147,7 @@
 	\DeclareFontShape{LS2}{stix2tt}{m}{n}{<-> stix2-mathtt}{}
 	\DeclareFontShape{LS2}{stix2tt}{b}{n}{<->ssub * stix2tt/m/n}{}
 	% endregion stix2-patch ------------------------------------------------------------
-
-	% Used to get rid of dont shape warning
-	\RequirePackage{anyfontsize}% https://tex.stackexchange.com/questions/58087
-\else
-	\RequirePackage{amsfonts}% provides \mathbb, \mathfrak
-	\RequirePackage{amssymb}% not needed with stix2
-	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
-	\RequirePackage{mathrsfs}% provides \mathscr
-	\RequirePackage{mathtools}% provides \mathclap
-	% \RequirePackage{fdsymbol}% NOTE: do not use, some really ugly symbols like ∑.
-\fi
-
-% decide whether to use fdsymbol or not
-\ifunicode@fdsymbol
-	\RequirePackage{fdsymbol}
-\fi
-
-% decide whether to use mnsymbol or not
-\ifunicode@mnsymbol
-	\RequirePackage{MnSymbol}
-\fi
-
-\RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
-\RequirePackage{dsfont}% provides \mathds, best looking \mathbb
-\RequirePackage{pifont}% used for checkmark and xmark http://ctan.org/pkg/pifont
-
-% Patch centernot to support \not as macro with argument.
-\RequirePackage{etoolbox}
-\RequirePackage{centernot}
-% REF: https://tex.stackexchange.com/a/424007
-\patchcmd\@centernot{\not}{\not{\hphantom{=}}}{}{\errmessage{Patching \noexpand\@centernot failed.}}%
-
-\RequirePackage{xcolor}
-\definecolor{unicode@green}{RGB}{00, 79, 00}% identical to svgname "dark green" #004F00
-\definecolor{unicode@red}{RGB}{79, 00, 00}% identical to svgname "dark red"  #4F0000
-\definecolor{unicode@crimson}{RGB}{220, 20, 60}% identical to svgname "crimson" #DC143C
-\definecolor{unicode@navy}{RGB}{00, 00, 128}% identical to svgname "navy" #000080
-
-% region bm patch ----------------------------------------------------------------------
-% REF: https://tex.stackexchange.com/q/3676
-\ProvideDocumentCommand{\hmmax}{}{0}% @bm: prevents "too many alphabets" error
-\ProvideDocumentCommand{\bmmax}{}{0}% @bm: prevents "too many alphabets" error
-\RequirePackage{bm}% provides \bm
-% endregion bm patch -------------------------------------------------------------------
-% endregion dependencies ---------------------------------------------------------------
-
-% region import missing symbols --------------------------------------------------------
-% Get some missing symbols
-% NOTE: Stix has many symbols, so we use it as a fallback for missing symbols.
-\@ifpackageloaded{stix}{}{%
+\else%
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
 	% REF: https://tex.stackexchange.com/a/82747
 	\DeclareMathAlphabet{\mathsfit}{T1}{\sfdefault}{\mddefault}{\sldefault}
@@ -218,9 +209,10 @@
 	% \DeclareMathSymbol{\eqdef}                {\mathrel}{integrals}{"8E}
 	% \DeclareMathSymbol{\triangleq}            {\mathrel}{integrals}{"8D}
 	% \DeclareMathSymbol{\questeq}              {\mathrel}{integrals}{"90}
-}
-% endregion import missing symbols -----------------------------------------------------
+\fi%
+% endregion apply patches --------------------------------------------------------------
 
+% TODO: fix and use this command
 \NewDocumentCommand{\unicode@makealias}{m O{} O{} O{} m}{%
 % Create alias for existing command. Up to 3 options can be provided.
 % \unicode@makealias{\alias}[\option1][\option2][\option3]{\fallback}
@@ -230,6 +222,12 @@
 \else\providecommand{#1}{#5}%
 \fi\fi\fi%
 }
+
+% custom colors
+\definecolor{unicode@green}{RGB}{00, 79, 00}% identical to svgname "dark green" #004F00
+\definecolor{unicode@red}{RGB}{79, 00, 00}% identical to svgname "dark red"  #4F0000
+\definecolor{unicode@crimson}{RGB}{220, 20, 60}% identical to svgname "crimson" #DC143C
+\definecolor{unicode@navy}{RGB}{00, 00, 128}% identical to svgname "navy" #000080
 
 % region font families -----------------------------------------------------------------
 \newcommand{\unicode@normal}[1]{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}

@@ -29,24 +29,6 @@ def get_source_path() -> Path:
     raise FileNotFoundError(f"Could not find the source directory {source_dir}.")
 
 
-def ask_for_overwrite(file: Path, *, default: bool = True) -> bool:
-    """Ask the user whether to overwrite an existing file."""
-    msg = f"Overwrite {file}? {'[Y/n]' if default else '[y/N]'}"
-    max_retries = 3
-
-    for _ in range(max_retries):
-        overwrite = input(msg).strip().lower()
-        if overwrite in {"y", "yes"}:
-            return True
-        if overwrite in {"n", "no"}:
-            return False
-        if not overwrite:
-            return default
-        print("Invalid input. Please enter 'y' or 'n'.")
-
-    raise ValueError("Too many retries.")
-
-
 def get_target_path(target_dir: str | Path) -> Path:
     """Returns path to some texmf directory.
 
@@ -64,6 +46,24 @@ def get_target_path(target_dir: str | Path) -> Path:
     target /= TARGET_DIR
     target.mkdir(parents=True, exist_ok=True)
     return target
+
+
+def ask_for_overwrite(file: Path, *, default: bool = True) -> bool:
+    """Ask the user whether to overwrite an existing file."""
+    msg = f"Overwrite {file}? {'[Y/n]' if default else '[y/N]'}"
+    max_retries = 3
+
+    for _ in range(max_retries):
+        overwrite = input(msg).strip().lower()
+        if overwrite in {"y", "yes"}:
+            return True
+        if overwrite in {"n", "no"}:
+            return False
+        if not overwrite:
+            return default
+        print("Invalid input. Please enter 'y' or 'n'.")
+
+    raise ValueError("Too many retries.")
 
 
 def transfer_file(
@@ -103,7 +103,8 @@ def transfer_file(
         target.write_text(source.read_text())
     else:
         print(f"Symlinking {source!s:<64} -> {target}.")
-        target.symlink_to(source)
+        relative_source = os.path.relpath(source, target.parent)
+        target.symlink_to(relative_source)
 
 
 def install(target: str | Path, *, copy: bool, overwrite: bool) -> None:

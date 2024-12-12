@@ -7,7 +7,7 @@
 % with pdflatex.
 
 % TODO: smarter implementation
-% https://tex.stackexchange.com/a/601583
+% SEE: https://tex.stackexchange.com/a/601583
 %\def\z"{}
 %\def\UnicodeMathSymbol#1#2#3#4{%
 % \ifnum#1>"A0
@@ -58,9 +58,7 @@
 \DeclareOption{nofdsymbol}{\unicode@fdsymbolfalse}
 \DeclareOption{mnsymbol}{\unicode@mnsymboltrue}
 \DeclareOption{nomnsymbol}{\unicode@mnsymbolfalse}
-\DeclareOption*{%
-	\PackageError{unicode-symbols}{Unknown option '\CurrentOption'}{}%
-}
+\DeclareOption*{\PackageError{unicode-symbols}{Unknown option '\CurrentOption'}{}}
 \ProcessOptions\relax%
 % endregion options --------------------------------------------------------------------
 
@@ -73,24 +71,30 @@
 
 \@ifpackageloaded{bm}{%
 	\PackageError{unicode-symbols}{Should be loaded before bm}{}
-}{% apply bm patch #SEE: https://tex.stackexchange.com/q/3676
-	\ProvideDocumentCommand{\hmmax}{}{0}% @bm: prevents "too many alphabets" error
-	\ProvideDocumentCommand{\bmmax}{}{0}% @bm: prevents "too many alphabets" error
+}{% apply bm patch
+	% SEE: https://tex.stackexchange.com/q/3676
+	\ProvideDocumentCommand{\hmmax}{}{0}% prevents "too many alphabets" error
+	\ProvideDocumentCommand{\bmmax}{}{0}% prevents "too many alphabets" error
 }
+
+\RequirePackage{iftex}
+\ifPDFTeX
+	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
+	\RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
+\else\fi
 
 % === Load requiremnts ===
 % TODO: Consider using mathfont for LuaTex
 %\RequirePackage{mathfont}
-\RequirePackage{iftex}
 \RequirePackage{newunicodechar}
 \RequirePackage{unicode-subscripts}
 \RequirePackage{unicode-superscripts}
 
 % load lmodern to get rid of font shape warning
-\RequirePackage{lmodern}% https://tex.stackexchange.com/questions/58087
+\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
 \RequirePackage{dsfont}% provides \mathds, best looking \mathbb
-\RequirePackage{pifont}% used for checkmark and xmark http://ctan.org/pkg/pifont
+\RequirePackage{pifont}% used for checkmark and xmark
 \RequirePackage{etoolbox}
 \RequirePackage{centernot}
 \RequirePackage{xcolor}
@@ -99,9 +103,8 @@
 \ifunicode@stix%
 	\RequirePackage{stix2}
 	% Used to get rid of dont shape warning
-	\RequirePackage{anyfontsize}% https://tex.stackexchange.com/questions/58087
+	\RequirePackage{anyfontsize}% SEE: https://tex.stackexchange.com/questions/58087
 \else%
-	\RequirePackage{amsfonts}% provides \mathbb, \mathfrak
 	\RequirePackage{amssymb}% not needed with stix2
 	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
 	\RequirePackage{mathrsfs}% provides \mathscr
@@ -110,7 +113,7 @@
 
 \ifunicode@fdsymbol%
 	% NOTE: not recommended, some symbols like 'Σ' are really ugly.
-	\RequirePackage{fdsymbol}
+	\RequirePackage{fdsmbol}
 \fi
 
 \ifunicode@mnsymbol%
@@ -128,7 +131,7 @@
 % NOTE: Stix has many symbols, so we use it as a fallback for missing symbols.
 \ifunicode@stix%
 	% region stix2-patch ---------------------------------------------------------------
-	% REF: https://tex.stackexchange.com/q/542795
+	% SEE: https://tex.stackexchange.com/q/542795
 	\DeclareFontFamily{LS1}{stix2bb}{\skewchar\font127 }
 	\DeclareFontShape{LS1}{stix2bb}{m}{n} {<-> stix2-mathbb}{}
 	\DeclareFontShape{LS1}{stix2bb}{m}{it}{<-> stix2-mathbbit}{}
@@ -149,14 +152,14 @@
 	% endregion stix2-patch ------------------------------------------------------------
 \else%
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
-	% REF: https://tex.stackexchange.com/a/82747
+	% SEE: https://tex.stackexchange.com/a/82747
 	\DeclareMathAlphabet{\mathsfit}{T1}{\sfdefault}{\mddefault}{\sldefault}
 	\SetMathAlphabet{\mathsfit}{bold}{T1}{\sfdefault}{\bfdefault}{\sldefault}
 	% By default, stix loads 12 math alphabets a 256 characters (pdflatex only supports 16 tables)
 	% stix's \mathcal is ugly, and we do not need all symbols,
-	% REF: https://tex.stackexchange.com/a/318144
-	% REF: https://tex.stackexchange.com/a/14406 (using symbol without wasting alphabets)
-	% REF:https://tex.stackexchange.com/q/14386
+	% SEE: https://tex.stackexchange.com/a/318144
+	% SEE: https://tex.stackexchange.com/a/14406 (using symbol without wasting alphabets)
+	% SEE:https://tex.stackexchange.com/q/14386
 	% \DeclareFontEncoding{LS1}{}{}
 	% \DeclareFontEncoding{LS2}{}{\noaccents@}
 	% \DeclareFontSubstitution{LS1}{stix2}{m}{n}
@@ -308,7 +311,7 @@
 \newcommand{\unicode@hermitian}{\ifmmode\mkern-1.5mu\mathsf{H}\mkern-1.5mu\else\kern-0.1em\textsf{H}\kern-0.1em\fi}
 % unary operators
 \newcommand{\unicode@contradiction}{\mathord{\downzigzagarrow}}
-% REF: https://tex.stackexchange.com/a/655980
+% SEE: https://tex.stackexchange.com/a/655980
 \DeclareMathSymbol\unicode@increment{\mathord}{operators}{\Delta}
 % \newcommand{\unicode@increment}{\mathord{\Delta}}% U+2206
 \newcommand{\unicode@unaryminus}{\mathord{\texttt{-}}}
@@ -316,11 +319,11 @@
 % binary operators
 \newcommand{\unicode@minus}{\mathbin{-}}% force binary
 \newcommand{\unicode@doubleplus}{\mathbin{+\!\!\!+}}% chktex 21
-\newcommand{\unicode@cupdot}{\mathbin{\mathaccent\cdot\cup}}% REF: https://tex.stackexchange.com/a/91059
+\newcommand{\unicode@cupdot}{\mathbin{\mathaccent\cdot\cup}}% SEE: https://tex.stackexchange.com/a/91059
 % operators
-\newcommand{\unicode@bigcupdot}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% REF: https://tex.stackexchange.com/a/91059
+\newcommand{\unicode@bigcupdot}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% SEE: https://tex.stackexchange.com/a/91059
 % relations
-% REF: reflectbox: https://tex.stackexchange.com/a/195027
+% SEE: reflectbox: https://tex.stackexchange.com/a/195027
 \newcommand{\unicode@bagmember}{\mathrel{\mathsf{E}}}
 \newcommand{\unicode@indep}{\mathrel{\perp\!\!\!\perp}}% chktex 21
 % relations overset
@@ -735,7 +738,7 @@
 
 
 % region arrows ------------------------------------------------------------------------
-% https://en.wikipedia.org/wiki/Arrows_(Unicode_block)
+% SEE: https://en.wikipedia.org/wiki/Arrows_(Unicode_block)
 \newunicodechar{←}{\autoleftarrow}
 \newunicodechar{→}{\autorightarrow}
 \newunicodechar{↓}{\autodownarrow}

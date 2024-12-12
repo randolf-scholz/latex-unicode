@@ -4,15 +4,15 @@
 \RequirePackage{iftex}
 %\RequirePackage[verbose]{newunicodechar}
 
-
+\ifPDFTeX%
+	\RequirePackage[utf8]{inputenc}
+	\RequirePackage[T1]{fontenc}
+\fi
 
 \ifLuaTeX%
 \fi
 
-\ifPDFTeX%
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
-\fi
+
 
 \ProvideDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
 % Adapted from newunicodechar package

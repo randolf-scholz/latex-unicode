@@ -25,8 +25,8 @@
 
 
 % region subdepth patch ================================================================
-% REF: https://tex.stackexchange.com/q/51678
-% REF: https://ctan.org/pkg/subdepth
+% SEE: https://tex.stackexchange.com/q/51678
+% SEE: https://ctan.org/pkg/subdepth
 \makeatletter
 \addto@hook\every@math@size{\dch@scr@hook}
 \newif\if@wspr@sup@low@
@@ -96,7 +96,7 @@
 
 % region subscript-braces patch ========================================================
 % NOTE: This patch allows to write subscripts without braces, e.g. x^\max instead of x^{\max}
-% REF: https://tex.stackexchange.com/q/655977
+% SEE: https://tex.stackexchange.com/q/655977
 \makeatletter
 \let\old@sup=^% save a copy of original ^ with catcode 7
 \catcode`\^=13% make ^ and activate character

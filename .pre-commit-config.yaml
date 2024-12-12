@@ -23,7 +23,7 @@ repos:
         exclude_types: [tsv]
   # ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.7.4
+    rev: v0.8.3
     hooks:
       - id: ruff-format
         args: ["--preview"]
@@ -37,12 +37,12 @@ repos:
         args: ["--select", "W,E", "--output-format", "concise"]
   # pyright
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.389
+    rev: v1.1.390
     hooks:
       - id: pyright
   # markdownlint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.42.0
+    rev: v0.43.0
     hooks:
       - id: markdownlint
         args: [

@@ -1,9 +1,10 @@
 # region custom gitignore settings -----------------------------------------------------
 # ignore hidden/private folders
-__*/
+_*/
 .*/
 !.idea/
 !.vscode/
+
 # test results
 **/tests/*.pdf
 # drawio files

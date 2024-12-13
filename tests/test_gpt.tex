@@ -1,0 +1,26 @@
+\documentclass{standalone}
+% \usepackage{lmodern}     % Load Latin Modern so it's available
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{calc}
+
+\newcommand{\cmfont}{\fontfamily{cmr}\selectfont}
+\newcommand{\lmfont}{\fontfamily{ugq}\selectfont}
+
+\newcommand{\UpperAlphabet}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\newcommand{\LowerAlphabet}{abcdefghijklmnopqrstuvwxyz}
+\newcommand{\Digits}{0123456789}
+
+\begin{document}
+% We will create a two-column table: first column CM, second column LM
+\begin{tabular}{rl}
+\toprule
+	\textbf{Computer Modern (CM)} & {\cmfont \UpperAlphabet}
+\\	\textbf{Latin Modern (LM)} & {\lmfont \UpperAlphabet}
+\\	\textbf{Computer Modern (CM)} & {\cmfont \LowerAlphabet}
+\\	\textbf{Latin Modern (LM)} & {\lmfont \LowerAlphabet}
+\\	\textbf{Computer Modern (CM)} & {\cmfont \Digits}
+\\	\textbf{Latin Modern (LM)} & {\lmfont \Digits}
+\\ \bottomrule
+\end{tabular}
+\end{document}

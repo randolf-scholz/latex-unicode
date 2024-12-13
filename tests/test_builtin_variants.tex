@@ -1,8 +1,9 @@
 \documentclass{standalone}
 \usepackage{booktabs}
-\usepackage{amsmath}
-\usepackage{mathrsfs}     % math fonts
-\usepackage{amsfonts}
+\usepackage{lmodern}
+% \usepackage{mathrsfs}     % provides \mathscr
+% \usepackage{amsfonts}  % provides \mathbb, \mathfrak
+% \usepackage{amsmath}
 
 \begin{document}
 \begin{tabular}{ccc}
@@ -15,14 +16,14 @@ mode & text & math \\
 \verb|rm|     & \textrm{F}      & $\mathrm{F}$     \\
 \verb|sf|     & \textsf{F}      & $\mathsf{F}$     \\
 \verb|tt|     & \texttt{F}      & $\mathtt{F}$     \\
-\verb|bb|     & ---             & $\mathbb{F}$     \\
+% \verb|bb|     & ---             & $\mathbb{F}$     \\
 \verb|sc|     & \textsc{f}      & $-$              \\
 \verb|up|     & \textup{F}      & $-$              \\
 \verb|sl|     & \textsl{F}      & $-$              \\
 \verb|md|     & \textmd{F}      & $-$              \\
 \verb|cal|    & ---             & $\mathcal{F}$    \\
-\verb|src|    & ---             & $\mathscr{F}$    \\
-\verb|frak|   & ---             & $\mathfrak{F}$   \\
+% \verb|src|    & ---             & $\mathscr{F}$    \\
+% \verb|frak|   & ---             & $\mathfrak{F}$   \\
 \bottomrule
 \end{tabular}
 

@@ -57,7 +57,7 @@ test_one $file:  # compile a single test file
     echo -e "$padded_name pdf=$result_pdf, lua=$result_lua, xe=$result_xe"
 
 # Define the test task
-test:
+test $case="*":  # run all tests
     #!/usr/bin/env bash
     echo "Current directory: $PWD"
     cd "$TEST_DIR" || exit 1
@@ -65,7 +65,7 @@ test:
     just clean
     # detect all test files
     shopt -s nullglob
-    files=(test{,s}_*.tex)
+    files=(test_$case.tex)
     # run the tests in parallel
     echo "Running tests on ${#files[@]} test files."
     # exit 1

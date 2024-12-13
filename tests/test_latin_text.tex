@@ -1,10 +1,10 @@
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
-\documentclass[12pt]{standalone}
+\documentclass{unittest}
 \usepackage{booktabs}
 \usepackage{multicol}
 
 \usepackage{makerow_setup}
-\usepackage[stix]{unicode-symbols}
+\usepackage[nostix]{unicode-symbols}
 
 \NewDocumentCommand{\makerow}{m O{}}{%
 \pgfkeys{/makerow, default, #2}% set defaults

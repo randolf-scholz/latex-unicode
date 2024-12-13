@@ -1,12 +1,10 @@
-\documentclass{standalone}
+\documentclass{unittest}
+% NOTE: fontenc[T1] is required for some glyphs.
+\usepackage[T1]{fontenc}  % SEE: https://tex.stackexchange.com/q/693891
 \usepackage{booktabs}
 \usepackage{multicol}
 
-\usepackage[verbose]{newunicodechar}
-\usepackage{makerow_setup}
-\usepackage[nostix]{unicode-symbols}
-
-
+\input{makerow_setup.sty}
 \NewDocumentCommand{\makerow}{s m O{}}{%
 	\pgfkeys{/makerow, default, #3}% set defaults
 	\umeaning{#2} & #2 & \rowTEXT & #2 & \rowMATH & $#2$ \\%
@@ -16,7 +14,6 @@
 	\pgfkeys{/makerow, default, #3}% set defaults
 	\umeaning{#2} & #2 & \rowTEXT & #2 && \\%
 }
-
 
 \NewDocumentCommand{\makemath}{s m O{}}{%
 	\pgfkeys{/makerow, default, #3}% set defaults

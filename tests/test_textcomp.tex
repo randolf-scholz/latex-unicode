@@ -1,17 +1,14 @@
-%
-% This tests symbols defined by the textcomp package.
-%
-\documentclass{standalone}
+% Test symbols defined by the textcomp package.
+\documentclass{unittest}
+% NOTE: fontenc[T1] is required for some glyphs.
+\usepackage[T1]{fontenc}  % SEE: https://tex.stackexchange.com/q/693891
 \usepackage{booktabs}
 \usepackage{multicol}
 
-\usepackage{makerow_setup}
-\usepackage[nostix]{unicode-symbols}
-
-
+\input{makerow_setup.sty}
 \NewDocumentCommand{\makerow}{s m O{}}{%
-\pgfkeys{/makerow, default, #3}% set defaults
-%
+	\pgfkeys{/makerow, default, #3}% set defaults
+	%
 	#2%
 	% text
 	& \rowTEXT & #2

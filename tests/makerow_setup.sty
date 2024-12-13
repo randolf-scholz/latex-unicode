@@ -1,16 +1,12 @@
 % chktex-file 41
 \RequirePackage{pgfkeys}
-
-\ProvideDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
-	% Adapted from newunicodechar package
-	\edef\unicode@meaning@temp{\detokenize{#1}}%
-	\if\unicode@meaning@temp\relax\else%
-	\expandafter\expandafter\expandafter\strip@prefix\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
-	\fi%
-}%
-
-\DeclareMathAlphabet{\mathsfit}{T1}{\sfdefault}{\mddefault}{\sldefault}
-\SetMathAlphabet{\mathsfit}{bold}{T1}{\sfdefault}{\bfdefault}{\sldefault}
+\makeatletter
+% define mathsfit if not already defined
+\@ifundefined{mathsfit}{%
+	\DeclareMathAlphabet{\mathsfit}{T1}{\sfdefault}{\mddefault}{\sldefault}
+	\SetMathAlphabet{\mathsfit}{bold}{T1}{\sfdefault}{\bfdefault}{\sldefault}
+}{}
+\makeatother
 
 \newcommand{\TT}[1]{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
 \newcommand{\BB}[1]{\ifmmode\mathbb{#1}\else#1\fi}
@@ -30,7 +26,6 @@
 \newcommand{\BSF}[1]{\ifmmode\boldsymbol{\mathsf{#1}}\else\textbf{\textsf{#1}}\fi}
 \newcommand{\ISF}[1]{\ifmmode\mathsfit{#1}\else\textit{\textsf{#1}}\fi}
 \newcommand{\BISF}[1]{\ifmmode\bm{\mathsfit{#1}}\else\textbf{\textsf{\textit{#1}}}\fi}
-
 
 \pgfkeys{%
 /makerow/.is family, /makerow,

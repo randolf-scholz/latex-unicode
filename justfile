@@ -3,15 +3,32 @@ export BUILD_DIR := ".build"
 export RESULT_DIR := ".results"
 export ROOT_DIR := `git rev-parse --show-toplevel`
 export TEST_DIR := ROOT_DIR + "/tests"
-
+export TEXMF_BASE_DIR := "texmf"
+export TEXMF_DIR := TEXMF_BASE_DIR + "/tex/latex"
 
 default:
   @just --list
+
+install:  # install the LaTeX package
+    cp -r src/* "$(kpsewhich -var-value TEXMFHOME)/tex/latex/"
+
 
 clean:  # remove all .build directories
     find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {} \;
     find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {} \;
 
+
+test_setup:  # create the build and result directories
+    # cleanup the test directories
+    rm -rf "{{TEST_DIR}}/{{BUILD_DIR}}"
+    rm -rf "{{TEST_DIR}}/{{RESULT_DIR}}"
+    rm -rf "{{TEST_DIR}}/{{TEXMF_BASE_DIR}}"
+    # create the test directories
+    mkdir -p "{{TEST_DIR}}/{{BUILD_DIR}}"
+    mkdir -p "{{TEST_DIR}}/{{RESULT_DIR}}"
+    mkdir -p "{{TEST_DIR}}/{{TEXMF_DIR}}"
+    # simlink all files from src to tests/texmf/tex/latex
+    ln -sr "{{ROOT_DIR}}/src/"* "{{TEST_DIR}}/{{TEXMF_DIR}}/"
 
 [no-cd]
 test_compile $file $compiler:
@@ -62,7 +79,7 @@ test $case="*":  # run all tests
     echo "Current directory: $PWD"
     cd "$TEST_DIR" || exit 1
     echo "Current directory: $PWD"
-    just clean
+    just test_setup
     # detect all test files
     shopt -s nullglob
     files=(test_$case.tex)

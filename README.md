@@ -19,39 +19,44 @@ $$ ϕ(x+∆x) ≈ ϕ(x) + ⟨∇ₓϕ(x) ∣ ∆x⟩ $$
 
 ## Installation
 
-There are two options to install the package:
-
 ### 1. Global Installation
 
-  ```bash
-  ./install.py
-  ```
-
-This will symlink the files into your `$TEXMFHOME` directory (usually `~/texmf`), making them available to all your LaTeX projects. Use `--copy` to copy the files instead of linking them.
-
-### 2. Local Installation
-
 ```bash
-./install.py .  # creates texmf/ in the current directory
+just install  # quick and dirty
 ```
 
-This will copy the files into a local `texmf` directory of the current project.
-In order for LaTeX to use the local `texmf` directory, you need to set the `TEXMFHOME` environment variable to the correct path.
-
 ```bash
-TEXMFHOME=$(pwd)/texmf pdlatex document.tex
+./install.py --copy  # recommended
 ```
 
-Or, when using `latexmk` / `OverLeaf`, simply add the following line to your `.latexmkrc` file:
+This will **copy** the files into your `$TEXMFHOME` directory (typically `~/texmf`), making them available to all your LaTeX projects.
+
+### 2. Local Installation (e.g. for a specific project)
+
+```bash
+cd /path/to/your/project
+git submodule add https://github.com/randolf-scholz/latex-unicode
+./latex-unicode/install.py .  # creates texmf/ in your project directory
+```
+
+This will **symlink** the files into a local `texmf` directory of the current project,
+so that you automatically get the latest version of the package when you update the submodule.
+
+In order for $\LaTeX$ to use the local `texmf` directory, you need to set the `TEXMFHOME` environment variable to the correct path.
+
+When compiling manually, use:
+
+```bash
+export TEXMFHOME=$PWD/texmf
+pdflatex document.tex
+```
+
+When using `latexmk` / `OverLeaf`, simply add the following line to your `.latexmkrc` file:
 
 ```perl
 use Cwd;
 $ENV{'TEXMFHOME'}=getcwd.'/texmf/';
 ```
-
-### 3. Manual Installation
-
-Copy the files from `src/` to your project directory.
 
 ## Contents
 

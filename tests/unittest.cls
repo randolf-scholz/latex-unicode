@@ -11,10 +11,19 @@
 % load newunicodechar package with verbose
 \RequirePackage[verbose]{newunicodechar}
 
-\NewDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
-	% Adapted from newunicodechar package
-	\edef\unicode@meaning@temp{\detokenize{#1}}%
-	\if\unicode@meaning@temp\relax\else%
-	\expandafter\expandafter\expandafter\strip@prefix\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
-	\fi%
-}%
+\RequirePackage{iftex}
+
+
+% \ifPDFTeX
+% 	\NewDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
+% 		% Adapted from newunicodechar package
+% 		\edef\unicode@meaning@temp{\detokenize{#1}}%
+% 		\if\unicode@meaning@temp\relax\else%
+% 		\expandafter\expandafter\expandafter\strip@prefix\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
+% 		\fi%
+% 	}%
+% \else
+% 	\NewDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
+% 		\expandafter\strip@prefix\meaning#1%
+% 	}
+% \fi

@@ -1,10 +1,9 @@
 \documentclass{unittest}
-% NOTE: fontenc[T1] is required for some glyphs.
-\usepackage[T1]{fontenc}  % SEE: https://tex.stackexchange.com/q/693891
+\usepackage{unicode-symbols}
 \usepackage{booktabs}
 \usepackage{multicol}
+\usepackage{makerow_setup}
 
-\input{makerow_setup.sty}
 \NewDocumentCommand{\makerow}{s m O{}}{%
 	\pgfkeys{/makerow, default, #3}% set defaults
 	\umeaning{#2} & #2 & \rowTEXT & #2 & \rowMATH & $#2$ \\%

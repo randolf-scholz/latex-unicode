@@ -11,7 +11,7 @@
 \NewDocumentCommand{\makerow}{m O{}}{%
 \pgfkeys{/makerow, default, #2}% set defaults
 %
-	#1%
+	#1              & $\NORMAL{#1}$%
 	% serif
 	& $\RM{#1}$     & $\rowRM$
 	& $\IT{#1}$     & $\rowIT$
@@ -38,10 +38,11 @@
 
 
 \begin{document}
-\begin{tabular}{c|cc cc cc cc|cc cc cc cc|cc cc|cc cc|cc cc cc}  % chktex 44
+\begin{tabular}{cc|cc cc cc cc|cc cc cc cc|cc cc|cc cc|cc cc cc}  % chktex 44
 \toprule
 	\multicolumn{31}{|c}{\textbf{testing latin alphabet in math mode}}
-\\	& \multicolumn{8}{|c|}{Serif}
+\\	\multicolumn{2}{c|}{Base}
+	& \multicolumn{8}{|c|}{Serif}
 	& \multicolumn{8}{|c}{Sans}
 	& \multicolumn{4}{|c}{Script}
 	& \multicolumn{4}{|c}{Fraktur}

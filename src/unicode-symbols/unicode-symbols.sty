@@ -374,13 +374,25 @@
 % \subscript{} and \superscript{} are defined in unicode-subscripts and unicode-superscripts
 % These allow chaining of unicode subscripts, e.g. X\subscript{1}\subcsript{2} is identical to X₁₂
 
-\ProvideDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
-% Adapted from newunicodechar package
-\edef\unicode@meaning@temp{\detokenize{#1}}%
-\if\unicode@meaning@temp\relax\else%
-\expandafter\expandafter\expandafter\strip@prefix\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
-\fi%
-}%
+\ifPDFTeX
+	\NewDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
+		% Adapted from newunicodechar package
+		\edef\unicode@meaning@temp{\detokenize{#1}}%
+		\if\unicode@meaning@temp\relax--undefined--\else%
+		\expandafter\expandafter\expandafter\strip@prefix\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
+		\fi%
+	}%
+\else
+	\NewDocumentCommand{\umeaning}{m}{% prints the meaning of a unicode symbol
+		\edef\unicode@meaning@temp{\meaning#1}
+		% can be either a macro or 'the letter ...'
+		% if its a macro, we strip the prefix
+		% \ifx\unicode@meaning@temp\relax--undefined--\else%
+		% \expandafter\strip@prefix\unicode@meaning@temp%
+		% \fi%
+
+	}%
+\fi
 
 \newcommand{\PrintMathFonts}{%
 \count255=0%

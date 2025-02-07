@@ -28,6 +28,8 @@ test_setup:  # create the build and result directories
     mkdir -p "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex"
     # simlink all files from src to tests/texmf/tex/latex
     ln -sr "{{ROOT_DIR}}/src/"* "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
+    # remove pdf files from the test directory
+    find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
 
 # [no-cd]
 [no-exit-message]

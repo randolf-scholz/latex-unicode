@@ -49,17 +49,22 @@
 \NeedsTeXFormat{LaTeX2e}[2024-06-01]% chktex 8
 \ProvidesPackage{unicode-symbols}[2024-11-15]% chktex 8
 % region options -----------------------------------------------------------------------
-\newif\ifunicode@stix\unicode@stixfalse
-\newif\ifunicode@fdsymbol\unicode@fdsymbolfalse
-\newif\ifunicode@mnsymbol\unicode@mnsymbolfalse
-\DeclareOption{stix}{\unicode@stixtrue}
-\DeclareOption{nostix}{\unicode@stixfalse}
-\DeclareOption{fdsymbol}{\unicode@fdsymboltrue}
-\DeclareOption{nofdsymbol}{\unicode@fdsymbolfalse}
-\DeclareOption{mnsymbol}{\unicode@mnsymboltrue}
-\DeclareOption{nomnsymbol}{\unicode@mnsymbolfalse}
-\DeclareOption*{\PackageError{unicode-symbols}{Unknown option '\CurrentOption'}{}}
-\ProcessOptions\relax%
+\DeclareKeys[unicode-symbols]{
+	stix.if = unicode@stix,
+	nostix.ifnot = unicode@stix,
+	fdsymbol.if = unicode@fdsymbol,
+	nofdsymbol.ifnot = unicode@fdsymbol,
+	mnsymbol.if = unicode@mnsymbol,
+	nomnsymbol.ifnot = unicode@mnsymbol,
+	stix.usage = load,
+	nostix.usage = load,
+	fdsymbol.usage = load,
+	nofdsymbol.usage = load,
+	mnsymbol.usage = load,
+	nomnsymbol.usage = load,
+}
+\SetKeys[unicode-symbols]{stix=false, fdsymbol=false, mnsymbol=false}
+\ProcessKeyOptions[unicode-symbols]%
 % endregion options --------------------------------------------------------------------
 
 
@@ -78,7 +83,7 @@
 }
 
 \RequirePackage{iftex}
-\ifPDFTeX
+\ifPDFTeX%
 	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
 	\RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
 \else\fi
@@ -263,7 +268,7 @@
 \fi\fi%
 }
 \newcommand{\unicode@bbi}[1]{\mathbb{\mathit{#1}}}
-\newcommand{\unicode@circled}[1]{\textcircled{\footnotesize #1}}
+\newcommand{\unicode@circled}[1]{\ifmmode\text{\textcircled{\ensuremath{\footnotesize #1}}}\else\textcircled{\footnotesize #1}\fi}
 % endregion font families --------------------------------------------------------------
 
 
@@ -387,12 +392,12 @@
 
 % region new modifiers -----------------------------------------------------------------
 \newcommand*{\romannumber}[1]{%
-\ifmmode\mathrm{\romannumeral #1\relax}%
-\else{\rmfamily\romannumeral #1\relax}\fi%
+\ifmmode\mathrm{\romannumeral#1\relax}%
+\else{\rmfamily\romannumeral#1\relax}\fi%
 }
 \newcommand*{\RomanNumber}[1]{%
-\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral #1@}% chktex 21
-\else{\rmfamily\expandafter\@slowromancap\romannumeral #1@}\fi% chktex 21
+\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
+\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
 }
 \newcommand{\sans}[1]{\mathsf{#1}}
 \newcommand{\isans}[1]{\mathit{\mathsf{#1}}}

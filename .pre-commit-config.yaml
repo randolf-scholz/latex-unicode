@@ -23,7 +23,7 @@ repos:
         exclude_types: [tsv]
   # ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.4
+    rev: v0.9.5
     hooks:
       - id: ruff-format
         args: ["--preview"]
@@ -57,47 +57,16 @@ repos:
     hooks:
       - id: shellcheck
         args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
-  # custom
-  - repo: https://github.com/randolf-scholz/assorted-hooks.git
-    rev: v0.5.56
+  - repo: https://github.com/randolf-scholz/latex-hooks.git
+    rev: v0.0.2
     hooks:
       - id: check-separator-length-88
+      - id: latex-avoid-def
+      - id: latex-avoid-let
+      - id: latex-avoid-newcommand
+      - id: latex-avoid-legacy-options
+      - id: latex-avoid-double-dollar
+      - id: latex-avoid-obsolete-packages
       - id: chktex
       - id: lacheck
         exclude: tests/
-  - repo: local
-    hooks:
-      - id: replace-let-newcommandcopy
-        name: 'Replace \let by \NewCommandCopy'
-        description: 'Use \NewCommandCopy instead of \let'
-        language: pygrep
-        entry: '\\let\\'
-        types: [tex]
-        files: "^src/"
-      - id: replace-def-newdocumentcommand
-        name: 'Replace \def by \NewDocumentCommand'
-        description: 'Use \NewDocumentCommand instead of \def'
-        entry: '\\def\s*\{?\s*\\\w+\s*\{' # excludes \def\interal@command...
-        language: pygrep
-        types: [tex]
-        files: "^src/"
-      - id: replace-newcommand-newdocumentcommand
-        name: 'Replace \newcommand by \NewDocumentCommand'
-        description: 'Use \NewDocumentCommand instead of \newcommand'
-        language: pygrep
-        entry: '\\(|re)newcommand\b'
-        types: [tex]
-        files: "^src/"
-      - id: replace-declarerobustcommand-newdocumentcommand
-        name: 'Replace \DeclareRobustCommand by \NewDocumentCommand'
-        description: 'Use \NewDocumentCommand instead of \DeclareRobustCommand'
-        language: pygrep
-        entry: '\\(DeclareRobustCommand|CheckCommand)\b'
-        types: [tex]
-        files: "^src/"
-      - id: use-keyoptions
-        name: "Check for legacy options usage"
-        description: "Use modern keyval options, see usrguide.pdf"
-        language: pygrep
-        entry: '\\(DeclareOption|CurrentOption|OptionNotUsed|ProcessOptions|ExecuteOptions)\b'
-        files: "^src/"

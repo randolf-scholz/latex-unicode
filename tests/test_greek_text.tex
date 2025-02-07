@@ -4,13 +4,11 @@
 \usepackage{multicol}
 
 \usepackage{makerow_setup}
-\usepackage[stix]{unicode-symbols}
+\usepackage{unicode-symbols}
 
 \NewDocumentCommand{\makerow}{s m O{}}{%
-\pgfkeys{/makerow, default, #3}% set defaults
-%
-	#2%
-	% math-mode
+\pgfkeys{/makerow, default, #3}%
+	#2              & $\NORMAL{#2}$%
 	% serif
 	& $\RM{#2}$     & $\rowRM$
 	& $\IT{#2}$     & $\rowIT$
@@ -27,12 +25,13 @@
 
 
 \begin{document}
-\begin{tabular}{c|cc cc cc cc|cc cc cc cc}  % chktex 44
+\begin{tabular}{cc|cc cc cc cc|cc cc cc cc}  % chktex 44
 \toprule
-	& \multicolumn{16}{c|}{\textbf{math mode}} \\
+	\multicolumn{17}{c}{\textbf{testing greek in text mode}}
+\\	\multicolumn{2}{c|}{Base}
 	& \multicolumn{8}{|c|}{Serif}
 	& \multicolumn{8}{|c}{Sans}
-\\ ref
+\\	ref & normal
 	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
 	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
 \\

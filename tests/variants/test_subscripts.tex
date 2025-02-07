@@ -6,17 +6,17 @@
 \usepackage{makerow_setup}
 \usepackage{unicode-symbols}
 
-\def\dummy{\setlength{\fboxsep}{0pt}\fbox{\phantom{X}}}
+\def\0{\setlength{\fboxsep}{0pt}\fbox{\phantom{X}}}
 
 \NewDocumentCommand{\makerow}{s m O{}}{%
 \pgfkeys{/makerow, default, #3}% set defaults
 	#2%
 	% math mode
-	& $\dummy_{#2}$              & \if-\rowSUB\else$\dummy\rowSUB$\fi
-	& $\dummy^{#2}$              & \if-\rowSUP\else$\dummy\rowSUP$\fi
+	& $\0_{#2}$              & \if-\rowSUB\else$\0\rowSUB$\fi
+	& $\0^{#2}$              & \if-\rowSUP\else$\0\rowSUP$\fi
 \IfBooleanT{#1}{% text mode
-	& \dummy\textsubscript{#2}   & \if-\rowSUB\else\dummy\rowSUB\fi
-	& \dummy\textsuperscript{#2} & \if-\rowSUP\else\dummy\rowSUP\fi
+	& \0\textsubscript{#2}   & \if-\rowSUB\else\0\rowSUB\fi
+	& \0\textsuperscript{#2} & \if-\rowSUP\else\0\rowSUP\fi
 }%
 	% end
 	\\%

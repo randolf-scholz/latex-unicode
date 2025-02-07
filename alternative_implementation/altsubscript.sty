@@ -25,11 +25,12 @@
 \RequirePackage{iftex}
 
 % region Package Options ---------------------------------------------------------------
-\newif\ifsubscript@debug\subscript@debugfalse%  Debug flag
-\newif\ifsubscript@testing\subscript@testingfalse%  Testing flag
-
-\DeclareOption{debug}{\subscript@debugtrue}
-\ProcessOptions\relax%
+\DeclareKeys[subscript]{%
+	debug.if = subscript@debug,
+	debug.usage = load,
+}
+\SetKeys[subscript]{debug=false}
+\ProcessKeyOptions[subscript]%
 % endregion Package Options ------------------------------------------------------------
 
 

@@ -1,0 +1,219 @@
+# region latex-unicode -----------------------------------------------------------------
+- id: latex-unicode-transpose
+  name: latex-unicode-transpose
+  description: "Checks that `𞁀` (modifier letter cyrillic small te (U+1E040)) is used for transpose."
+  language: pygrep
+  types: [tex]
+  entry: 'ᵀ|\^(\{(\\(text|math)sf\{[tT]\}|\\top|\\intercal|t|T|⊺|⊤|𝗍|𝖳)\}|(\\(text|math)sf\{[tT]\}|\\top|\\intercal|t|T|⊺|⊤|𝗍|𝖳))'
+  # entry: '(\u1D40|\^\{?(?:(?:\\textsf\{|\\mathsf\{)?[tT]\}?|\\top|\u22BA|\\intercal|\u22A4|\U0001D5CD|\U0001D5B3)\}?)'
+  # NOTE: re.compile gives bad escape \U at position 0, we use direct unicode since pygrep performs encode.
+- id: latex-unicode-hermitian
+  name: latex-unicode-hermitian
+  description: "Checks that `ᵸ` (modifier letter cyrillic en (U+1D78)) is used for hermitian."
+  language: pygrep
+  types: [tex]
+  entry: 'ᴴ|\^((H|\\(text|math)sf\{H\})|\{(H|\\(text|math)sf\{H\})\})'
+  # entry: '(\u1D40|\^\{?(?:(?:\\textsf\{|\\mathsf\{)?[tT]\}?|\\top|\u22BA|\\intercal|\u22A4|\U0001D5CD|\U0001D5B3)\}?)'
+  # NOTE: re.compile gives bad escape \U at position 0, we use direct unicode since pygrep performs encode.
+- id: latex-unicode-superscripts
+  name: latex-unicode-superscripts
+  description: "Checks that Unicode superscripts are used."
+  language: pygrep
+  types: [tex]
+  entry: '\^([0-9a-pr-z\+\-\(\)\=]|\{[0-9a-pr-z\+\-\(\)\=]+\})\b'
+- id: latex-unicode-subscripts
+  name: latex-unicode-superscripts
+  description: "Checks that Unicode subscripts are used."
+  language: pygrep
+  types: [tex]
+  entry: '\_([0-9aeh-pr-vx\+\-\(\)\=\*]|\{[0-9\+\-\(\)\=\*]+\})\b'
+- id: latex-unicode-integrals
+  name: latex-unicode-integrals
+  description: "Checks that Unicode integral signs are used."
+  language: pygrep
+  types: [tex]
+  entry: '\\o?i*int\b'
+- id: latex-unicode-quotes
+  name: latex-unicode-quotes
+  description: 'Use “ (\ldq) and ” (\rdq) instead of ``...'''' in text.'
+  language: pygrep
+  types: [tex]
+  entry: '(\`\`|\''\'')'
+- id: latex-unicode-greek
+  name: latex-unicode-greek
+  description: "Checks that Unicode greek letters are used."
+  language: pygrep
+  types: [tex]
+  entry:  '(?x:\\(var)?(
+            [Aa]lpha
+            |[Bb]eta
+            |[Gg]amma
+            |[Dd]elta
+            |[Ee]psilon
+            |[Zz]eta
+            |[Ee]ta
+            |[Hh]eta
+            |[Tt]heta
+            |[Ii]ota
+            |[Kk]appa
+            |[Ll]ambda
+            |[Mm]u
+            |[Nn]u
+            |[Xx]i
+            |[Oo]micron
+            |[Pp]i
+            |[Rr]ho
+            |[Ss]igma
+            |[Tt]au
+            |[Uu]psilon
+            |[Pp]hi
+            |[Cc]hi
+            |[Pp]si
+            |[Oo]mega
+          )\b)'
+- id: latex-unicode-base
+  name: latex-unicode-base
+  description: "Checks that basic Unicode symbols are used."
+  language: pygrep
+  types: [tex]
+  entry:  '(?x:\\(text|math)?(
+            aleph
+            |amalg
+            |angle
+            |approx
+            |ast
+            |asymp
+            |backslash
+            |bigcirc
+            |bigcirc
+            |bigodot
+            |bigoplus
+            |bigotimes
+            |bigtriangledown
+            |bigtriangleup
+            |bigvee
+            |bigwedge
+            |bot
+            |bowtie
+            |Box
+            |bullet
+            |cap
+            |cdot
+            |cdotp
+            |cdots
+            |circ
+            |colon
+            |cong
+            |coprod
+            |copyright
+            |cup
+            |dag
+            |dagger
+            |dagger
+            |dashv
+            |ddag
+            |ddagger
+            |ddagger
+            |ddots
+            |diamond
+            |Diamond
+            |div
+            |div
+            |doteq
+            |dots
+            |downarrow
+            |ell
+            |emptyset
+            |equiv
+            |exists
+            |forall
+            |frown
+            |ge
+            |gg
+            |hbar
+            |Im
+            |imath
+            |in
+            |infty
+            |int
+            |jmath
+            |Join
+            |langle
+            |ldotp
+            |ldots
+            |ldots
+            |le
+            |leftarrow
+            |lhd
+            |ll
+            |mho
+            |mid†
+            |models
+            |mp
+            |nabla
+            |neg
+            |neg
+            |ni
+            |odot
+            |oint
+            |ominus
+            |oplus
+            |oslash
+            |otimes
+            |P
+            |parallel
+            |partial
+            |perp
+            |pm
+            |pm
+            |pounds
+            |prec
+            |preceq
+            |prime
+            |prod
+            |propto
+            |rangle
+            |Re
+            |rhd
+            |rightarrow
+            |S
+            |setminus
+            |sim
+            |simeq
+            |smile
+            |sqcap
+            |sqcup
+            |sqsubset
+            |sqsubseteq
+            |sqsupset
+            |sqsupseteq
+            |star
+            |subset
+            |subseteq
+            |succ
+            |succeq
+            |sum
+            |supset
+            |supseteq
+            |surd
+            |times
+            |times
+            |top
+            |triangle
+            |triangleleft
+            |triangleright
+            |unlhd
+            |unrhd
+            |uparrow
+            |uplus
+            |vdash
+            |vdots
+            |vee
+            |wedge
+            |wp
+            |wr
+          )\b)'
+
+
+
+# endregion latex-unicode --------------------------------------------------------------

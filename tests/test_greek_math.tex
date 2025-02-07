@@ -2,15 +2,12 @@
 \documentclass{unittest}
 \usepackage{booktabs}
 \usepackage{multicol}
-
 \usepackage{makerow_setup}
-\usepackage[nostix]{unicode-symbols}
+\usepackage{unicode-symbols}
 
 \NewDocumentCommand{\makerow}{s m O{}}{%
-\pgfkeys{/makerow, default, #3}% set defaults
-%
-	#2%
-	% math-mode
+\pgfkeys{/makerow, default, #3}%
+	#2              & $\NORMAL{#2}$%
 	% serif
 	& $\RM{#2}$     & $\rowRM$
 	& $\IT{#2}$     & $\rowIT$
@@ -27,14 +24,15 @@
 
 
 \begin{document}
-\begin{tabular}{c|cc cc cc cc|cc cc cc cc}  % chktex 44
+\begin{tabular}{cc|cc cc cc cc|cc cc cc cc}  % chktex 44
 \toprule
-	& \multicolumn{16}{c|}{\textbf{math mode}} \\
+	\multicolumn{17}{c}{\textbf{testing greek in math mode}}
+\\	\multicolumn{2}{c|}{Base}
 	& \multicolumn{8}{|c|}{Serif}
 	& \multicolumn{8}{|c}{Sans}
-\\ ref
-	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
-	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
+\\	ref & normal
+	& \multicolumn{2}{|c}{rm} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
+	& \multicolumn{2}{|c}{sf} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
 \\
 \midrule% Greek uppercase --------------------------------------------------------------
 \makerow*{Α}[bf=𝐀, it=𝛢, bi=𝜜, bsf=𝝖, bisf=𝞐]
@@ -68,7 +66,7 @@
 \makerow*{β}[bf=𝛃, it=𝛽, bi=𝜷, bsf=𝝱, bisf=𝞫]
 \makerow*{γ}[bf=𝛄, it=𝛾, bi=𝜸, bsf=𝝲, bisf=𝞬]
 \makerow*{δ}[bf=𝛅, it=𝛿, bi=𝜹, bsf=𝝳, bisf=𝞭]
-\makerow*{ε}[bf=𝛆, it=𝜀, bi=𝜺, bsf=𝝴, bisf=𝞮]
+\makerow*{ϵ}[bf=𝛆, it=𝜀, bi=𝜺, bsf=𝝴, bisf=𝞮]
 \makerow*{ζ}[bf=𝛇, it=𝜁, bi=𝜻, bsf=𝝵, bisf=𝞯]
 \makerow*{η}[bf=𝛈, it=𝜂, bi=𝜼, bsf=𝝶, bisf=𝞰]
 \makerow*{θ}[bf=𝛉, it=𝜃, bi=𝜽, bsf=𝝷, bisf=𝞱]
@@ -85,15 +83,16 @@
 \makerow*{σ}[bf=𝛔, it=𝜎, bi=𝝈, bsf=𝞂, bisf=𝞼]
 \makerow*{τ}[bf=𝛕, it=𝜏, bi=𝝉, bsf=𝞃, bisf=𝞽]
 \makerow*{υ}[bf=𝛖, it=𝜐, bi=𝝊, bsf=𝞄, bisf=𝞾]
-\makerow*{φ}[bf=𝛟, it=𝜙, bi=𝝓, bsf=𝞍, bisf=𝟇]
+\makerow*{ϕ}[bf=𝛗, it=𝜑, bi=𝝋, bsf=𝞅, bisf=𝞿]
 \makerow*{χ}[bf=𝛘, it=𝜒, bi=𝝌, bsf=𝞆, bisf=𝟀]
 \makerow*{ψ}[bf=𝛙, it=𝜓, bi=𝝍, bsf=𝞇, bisf=𝟁]
 \makerow*{ω}[bf=𝛚, it=𝜔, bi=𝝎, bsf=𝞈, bisf=𝟂]
 \makerow*{∂}[bf=𝛛, it=𝜕, bi=𝝏, bsf=𝞉, bisf=𝟃]
-\makerow*{ϵ}[bf=𝛜, it=𝜖, bi=𝝐, bsf=𝞊, bisf=𝟄]
+\midrule% Greek variants ---------------------------------------------------------------
+\makerow*{ε}[bf=𝛜, it=𝜖, bi=𝝐, bsf=𝞊, bisf=𝟄]
 \makerow*{ϑ}[bf=𝛝, it=𝜗, bi=𝝑, bsf=𝞋, bisf=𝟅]
 \makerow*{ϰ}[bf=𝛞, it=𝜘, bi=𝝒, bsf=𝞌, bisf=𝟆]
-\makerow*{ϕ}[bf=𝛗, it=𝜑, bi=𝝋, bsf=𝞅, bisf=𝞿]
+\makerow*{φ}[bf=𝛟, it=𝜙, bi=𝝓, bsf=𝞍, bisf=𝟇]
 \makerow*{ϱ}[bf=𝛠, it=𝜚, bi=𝝔, bsf=𝞎, bisf=𝟈]
 \makerow*{ϖ}[bf=𝛡, it=𝜛, bi=𝝕, bsf=𝞏, bisf=𝟉]
 \bottomrule

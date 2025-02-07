@@ -22,16 +22,12 @@
 
 
 % region Package Options ---------------------------------------------------------------
-\newif\ifusuperscript@debug\usuperscript@debugfalse%  Debug flag
-\DeclareOption{debug}{\usuperscript@debugtrue}
-\ProcessOptions\relax%
-
-% Automatically load the sister package, passing the same options
-\ifusuperscript@debug%
-	\RequirePackage[debug]{unicode-subscripts}
-\else%
-	\RequirePackage{unicode-subscripts}%
-\fi%
+\DeclareKeys[unicode-superscripts]{%
+	debug.if = usuperscript@debug,
+	debug.usage = load,
+}
+\SetKeys[unicode-superscripts]{debug=false}
+\ProcessKeyOptions[unicode-superscripts]%
 % endregion Package Options ------------------------------------------------------------
 
 

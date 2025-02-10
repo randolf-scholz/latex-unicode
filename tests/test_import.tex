@@ -6,9 +6,11 @@
 \makeatletter
 % \strip@prefix@safe{⟨tokens⟩} returns ⟨tokens⟩ with a leading ">" removed if one is present;
 % if no ">" is present at the start, the argument is returned unchanged.
-\newcommand{\strip@prefix@safe}[1]{%
-\edef\aga{#1>}
+\NewDocumentCommand{\@uformat}{m}{%
+Actually, its <<#1>>
+\edef\aga{#1>}%
 \edef\temp{\expandafter\strip@prefix\aga}%
+The temp is <<\meaning\temp>>
 % check if \temp is empty
 \ifx\temp\@empty%
 <#1>%
@@ -20,8 +22,8 @@
 
 
 \NewDocumentCommand{\xmeaning}{m}{% prints the meaning of a unicode symbol
-\edef\foo{\meaning#1}
-\strip@prefix@safe{\foo}%
+\edef\foo{\meaning#1\relax}%
+\@uformat{\foo}%
 % \edef\stripped{\strip@prefix{\foo >}}
 % \ifx\stripped\relax%
 % stripped%
@@ -33,6 +35,14 @@
 }%
 \makeatother
 
+
+\NewDocumentCommand{\haha}{m}{\meaning#1}
+
+
 \begin{document}
-\xmeaning{a}\xmeaning{£}aaaa
+\begin{tabular}{lll}
+>\xmeaning{£}<
+\\>\xmeaning{a}<
+\\\xmeaning{}<
+\end{tabular}
 \end{document}

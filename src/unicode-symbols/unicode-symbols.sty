@@ -86,7 +86,12 @@
 \ifPDFTeX%
 	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
 	\RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
-\else\fi
+	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
+\else
+	\RequirePackage{fontspec}
+	% \RequirePackage[utf8]{inputenc}   % allow utf-8 input
+	% \RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
+\fi
 
 % === Load requiremnts ===
 % TODO: Consider using mathfont for LuaTex
@@ -96,7 +101,6 @@
 \RequirePackage{unicode-superscripts}
 
 % load lmodern to get rid of font shape warning
-\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
 \RequirePackage{dsfont}% provides \mathds, best looking \mathbb
 \RequirePackage{pifont}% used for checkmark and xmark
@@ -132,34 +136,64 @@
 % SEE: https://tex.stackexchange.com/a/424007
 \patchcmd\@centernot{\not}{\not{\hphantom{=}}}{}{\errmessage{Patching \noexpand\@centernot failed.}}
 
+
+% BUILTIN MATH FONTS:
+% (\mathnormal)
+% \mathrm
+% \mathbf
+% \mathsf
+% \mathit
+% \mathtt
+% \mathcal
+% ADDITIONAL MATH FONTS
+% \mathbb
+% \mathscr
+% \mathbfscr <--> \mathcal
+% \mathfrak
+% \mathbffrak  (bold+fraktur)
+% \mathsfit  (sans-serif+italic)
+% \mathbfit  (bold+italic)
+% \mathbfsf  (sans-serif+bold)
+% \mathbfsfit (sans-serif+bold+italic)
+
+
 % FIXME Get some missing symbols
 % NOTE: Stix has many symbols, so we use it as a fallback for missing symbols.
 \ifunicode@stix%
 	% region stix2-patch ---------------------------------------------------------------
 	% SEE: https://tex.stackexchange.com/q/542795
-	\DeclareFontFamily{LS1}{stix2bb}{\skewchar\font127 }
-	\DeclareFontShape{LS1}{stix2bb}{m}{n} {<-> stix2-mathbb}{}
-	\DeclareFontShape{LS1}{stix2bb}{m}{it}{<-> stix2-mathbbit}{}
-	\DeclareFontShape{LS1}{stix2bb}{b}{n} {<->ssub * stix2bb/m/n}{}
-	\DeclareFontShape{LS1}{stix2bb}{b}{it}{<->ssub * stix2bb/m/it}{}
+	% \DeclareFontFamily{LS1}{stix2bb}{\skewchar\font127 }
+	% \DeclareFontShape{LS1}{stix2bb}{m}{n} {<-> stix2-mathbb}{}
+	% \DeclareFontShape{LS1}{stix2bb}{m}{it}{<-> stix2-mathbbit}{}
+	% \DeclareFontShape{LS1}{stix2bb}{b}{n} {<->ssub * stix2bb/m/n}{}
+	% \DeclareFontShape{LS1}{stix2bb}{b}{it}{<->ssub * stix2bb/m/it}{}
 
-	\DeclareFontFamily{LS2}{stix2ex}{}
-	\DeclareFontShape{LS2}{stix2ex}{m}{n}{<-> stix2-mathex}{}
-	\DeclareFontShape{LS2}{stix2ex}{b}{n}{<->ssub * stix2ex/m/n}{}
+	% \DeclareFontFamily{LS2}{stix2ex}{}
+	% \DeclareFontShape{LS2}{stix2ex}{m}{n}{<-> stix2-mathex}{}
+	% \DeclareFontShape{LS2}{stix2ex}{b}{n}{<->ssub * stix2ex/m/n}{}
 
-	\DeclareFontFamily{LS2}{stix2cal}{\skewchar\font127 }
-	\DeclareFontShape{LS2}{stix2cal}{m}{n}{<-> stix2-mathcal}{}
-	\DeclareFontShape{LS2}{stix2cal}{b}{n}{<->ssub * stix2cal/m/n}{}
+	% \DeclareFontFamily{LS2}{stix2cal}{\skewchar\font127 }
+	% \DeclareFontShape{LS2}{stix2cal}{m}{n}{<-> stix2-mathcal}{}
+	% \DeclareFontShape{LS2}{stix2cal}{b}{n}{<->ssub * stix2cal/m/n}{}
 
-	\DeclareFontFamily{LS2}{stix2tt}{\skewchar\font127 }
-	\DeclareFontShape{LS2}{stix2tt}{m}{n}{<-> stix2-mathtt}{}
-	\DeclareFontShape{LS2}{stix2tt}{b}{n}{<->ssub * stix2tt/m/n}{}
+	% \DeclareFontFamily{LS2}{stix2tt}{\skewchar\font127 }
+	% \DeclareFontShape{LS2}{stix2tt}{m}{n}{<-> stix2-mathtt}{}
+	% \DeclareFontShape{LS2}{stix2tt}{b}{n}{<->ssub * stix2tt/m/n}{}
 	% endregion stix2-patch ------------------------------------------------------------
 \else%
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
 	% SEE: https://tex.stackexchange.com/a/82747
-	\DeclareMathAlphabet{\mathsfit}{T1}{\sfdefault}{\mddefault}{\sldefault}
-	\SetMathAlphabet{\mathsfit}{bold}{T1}{\sfdefault}{\bfdefault}{\sldefault}
+	% bf + it
+	\DeclareMathAlphabet{\mathbfit}{OT1}{\rmdefault}{b}{it}
+	% sf + bf
+	\DeclareMathAlphabet{\mathbfsf}{OT1}{\sfdefault}{b}{n}
+	% sf + bf + it
+	\DeclareMathAlphabet{\mathbfsfit}{OT1}{\sfdefault}{b}{it}
+	% sf + it
+	\DeclareMathAlphabet{\mathsfit}{OT1}{\sfdefault}{m}{it}
+	% bold version of sf + if = bfsfit
+	\SetMathAlphabet{\mathsfit}{bold}{OT1}{\sfdefault}{b}{it}
+
 	% By default, stix loads 12 math alphabets a 256 characters (pdflatex only supports 16 tables)
 	% stix's \mathcal is ugly, and we do not need all symbols,
 	% SEE: https://tex.stackexchange.com/a/318144
@@ -412,6 +446,10 @@
 }%
 
 \newcommand{\PrintMathFonts}{%
+%
+% Displays the used math fonts
+% SEE: https://tex.stackexchange.com/a/40767
+%
 \count255=0%
 \loop\ifnum\count255<16%
 	(\the\count255:~\fontname\textfont\count255)\newline%

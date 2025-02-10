@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+% \usepackage{inputenc}
+% \usepackage{bm}
+
+% NOTE: ORDER MATTERS!!!
+% T1 -> DeclareMathAlphabet -> stix2: ✅
+% T1 -> stix2 -> DeclareMathAlphabet: ❌
+% T1 -> lmodern -> DeclareMathAlphabet: ❌
+% T1 -> DeclareMathAlphabet -> lmodern: ❌
+
+% OT1 -> DeclareMathAlphabet -> lmodern: ❌
+% OT1 -> lmodern -> DeclareMathAlphabet: ✅
+% OT1 -> stix2 -> DeclareMathAlphabet: ❌
+% OT1 -> DeclareMathAlphabet -> stix2 : ✅
+
+
+% \usepackage{stix2}
+
+\usepackage{lmodern}
+
+\usepackage{amsmath}
+
+% bf + it
+\DeclareMathAlphabet{\mathbfit}{OT1}{\rmdefault}{b}{it}
+% sf + bf
+\DeclareMathAlphabet{\mathbfsf}{OT1}{\sfdefault}{b}{n}
+% sf + bf + it
+\DeclareMathAlphabet{\mathbfsfit}{OT1}{\sfdefault}{b}{it}
+% sf + it
+\DeclareMathAlphabet{\mathsfit}{OT1}{\sfdefault}{m}{it}
+% bold version of sf + if = bfsfit
+\SetMathAlphabet{\mathsfit}{bold}{OT1}{\sfdefault}{b}{it}
+
+
+% \usepackage{lmodern}
+
+% \usepackage{stix2}
+% \usepackage{lmodern}
+% \usepackage{stix2}
+% \usepackage{lmodern}
+
+% \usepackage{anyfontsize}% SEE: https://tex.stackexchange.com/questions/58087
+
+
+
+
+% \usepackage{unicode-symbols}
+% \usepackage{fontspec}
+\let\Alpha=A
+\let\Beta=B
+\let\Epsilon=E
+\let\Zeta=Z
+\let\Heta=H
+\let\Iota=I
+\let\Kappa=K
+\let\Mu=M
+\let\Nu=N
+\let\Omicron=O
+\let\Rho=P
+\let\Tau=T
+\let\Chi=X
+\usepackage{newunicodechar}
+\newunicodechar{𝛢}{\mathit{\Alpha}}
+\newunicodechar{𝛣}{\mathit{\Beta}}
+\newunicodechar{𝛤}{\mathit{\Gamma}}
+\newunicodechar{𝛥}{\mathit{\Delta}}
+\newunicodechar{𝛦}{\mathit{\Epsilon}}
+\newunicodechar{𝛧}{\mathit{\Zeta}}
+\newunicodechar{𝛨}{\mathit{\Heta}}
+\newunicodechar{𝛩}{\mathit{\Theta}}
+\newunicodechar{𝛪}{\mathit{\Iota}}
+\newunicodechar{𝛫}{\mathit{\Kappa}}
+\newunicodechar{𝛬}{\mathit{\Lambda}}
+\newunicodechar{𝛭}{\mathit{\Mu}}
+\newunicodechar{𝛮}{\mathit{\Nu}}
+\newunicodechar{𝛯}{\mathit{\Xi}}
+\newunicodechar{𝛰}{\mathit{\Omicron}}
+\newunicodechar{𝛱}{\mathit{\Pi}}
+\newunicodechar{𝛲}{\mathit{\Rho}}
+% \newunicodechar{𝛳}{\mathit{\varTheta}}
+\newunicodechar{𝛴}{\mathit{\Sigma}}
+\newunicodechar{𝛵}{\mathit{\Tau}}
+\newunicodechar{𝛶}{\mathit{\Upsilon}}
+\newunicodechar{𝛷}{\mathit{\Phi}}
+\newunicodechar{𝛸}{\mathit{\Chi}}
+\newunicodechar{𝛹}{\mathit{\Psi}}
+\newunicodechar{𝛺}{\mathit{\Omega}}
+
+
+\newunicodechar{𝚪}{\mathbf{\Gamma}}
+\newunicodechar{𝛤}{\mathit{\Gamma}}
+\newunicodechar{𝜞}{\mathbfit{\Gamma}}
+\newunicodechar{𝝘}{\mathbfsf{\Gamma}}
+\newunicodechar{𝞒}{\mathbfsfit{\Gamma}}
+\begin{document}
+test  Current font: <\fontname\font>.
+\\
+% % choose latin modern
+% \fontfamily{lmr}\selectfont
+% ABCDEFGHIJKLMNOPQRSTUVWXYZ \\
+% % choose computer modern
+% \fontfamily{cmr}\selectfont
+% ABCDEFGHIJKLMNOPQRSTUVWXYZ \\
+
+
+A bf=$\mathbf{A}$ it=$\mathit{A}$ bfit=$\mathbfit{A}$ bfsf=$\mathbfsf{A}$ bfsfit=$\mathbfsfit{A}$ sfit=$\mathsfit{A}$ fake=$\boldsymbol{\mathsfit{A}}$ \\
+
+$\Gamma$ bf=$𝚪$, it=$𝛤$, bfit=$𝜞$, bfsf=$𝝘$, bisf=$𝞒$ fake=$\boldsymbol{\mathsfit{\Gamma}}$
+
+
+
+$𝛢$
+$𝛣$
+$𝛤$
+$𝛥$
+$𝛦$
+$𝛧$
+$𝛨$
+$𝛩$
+$𝛪$
+$𝛫$
+$𝛬$
+$𝛭$
+$𝛮$
+$𝛯$
+$𝛰$
+$𝛱$
+$𝛲$
+% $𝛳$
+$𝛴$
+$𝛵$
+$𝛶$
+$𝛷$
+$𝛸$
+$𝛹$
+$𝛺$
+\end{document}

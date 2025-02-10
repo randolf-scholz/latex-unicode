@@ -31,40 +31,73 @@
 \NewDocumentCommand{\BFRAK}{m}{\ifmmode\boldsymbol{\mathfrak{#1}}\else#1\fi}
 
 
+\DeclareKeys[makerow]{%
+	% text/math
+	text.store=\rowTEXT,
+	math.store=\rowMATH,
+	% serif
+	rm.store=\rowRM,
+	bf.store=\rowBF,
+	it.store=\rowIT,
+	bi.store=\rowBI,
+	% sans
+	sf.store=\rowSF,
+	bsf.store=\rowBSF,
+	isf.store=\rowISF,
+	bisf.store=\rowBISF,
+	% fraktur
+	frak.store=\rowFRAK,
+	bfrak.store=\rowBFRAK,
+	% scriptur
+	scr.store=\rowSCR,
+	cal.store=\rowCAL,
+	% misc
+	normal.store=\rowNORMAL,
+	tt.store=\rowTT,
+	bb.store=\rowBB,
+	circ.store=\rowCIRC,
+	% roman
+	roman.store=\rowRoman,
+	Roman.store=\rowROMAN,
+	% sup- and superscript
+	sub.store=\rowSUB,
+	sup.store=\rowSUP,
+}
+
 \pgfkeys{%
 /makerow/.is family, /makerow,
 % here we define the default values
 default/.style={
 	% text/math
-	text=\relax,
-	math=\relax,
+	text=-,
+	math=-,
 	% serif
-	rm=\relax,
-	bf=\relax,
-	it=\relax,
-	bi=\relax,
+	rm=-,
+	bf=-,
+	it=-,
+	bi=-,
 	% sans
-	sf=\relax,
-	bsf=\relax,
-	isf=\relax,
-	bisf=\relax,
+	sf=-,
+	bsf=-,
+	isf=-,
+	bisf=-,
 	% scriptur
-	scr=\relax,
-	cal=\relax,
+	scr=-,
+	cal=-,
 	% fraktur
-	frak=\relax,
-	bfrak=\relax
+	frak=-,
+	bfrak=-
 	% misc
-	normal=\relax,
-	tt=\relax,
-	bb=\relax,
-	circ=\relax,
+	normal=-,
+	tt=-,
+	bb=-,
+	circ=-,
 	% roman
-	roman=\relax,
-	Roman=\relax
+	roman=-,
+	Roman=-
 	% sub- and superscript
-	sub=\relax,
-	sup=\relax,
+	sub=-,
+	sup=-,
 },
 % text/math
 text/.code={\gdef\rowTEXT{#1}},

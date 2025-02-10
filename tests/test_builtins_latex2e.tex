@@ -6,23 +6,23 @@
 
 \NewDocumentCommand{\makerow}{s m O{}}{%
 	\pgfkeys{/makerow, default, #3}% set defaults
-	\umeaning{#2} & #2 & \rowTEXT & #2 & \rowMATH & $#2$ \\%
+	#2 & \umeaning{#2} & \rowTEXT & #2 & \rowMATH & $#2$ \\%
 }
 
 \NewDocumentCommand{\maketext}{s m O{}}{%
 	\pgfkeys{/makerow, default, #3}% set defaults
-	\umeaning{#2} & #2 & \rowTEXT & #2 && \\%
+	#2 & \umeaning{#2} & \rowTEXT & #2 && \\%
 }
 
 \NewDocumentCommand{\makemath}{s m O{}}{%
 	\pgfkeys{/makerow, default, #3}% set defaults
-	\umeaning{#2} & $#2$ &&& \rowMATH & $#2$ \\%
+	$#2$ & \umeaning{#2} &&& \rowMATH & $#2$ \\%
 }
 
 \begin{document}
 \begin{tabular}{ll|ll|ll}  % chktex 44
 \toprule
-meaning & symbol & \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\textbf{math}} \\
+symbol & meaning &  \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\textbf{math}} \\
 \midrule% Text symbols ----------------------------------
 \maketext{ˆ}[text=\textasciicircum     ]
 \maketext{˜}[text=\textasciitilde      ]
@@ -30,7 +30,7 @@ meaning & symbol & \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\text
 \maketext{}[text=\textbackslash       ]
 \maketext{}[text=\textbar             ]
 \maketext{‖}[text=\textbardbl          ]
-\maketext{◯}[text=\textbigcircle       ]
+% \maketext{◯}[text=\textbigcircle       ]
 \maketext{}[text=\textbraceleft       ]
 \maketext{}[text=\textbraceright      ]
 \maketext{•}[text=\textbullet          ]

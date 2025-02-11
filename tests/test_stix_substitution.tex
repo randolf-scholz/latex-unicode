@@ -1,0 +1,19 @@
+\documentclass{unittest}
+\usepackage{stix2}
+\usepackage{newunicodechar}
+
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{𝚪}{\ifmmode\mathbf{Γ}\else\textbf{Γ}\fi}
+\newunicodechar{𝛤}{\ifmmode\mathit{Γ}\else\textbf{Γ}\fi}
+\newunicodechar{𝜞}{\ifmmode\mathbfit{Γ}\else\textbf{Γ}\fi}
+\newunicodechar{𝝘}{\ifmmode\mathbfsf{Γ}\else\textbf{Γ}\fi}
+\newunicodechar{𝞒}{\ifmmode\mathbfsfit{Γ}\else\textbf{Γ}\fi}
+
+\begin{document}
+\begin{tabular}{cc|cccc|cccc}
+\multicolumn{2}{c}{normal} & rm & bf & it & bfit & sf & bfsf & sfit & bfsfit
+\\	$C$ & $\mathnormal{C}$ & $\mathrm{C}$ & $\mathbf{C}$ & $\mathit{C}$ & $\mathbfit{C}$ & $\mathsf{C}$ & $\mathbfsf{C}$ & $\mathsfit{C}$ & $\mathbfsfit{C}$
+\\	$\Gamma$ & $\mathnormal{\Gamma}$ & $\mathrm{\Gamma}$ & $\mathbf{\Gamma}$ & $\mathit{\Gamma}$ & $\mathbfit{\Gamma}$ & $\mathsf{-}$ & $\mathbfsf{\Gamma}$ & $\mathsfit{-}$ & $\mathbfsfit{\Gamma}$
+\\	$Γ$ & $\mathnormal{Γ}$ & $\mathrm{Γ}$ & $𝚪$ & $𝛤$ & $𝜞$ & $\mathsf{-}$ & $𝝘$ & $\mathsfit{-}$ & $𝞒$
+\end{tabular}
+\end{document}

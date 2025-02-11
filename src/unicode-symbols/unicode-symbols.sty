@@ -65,6 +65,7 @@
 }
 \SetKeys[unicode-symbols]{stix=false, fdsymbol=false, mnsymbol=false}
 \ProcessKeyOptions[unicode-symbols]%
+
 % endregion options --------------------------------------------------------------------
 
 
@@ -84,40 +85,36 @@
 
 \RequirePackage{iftex}
 \ifPDFTeX%
-	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
 	\RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
-	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
+	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
 \else
-	\RequirePackage{fontspec}
-	% \RequirePackage[utf8]{inputenc}   % allow utf-8 input
-	% \RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
+	% \RequirePackage{fontspec}  <--- causes errors with stix!!
 \fi
 
 % === Load requiremnts ===
-% TODO: Consider using mathfont for LuaTex
-%\RequirePackage{mathfont}
-\RequirePackage{newunicodechar}
-\RequirePackage{unicode-subscripts}
-\RequirePackage{unicode-superscripts}
-
-% load lmodern to get rid of font shape warning
-\RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
-\RequirePackage{dsfont}% provides \mathds, best looking \mathbb
-\RequirePackage{pifont}% used for checkmark and xmark
-\RequirePackage{etoolbox}
-\RequirePackage{centernot}
-\RequirePackage{xcolor}
-\RequirePackage{bm}
-
 \ifunicode@stix%
 	\RequirePackage{stix2}
 	% Used to get rid of dont shape warning
 	\RequirePackage{anyfontsize}% SEE: https://tex.stackexchange.com/questions/58087
 \else%
+	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 	\RequirePackage{amssymb}% not needed with stix2
 	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
 	\RequirePackage{mathrsfs}% provides \mathscr
 	\RequirePackage{mathtools}% provides \mathclap
+
+	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
+	% SEE: https://tex.stackexchange.com/a/82747
+	% bf + it
+	\DeclareMathAlphabet{\mathbfit}{OT1}{\rmdefault}{b}{sl}
+	% sf + bf
+	\DeclareMathAlphabet{\mathbfsf}{OT1}{\sfdefault}{b}{n}
+	% sf + bf + it
+	\DeclareMathAlphabet{\mathbfsfit}{OT1}{\sfdefault}{b}{sl}
+	% sf + it
+	\DeclareMathAlphabet{\mathsfit}{OT1}{\sfdefault}{m}{sl}
+	% bold version of sf + if = bfsfit
+	\SetMathAlphabet{\mathsfit}{bold}{OT1}{\sfdefault}{b}{sl}
 \fi
 
 \ifunicode@fdsymbol%
@@ -128,6 +125,21 @@
 \ifunicode@mnsymbol%
 	\RequirePackage{MnSymbol}
 \fi
+
+% TODO: Consider using mathfont for LuaTex
+%\RequirePackage{mathfont}
+\RequirePackage{newunicodechar}
+\RequirePackage{unicode-subscripts}
+\RequirePackage{unicode-superscripts}
+
+% load lmodern to get rid of font shape warning
+\RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
+% \RequirePackage{dsfont}% provides \mathds, best looking \mathbb
+% \RequirePackage{pifont}% used for checkmark and xmark
+\RequirePackage{etoolbox}
+\RequirePackage{centernot}
+\RequirePackage{xcolor}
+\RequirePackage{bm}
 % endregion requirements ---------------------------------------------------------------
 
 
@@ -181,19 +193,6 @@
 	% \DeclareFontShape{LS2}{stix2tt}{b}{n}{<->ssub * stix2tt/m/n}{}
 	% endregion stix2-patch ------------------------------------------------------------
 \else%
-	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
-	% SEE: https://tex.stackexchange.com/a/82747
-	% bf + it
-	\DeclareMathAlphabet{\mathbfit}{OT1}{\rmdefault}{b}{it}
-	% sf + bf
-	\DeclareMathAlphabet{\mathbfsf}{OT1}{\sfdefault}{b}{n}
-	% sf + bf + it
-	\DeclareMathAlphabet{\mathbfsfit}{OT1}{\sfdefault}{b}{it}
-	% sf + it
-	\DeclareMathAlphabet{\mathsfit}{OT1}{\sfdefault}{m}{it}
-	% bold version of sf + if = bfsfit
-	\SetMathAlphabet{\mathsfit}{bold}{OT1}{\sfdefault}{b}{it}
-
 	% By default, stix loads 12 math alphabets a 256 characters (pdflatex only supports 16 tables)
 	% stix's \mathcal is ugly, and we do not need all symbols,
 	% SEE: https://tex.stackexchange.com/a/318144
@@ -272,26 +271,26 @@
 \definecolor{unicode@navy}{RGB}{00, 00, 128}% identical to svgname "navy" #000080
 
 % region font families -----------------------------------------------------------------
-\newcommand{\unicode@normal}[1]{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+\NewDocumentCommand\unicode@normal{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
 % Serif modifiers
-\newcommand{\unicode@rm}[1]{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\newcommand{\unicode@it}[1]{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\newcommand{\unicode@bf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
-\newcommand{\unicode@bi}[1]{\ifmmode\boldsymbol{\mathit{#1}}\else\textbf{\textit{#1}}\fi}
+\NewDocumentCommand\unicode@rm{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
+\NewDocumentCommand\unicode@it{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
+\NewDocumentCommand\unicode@bf{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+\NewDocumentCommand\unicode@bi{m}{\ifmmode\mathbfit{#1}\else\textbf{\textit{#1}}\fi}
 % Sans-variants
-\newcommand{\unicode@sf}[1]{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\newcommand{\unicode@itsf}[1]{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
-\newcommand{\unicode@bfsf}[1]{\ifmmode\boldsymbol{\mathsf{#1}}\else\textbf{\textsf{#1}}\fi}
-\newcommand{\unicode@bisf}[1]{\ifmmode\boldsymbol{\mathsfit{#1}}\else\textbf{\textsf{\textit{#1}}}\fi}
+\NewDocumentCommand\unicode@sf{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
+\NewDocumentCommand\unicode@itsf{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
+\NewDocumentCommand\unicode@bfsf{m}{\ifmmode\mathbfsf{#1}\else\textbf{\textsf{#1}}\fi}
+\NewDocumentCommand\unicode@bisf{m}{\ifmmode\mathbfsfit{#1}\else\textbf{\textsf{\textit{#1}}}\fi}
 % Fraktur
-\newcommand{\unicode@frak}[1]{\ensuremath{\mathfrak{#1}}}
-\newcommand{\unicode@bfrak}[1]{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
+\NewDocumentCommand\unicode@frak{m}{\ensuremath{\mathfrak{#1}}}
+\NewDocumentCommand\unicode@bfrak{m}{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
 % Script
-\newcommand{\unicode@cal}[1]{\ensuremath{\mathcal{#1}}}
-\newcommand{\unicode@scr}[1]{\ensuremath{\mathscr{#1}}}
+\NewDocumentCommand\unicode@cal{m}{\ensuremath{\mathcal{#1}}}
+\NewDocumentCommand\unicode@scr{m}{\ensuremath{\mathscr{#1}}}
 % Misc
-\newcommand{\unicode@tt}[1]{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-\newcommand{\unicode@bb}[1]{%
+\NewDocumentCommand\unicode@tt{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\NewDocumentCommand\unicode@bb{m}{%
 % We use mathds as primary, and fallback to mathbb.
 \ifnum`#1=\uccode`#1\relax % Check if the character is uppercase
 	\ensuremath{\mathds{#1}}% Use dsfont
@@ -301,8 +300,8 @@
     \ensuremath{\mathbb{#1}}%
 \fi\fi%
 }
-\newcommand{\unicode@bbi}[1]{\mathbb{\mathit{#1}}}
-\newcommand{\unicode@circled}[1]{\ifmmode\text{\textcircled{\ensuremath{\footnotesize #1}}}\else\textcircled{\footnotesize #1}\fi}
+\NewDocumentCommand\unicode@bbi{m}{\mathbb{\mathit{#1}}}
+\NewDocumentCommand\unicode@circled{m}{\ifmmode\text{\textcircled{\ensuremath{\footnotesize #1}}}\else\textcircled{\footnotesize #1}\fi}
 % endregion font families --------------------------------------------------------------
 
 

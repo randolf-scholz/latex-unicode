@@ -13,8 +13,9 @@ install:  # install the LaTeX package
 
 
 clean:  # remove all .build directories
-    find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {} \;
-    find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {} \;
+    find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {}
+    find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {}
+    find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
 
 
 test_setup:  # create the build and result directories

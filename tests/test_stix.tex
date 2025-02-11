@@ -1,0 +1,37 @@
+\documentclass{unittest}
+\usepackage{stix2}
+\usepackage{newunicodechar}
+
+\newunicodechar{Γ}{\Gamma}
+\newunicodechar{𝚪}{\mathbf{\Gamma}}
+\newunicodechar{𝛤}{\mathit{\Gamma}}
+\newunicodechar{𝜞}{\mathbfit{\Gamma}}
+\newunicodechar{𝝘}{\mathbfsf{\Gamma}}
+\newunicodechar{𝞒}{\mathbfsfit{\Gamma}}
+
+\begin{document}
+\begin{tabular}{c|cccc}
+\toprule
+\multicolumn{4}{c}{Testing with font \fontname\font.}
+\\	modifier   & latin            & greek                 & unicode
+\\	\midrule
+	base   & $C$              & $\Gamma$              & $Γ$
+\\	normal & $\mathnormal{C}$ & $\mathnormal{\Gamma}$ & $\mathnormal{Γ}$
+\\	rm     & $\mathrm{C}$     & $\mathrm{\Gamma}$     & $\mathrm{Γ}$
+\\	bf     & $\mathbf{C}$     & $\mathbf{\Gamma}$     & $𝚪$
+\\	it     & $\mathit{C}$     & $\mathit{\Gamma}$     & $𝛤$
+\\	bfit   & $\mathbfit{C}$   & $\mathbfit{\Gamma}$   & $𝜞$
+\\	sf     & $\mathsf{C}$     & $\mathsf{-}$          & $\mathsf{-}$
+\\	bfsf   & $\mathbfsf{C}$   & $\mathbfsf{\Gamma}$   & $𝝘$
+\\	sfit   & $\mathsfit{C}$   & $\mathsfit{-}$        & $\mathsfit{-}$
+\\	bfsfit & $\mathbfsfit{C}$ & $\mathbfsfit{\Gamma}$ & $𝞒$
+\\	\bottomrule
+\end{tabular}
+\end{document}
+
+% \begin{tabular}{cc|cccc|cccc}
+% \multicolumn{2}{c}{normal} & rm & bf & it & bfit & sf & bfsf & sfit & bfsfit
+% \\	$C$ & $\mathnormal{C}$ & $\mathrm{C}$ & $\mathbf{C}$ & $\mathit{C}$ & $\mathbfit{C}$ & $\mathsf{C}$ & $\mathbfsf{C}$ & $\mathsfit{C}$ & $\mathbfsfit{C}$
+% \\	$\Gamma$ & $\mathnormal{\Gamma}$ & $\mathrm{\Gamma}$ & $\mathbf{\Gamma}$ & $\mathit{\Gamma}$ & $\mathbfit{\Gamma}$ & $\mathsf{-}$ & $\mathbfsf{\Gamma}$ & $\mathsfit{-}$ & $\mathbfsfit{\Gamma}$
+% \\	$Γ$ & $\mathnormal{Γ}$ & $\mathrm{Γ}$ & $𝚪$ & $𝛤$ & $𝜞$ & $\mathsf{-}$ & $𝝘$ & $\mathsfit{-}$ & $𝞒$
+% \end{tabular}

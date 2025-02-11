@@ -1,34 +1,27 @@
 % chktex-file 41
 \RequirePackage{pgfkeys}
-\makeatletter
-% define mathsfit if not already defined
-\@ifundefined{mathsfit}{%
-	% SEE: https://tex.stackexchange.com/a/434396
-	\DeclareMathAlphabet{\mathsfit}{T1}{\sfdefault}{\mddefault}{\sldefault}
-	\SetMathAlphabet{\mathsfit}{bold}{T1}{\sfdefault}{\bfdefault}{\sldefault}
-}{}
-\makeatother
 
-% serif
-\NewDocumentCommand{\RM}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\NewDocumentCommand{\BF}{m}{\ifmmode\boldsymbol{#1}\else\textbf{#1}\fi}
-\NewDocumentCommand{\IT}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\NewDocumentCommand{\BI}{m}{\ifmmode\boldsymbol{\mathit{#1}}\else\textbf{\textit{#1}}\fi}
-% sans
-\NewDocumentCommand{\SF}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\NewDocumentCommand{\BSF}{m}{\ifmmode\boldsymbol{\mathsf{#1}}\else\textbf{\textsf{#1}}\fi}
-\NewDocumentCommand{\ISF}{m}{\ifmmode\mathsfit{#1}\else\textit{\textsf{#1}}\fi}
-\NewDocumentCommand{\BISF}{m}{\ifmmode\bm{\mathsfit{#1}}\else\textbf{\textsf{\textit{#1}}}\fi}
-% misc
-\NewDocumentCommand{\NORMAL}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
-\NewDocumentCommand{\CIRC}{m}{\ifmmode\circled{#1}\else\circled{#1}\fi}
-\NewDocumentCommand{\TT}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-% math-only
-\NewDocumentCommand{\BB}{m}{\ifmmode\mathbb{#1}\else#1\fi}
-\NewDocumentCommand{\SCR}{m}{\ifmmode\mathscr{#1}\else#1\fi}
-\NewDocumentCommand{\CAL}{m}{\ifmmode\mathcal{#1}\else#1\fi}
-\NewDocumentCommand{\FRAK}{m}{\ifmmode\mathfrak{#1}\else#1\fi}
-\NewDocumentCommand{\BFRAK}{m}{\ifmmode\boldsymbol{\mathfrak{#1}}\else#1\fi}
+
+% % serif
+% \NewDocumentCommand{\RM}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
+% \NewDocumentCommand{\BF}{m}{\ifmmode\boldsymbol{#1}\else\textbf{#1}\fi}
+% \NewDocumentCommand{\IT}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
+% \NewDocumentCommand{\BI}{m}{\ifmmode\boldsymbol{\mathit{#1}}\else\textbf{\textit{#1}}\fi}
+% % sans
+% \NewDocumentCommand{\SF}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
+% \NewDocumentCommand{\BSF}{m}{\ifmmode\boldsymbol{\mathsf{#1}}\else\textbf{\textsf{#1}}\fi}
+% \NewDocumentCommand{\ISF}{m}{\ifmmode\mathsfit{#1}\else\textit{\textsf{#1}}\fi}
+% \NewDocumentCommand{\BISF}{m}{\ifmmode\boldsymbol{\mathsfit{#1}}\else\textbf{\textsf{\textit{#1}}}\fi}
+% % misc
+% \NewDocumentCommand{\NORMAL}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+% \NewDocumentCommand{\CIRC}{m}{\ifmmode\circled{#1}\else\circled{#1}\fi}
+% \NewDocumentCommand{\TT}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+% % math-only
+% \NewDocumentCommand{\BB}{m}{\ifmmode\mathbb{#1}\else#1\fi}
+% \NewDocumentCommand{\SCR}{m}{\ifmmode\mathscr{#1}\else#1\fi}
+% \NewDocumentCommand{\CAL}{m}{\ifmmode\mathcal{#1}\else#1\fi}
+% \NewDocumentCommand{\FRAK}{m}{\ifmmode\mathfrak{#1}\else#1\fi}
+% \NewDocumentCommand{\BFRAK}{m}{\ifmmode\boldsymbol{\mathfrak{#1}}\else#1\fi}
 
 
 \DeclareKeys[makerow]{%

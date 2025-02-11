@@ -1,3 +1,4 @@
+%  Patch that allows `mathrel` tokens to be used as superscripts.
 % SEE: https://tex.stackexchange.com/a/715288
 % chktex-file 41
 % chktex-file 23
@@ -5,7 +6,6 @@
 \documentclass{standalone}
 \usepackage{amsmath}
 \usepackage{amssymb}
-
 
 % region patch1 ------------------------------------------------------------------------
 %\makeatletter
@@ -41,7 +41,6 @@
 %\makeatother
 % endregion patch1 ---------------------------------------------------------------------
 
-
 % region patch2 ------------------------------------------------------------------------
 \makeatletter
 \let\old@sup=^% save a copy of original ^ (catcode 7)
@@ -52,24 +51,23 @@
 
 % redefine \pr@m@s using `^` with the new catcode.
 \def\pr@m@s{% copy of \@pr@m@s code from latex.ltx
-\ifx'\@let@token% <-- use U+0027
-	\expandafter\pr@@@s%
-\else\ifx^\@let@token%
-	\expandafter\expandafter\expandafter\pr@@@t%
-\else%
-	\egroup%
-\fi\fi%
+	\ifx'\@let@token% <-- use U+0027
+		\expandafter\pr@@@s%
+	\else\ifx^\@let@token%
+		\expandafter\expandafter\expandafter\pr@@@t%
+	\else%
+		\egroup%
+	\fi\fi%
 }
 \makeatother
 % endregion patch2 ---------------------------------------------------------------------
 
-\newcommand\mesh{\mathrel{\#}}
-\newcommand\smallplus{\mathbin{\texttt{+}}}
-\newcommand\indep{\mathrel{\perp\!\!\!\perp}}
-\newcommand\myrel{\mathrel{\overset{\textsf{a.e.}}{\sim}}}
+\NewDocumentCommand\mesh{}{\mathrel{\#}}
+\NewDocumentCommand\smallplus{}{\mathbin{\texttt{+}}}
+\NewDocumentCommand\indep{}{\mathrel{\perp\!\!\!\perp}}
+\NewDocumentCommand\myrel{}{\mathrel{\overset{\textsf{a.e.}}{\sim}}}
 
 \begin{document}
-% SEEerence
 \begin{tabular}{l}
 	$A \square B$   \\
 	$A^\square$     \\
@@ -81,7 +79,7 @@
 	$A'''^\square$   \\
 	$A'''^{\square}$ \\
 \end{tabular}
-%\end{document}
+
 % no prime
 \begin{tabular}{lllllll}
 $A \square B   $ &  $A^\square   $ & $A^{\square}   $ \\

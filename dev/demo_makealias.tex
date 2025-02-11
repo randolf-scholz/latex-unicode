@@ -1,0 +1,48 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{etoolbox}
+
+\NewDocumentCommand\foo{}{FOO}
+\NewDocumentCommand\goo{}{BAR}
+\NewDocumentCommand\hoo{}{BAZ}
+\NewDocumentCommand\fallback{}{FALLBACK}
+
+\NewDocumentCommand{\makealias}{m O{\relax} O{\relax} O{\relax} m}{%
+	\ifundef{#2}{%
+	\ifundef{#3}{%
+	\ifundef{#4}{%
+	\PackageError{package name}{error text}{help text}%
+	}{\let#1=#4}%
+	}{\let#1=#3}%
+	}{\let#1=#2}%
+}%
+\makealias{\alias}[\relax][\lllll][\hoo]{\fallback}
+\NewDocumentCommand{\CMD}{}{\alias}
+
+\NewDocumentCommand\REP{m}{#1#1#1}
+\def\foo{\mathrel{a}}
+\def\goo{{\mathrel{a}}}
+\def\hoo{\bgroup\mathrel{a}\egroup}
+\def\koo{\begingroup\mathrel{a}\endgroup}
+\NewDocumentCommand\myrel{}{\mathrel{\overset{\textsf{a.e.}}{\sim}}}
+
+\DeclareMathSymbol\mesh{\mathrel}{operators}{`\#}
+\DeclareMathSymbol\increment{\mathord}{operators}{\Delta}
+%\DeclareMathSymbol\mesh{\mathrel}{operators}{`\myrel}
+\NewDocumentCommand\indep{}{\mathrel{\perp\!\!\!\perp}}
+
+\begin{document}
+$x\myrel y$
+%\CMD \\ \alias
+\begin{tabular}{l}
+	$x^\increment$
+\\	\REP{${(1\mathord{a}2)}$}
+\\	\REP{${(1\mathbin{a}2)}$}
+\\	\REP{${(1\mathrel{a}2)}$}
+\\	\REP{${(1\foo2)}$}
+\\	\REP{${(1\goo2)}$}
+\\	\REP{${(1\hoo2)}$}
+\\	\REP{${(1\koo2)}$}
+\end{tabular}
+\end{document}

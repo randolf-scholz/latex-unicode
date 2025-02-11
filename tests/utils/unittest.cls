@@ -12,6 +12,11 @@
 \RequirePackage{multicol}
 \usepackage{arydshln}
 
+
+% TODO: Add reproducible build settings
+% SEE: https://tex.stackexchange.com/questions/229605
+
+
 \AtBeginDocument{%
 %
 \ProvideDocumentCommand\textbb{m}{--}

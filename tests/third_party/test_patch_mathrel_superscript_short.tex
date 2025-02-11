@@ -11,20 +11,20 @@
 
 % patch \pr@m@s using `^` with the new catcode.
 \def\pr@m@s{% copy of \@pr@m@s code from latex.ltx
-\ifx'\@let@token% <-- use U+0027
-	\expandafter\pr@@@s%
-\else\ifx^\@let@token%
-	\expandafter\expandafter\expandafter\pr@@@t%
-\else%
-	\egroup%
-\fi\fi%
+	\ifx'\@let@token% <-- use U+0027
+		\expandafter\pr@@@s%
+	\else\ifx^\@let@token%
+		\expandafter\expandafter\expandafter\pr@@@t%
+	\else%
+		\egroup%
+	\fi\fi%
 }
 \makeatother
 
-\newcommand\mesh{\mathrel{\#}}
-\newcommand\smallplus{\mathbin{\texttt{+}}}
-\newcommand\indep{\mathrel{\perp\!\!\!\perp}}
-\newcommand\myrel{\mathrel{\overset{\textsf{a.e.}}{\sim}}}
+\NewDocumentCommand\mesh{}{\mathrel{\#}}
+\NewDocumentCommand\smallplus{}{\mathbin{\texttt{+}}}
+\NewDocumentCommand\indep{}{\mathrel{\perp\!\!\!\perp}}
+\NewDocumentCommand\myrel{}{\mathrel{\overset{\textsf{a.e.}}{\sim}}}
 
 \begin{document}
 \begin{tabular}{lllllll}

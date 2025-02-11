@@ -1,4 +1,4 @@
-exclude: '\.idea/|\.vscode/'
+exclude: '\.idea/|\.vscode/|dev/'
 minimum_pre_commit_version: 3.6.0
 default_language_version:
   python: python3.11

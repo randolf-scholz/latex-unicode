@@ -4,6 +4,7 @@ export RESULT_DIR := ".results"
 export ROOT_DIR := `git rev-parse --show-toplevel`
 export TEST_DIR := ROOT_DIR + "/tests"
 export TEXMF_DIR := "texmf"
+export DEV_DIR := ROOT_DIR + "/dev"
 
 default:
   @just --list
@@ -16,6 +17,7 @@ clean:  # remove all .build directories
     find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {} \;
     find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {} \;
     find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
+    find "{{DEV_DIR}}" -type f -name "*.pdf" -delete
 
 
 test_setup:  # create the build and result directories

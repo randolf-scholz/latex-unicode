@@ -1,34 +1,36 @@
 \documentclass{unittest}
-\usepackage{booktabs}
-\usepackage{multicol}
+\usepackage{unicode-symbols}
 
-\usepackage{makerow_setup}
-\usepackage{amssymb}
-\usepackage{amsmath}
 
-\NewDocumentCommand{\makerow}{s m O{}}{%
-	\pgfkeys{/makerow, default, #3}% set defaults
-	\umeaning{#2} & #2 & \rowTEXT & #2 & \rowMATH & $#2$ \\%
+\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	\umeaning{#1} & #1
+	& \rowTEXT & #1
+	& \rowMATH & $#1$
+	%
+	\\%
 }
 
-\NewDocumentCommand{\maketext}{s m O{}}{%
-	\pgfkeys{/makerow, default, #3}% set defaults
-	\umeaning{#2} & #2 & \rowTEXT & #2 && \\%
+\NewDocumentCommand{\maketext}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	\umeaning{#1} & #1
+	& \rowTEXT & #1
+	&&
+	%
+	\\%
 }
 
 
-\NewDocumentCommand{\makemath}{s m O{}}{%
-	\pgfkeys{/makerow, default, #3}% set defaults
-	\rowMATH \\
-%	\umeaning{#2} & $#2$ &&& \rowMATH & $#2$ \\%
+\NewDocumentCommand{\makemath}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	% \rowMATH \\
+	\umeaning{#1} & $#1$ &&& \rowMATH & $#1$ \\%
 }
 
 \begin{document}
 \begin{tabular}{ll|ll|ll}  % chktex 44
 \toprule
 meaning & symbol & \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\textbf{math}} \\
-\midrule% Text symbols ----------------------------------
-\makerow{}[text=\checkmark, math=$\checkmark$]
 \midrule% Table 54 (binary operations) -------------------------------------------------
 \makemath{⊼}[math=$\barwedge$       ]
 \makemath{⊡}[math=$\boxdot$         ]
@@ -153,8 +155,6 @@ meaning & symbol & \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\text
 \makemath{↞}[math=$\twoheadleftarrow$   ]
 \makemath{↠}[math=$\twoheadrightarrow$  ]
 \makemath{⇈}[math=$\upuparrows$         ]
-
-
 \bottomrule
 \end{tabular}
 \end{document}

@@ -1,50 +1,56 @@
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
 \documentclass{unittest}
-\usepackage{booktabs}
-\usepackage{multicol}
+\usepackage{unicode-symbols}
 
-\usepackage{makerow_setup}
-\usepackage[stix]{unicode-symbols}
-
-\NewDocumentCommand{\makerow}{s m O{}}{%
-\pgfkeys{/makerow, default, #3}% set defaults
-%
-	#2%
+\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	#1%
 	% math mode
-	& $\TT{#2}$    & $\rowTT$
-	& $\BB{#2}$    & $\rowBB$
-	& $\SCR{#2}$   & $\rowSCR$
-	& $\CAL{#2}$   & $\rowCAL$
-	& $\FRAK{#2}$  & $\rowFRAK$
-	& $\BFRAK{#2}$ & $\rowBFRAK$
-\IfBooleanT{#1}{% only add text if star.
-	& \TT{#2}    & \rowTT
-	& \BB{#2}    & \rowBB
-	& \SCR{#2}   & \rowSCR
-	& \CAL{#2}   & \rowCAL
-	& \FRAK{#2}  & \rowFRAK
-	& \BFRAK{#2} & \rowBFRAK
-}%
-	% end
+	& $\TT{#1}$    & $\rowTT$
+	& $\BB{#1}$    & $\rowBB$
+	&&% & $\SCR{#1}$   & $\rowSCR$
+	& $\CAL{#1}$   & $\rowCAL$
+	& $\FRAK{#1}$  & $\rowFRAK$
+	& $\BFRAK{#1}$ & $\rowBFRAK$
+	% text mode
+	& \TT{#1}    & \rowTT
+	& \BB{#1}    & \rowBB
+	&&% & \SCR{#1}   & \rowSCR
+	& \CAL{#1}   & \rowCAL
+	& \FRAK{#1}  & \rowFRAK
+	& \BFRAK{#1} & \rowBFRAK
+	%
 	\\%
 }
 
 \begin{document}
-\begin{tabular}{c|cc cc cc cc cc cc|cc cc cc cc cc cc}  % chktex 44
-	& \multicolumn{12}{|c}{\textbf{math mode}} &  \multicolumn{12}{c|}{\textbf{text mode}} \\
-	& \multicolumn{2}{c}{tt} & \multicolumn{2}{c}{bb} & \multicolumn{2}{c}{scr} & \multicolumn{2}{c}{cal} & \multicolumn{2}{c}{frak} & \multicolumn{2}{c}{bfrak}
-	& \multicolumn{2}{c}{tt} & \multicolumn{2}{c}{bb} & \multicolumn{2}{c}{scr} & \multicolumn{2}{c}{cal} & \multicolumn{2}{c}{frak} & \multicolumn{2}{c}{bfrak}
+\begin{tabular}{c|cc:cc:cc:cc:cc:cc|cc:cc:cc:cc:cc:cc}% chktex 44
+	& \multicolumn{12}{|c}{\textbf{math mode}}
+	& \multicolumn{12}{c|}{\textbf{text mode}}
+\\	char
+	& \multicolumn{2}{c}{tt}
+	& \multicolumn{2}{c}{bb}
+	& \multicolumn{2}{c}{scr}
+	& \multicolumn{2}{c}{cal}
+	& \multicolumn{2}{c}{frak}
+	& \multicolumn{2}{c}{bfrak}
+	& \multicolumn{2}{c}{tt}
+	& \multicolumn{2}{c}{bb}
+	& \multicolumn{2}{c}{scr}
+	& \multicolumn{2}{c}{cal}
+	& \multicolumn{2}{c}{frak}
+	& \multicolumn{2}{c}{bfrak}
 \\ \midrule% Digits --------------------------------------------------------------------
 \makerow{0}[tt=𝟶, bb=𝟘]
-\makerow{0}[tt=𝟷, bb=𝟙]
-\makerow{0}[tt=𝟸, bb=𝟚]
-\makerow{0}[tt=𝟹, bb=𝟛]
-\makerow{0}[tt=𝟺, bb=𝟜]
-\makerow{0}[tt=𝟻, bb=𝟝]
-\makerow{0}[tt=𝟼, bb=𝟞]
-\makerow{0}[tt=𝟽, bb=𝟟]
-\makerow{0}[tt=𝟾, bb=𝟠]
-\makerow{0}[tt=𝟿, bb=𝟡]
+\makerow{1}[tt=𝟷, bb=𝟙]
+\makerow{2}[tt=𝟸, bb=𝟚]
+\makerow{3}[tt=𝟹, bb=𝟛]
+\makerow{4}[tt=𝟺, bb=𝟜]
+\makerow{5}[tt=𝟻, bb=𝟝]
+\makerow{6}[tt=𝟼, bb=𝟞]
+\makerow{7}[tt=𝟽, bb=𝟟]
+\makerow{8}[tt=𝟾, bb=𝟠]
+\makerow{9}[tt=𝟿, bb=𝟡]
 \midrule% Latin uppercase --------------------------------------------------------------
 \makerow{A}[tt=𝙰, bb=𝔸, scr=𝒜, cal=𝓐, frak=𝔄, bfrak=𝕬]
 \makerow{B}[tt=𝙱, bb=𝔹, scr=ℬ, cal=𝓑, frak=𝔅, bfrak=𝕭]

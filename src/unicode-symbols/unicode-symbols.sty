@@ -134,8 +134,8 @@
 
 % load lmodern to get rid of font shape warning
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
-% \RequirePackage{dsfont}% provides \mathds, best looking \mathbb
-% \RequirePackage{pifont}% used for checkmark and xmark
+\RequirePackage{dsfont}% provides \mathds, best looking \mathbb
+\RequirePackage{pifont}% used for checkmark and xmark
 \RequirePackage{etoolbox}
 \RequirePackage{centernot}
 \RequirePackage{xcolor}
@@ -427,21 +427,22 @@
 % Prints the meaning of a character
 %
 \edef\unicode@meaning@temp{\detokenize{#1}}%
-%
 % check if the result is empty
-\ifx\unicode@meaning@temp\@empty%
+\ifx\unicode@meaning@temp\empty%
 	---empty---%
-\else\ifPDFTeX%
-	% check if the result defines a csname
-	\ifcsname u8:\unicode@meaning@temp\endcsname%
-		\expandafter\expandafter\expandafter\strip@prefix%
-		\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
-	\else%
-		\expandafter\meaning\unicode@meaning@temp%
-	\fi%
 \else%
-	\expandafter\safe@strip@prefix\meaning#1%
-\fi\fi%
+	\ifPDFTeX%
+		% check if the result defines a csname
+		\ifcsname u8:\unicode@meaning@temp\endcsname%
+			\expandafter\expandafter\expandafter\strip@prefix%
+			\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
+		\else%
+			\expandafter\meaning\unicode@meaning@temp\relax%
+		\fi%
+	\else%
+		\safe@strip@prefix{\meaning#1}%
+	\fi%
+\fi%
 }%
 
 \newcommand{\PrintMathFonts}{%

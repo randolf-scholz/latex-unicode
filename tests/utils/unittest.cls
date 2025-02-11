@@ -6,15 +6,34 @@
 \tracinglostchars=3% error if a glyph is missing
 \errorcontextlines=5% <-- useful for debugging
 \LoadClass{standalone}
+% load newunicodechar package with verbose
+\RequirePackage[verbose]{newunicodechar}
 \RequirePackage{booktabs}
 \RequirePackage{multicol}
 \usepackage{arydshln}
 
+\AtBeginDocument{%
+%
+\ProvideDocumentCommand\textbb{m}{--}
+\ProvideDocumentCommand\textcal{m}{--}
+\ProvideDocumentCommand\textscr{m}{--}
+\ProvideDocumentCommand\textbfscr{m}{--}
+\ProvideDocumentCommand\textfrak{m}{--}
+\ProvideDocumentCommand\textbffrak{m}{--}
 
 \ProvideDocumentCommand\textbfit{m}{\textbf{\textit{#1}}}
 \ProvideDocumentCommand\textsfit{m}{\textsf{\textit{#1}}}
 \ProvideDocumentCommand\textbfsf{m}{\textbf{\textsf{#1}}}
 \ProvideDocumentCommand\textbfsfit{m}{\textbf{\textsf{\textit{#1}}}}
+\ProvideDocumentCommand\textcirc{m}{\textcircled{\footnotesize #1}}
+
+\ProvideDocumentCommand\mathcirc{m}{\text{\textcirc{#1}}}
+\ProvideDocumentCommand\mathbffrak{m}{\bm{\mathfrak{#1}}}
+\ProvideDocumentCommand\mathbfscr{m}{\bm{\mathscr{#1}}}
+\ProvideDocumentCommand\mathbfsf{m}{\bm{\mathsf{#1}}}
+\ProvideDocumentCommand\mathbfsfit{m}{\bm{\mathsfit{#1}}}
+\ProvideDocumentCommand\mathbfit{m}{\bm{\mathit{}}}
+
 % Serif modifiers
 \ProvideDocumentCommand\RM{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
 \ProvideDocumentCommand\IT{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
@@ -28,11 +47,18 @@
 %
 \ProvideDocumentCommand\NORMAL{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
 \ProvideDocumentCommand\TT{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\ProvideDocumentCommand\BB{m}{\ifmmode\mathbb{#1}\else\textbb{#1}\fi}
+\ProvideDocumentCommand\CIRC{m}{\ifmmode\mathcirc{#1}\else\textcirc{#1}\fi}
+%
+\ProvideDocumentCommand\CAL{m}{\ifmmode\mathcal{#1}\else\textcal{#1}\fi}
+\ProvideDocumentCommand\SCR{m}{\ifmmode\mathscr{#1}\else\textscr{#1}\fi}
+\ProvideDocumentCommand\FRAK{m}{\ifmmode\mathfrak{#1}\else\textfrak{#1}\fi}
+\ProvideDocumentCommand\BFRAK{m}{\ifmmode\mathbffrak{#1}\else\textbffrak{#1}\fi}
+%
+}
 
 
 
-% load newunicodechar package with verbose
-\RequirePackage[verbose]{newunicodechar}
 
 \RequirePackage{pgfkeys}
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
@@ -111,6 +137,7 @@ default/.style={
 	% text/math
 	text=-,
 	math=-,
+	normal=-,
 	% serif
 	rm=-,
 	bf=-,
@@ -126,9 +153,8 @@ default/.style={
 	cal=-,
 	% fraktur
 	frak=-,
-	bfrak=-
+	bfrak=-,
 	% misc
-	normal=-,
 	tt=-,
 	bb=-,
 	circ=-,

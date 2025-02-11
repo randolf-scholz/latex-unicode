@@ -1,29 +1,27 @@
 \documentclass{unittest}
 \usepackage{unicode-symbols}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{makerow_setup}
 
-\NewDocumentCommand{\makerow}{s m O{}}{%
-	\pgfkeys{/makerow, default, #3}% set defaults
-	#2 & \umeaning{#2} & \rowTEXT & #2 & \rowMATH & $#2$ \\%
+
+\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	#1 & \umeaning{#1} & \rowTEXT & #1 & \rowMATH & $#1$ \\%
 }
 
-\NewDocumentCommand{\maketext}{s m O{}}{%
-	\pgfkeys{/makerow, default, #3}% set defaults
-	#2 & \umeaning{#2} & \rowTEXT & #2 && \\%
+\NewDocumentCommand{\maketext}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	#1 & \umeaning{#1} & \rowTEXT & #1 && \\%
 }
 
-\NewDocumentCommand{\makemath}{s m O{}}{%
-	\pgfkeys{/makerow, default, #3}% set defaults
-	$#2$ & \umeaning{#2} &&& \rowMATH & $#2$ \\%
+\NewDocumentCommand{\makemath}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	$#1$ & \umeaning{#1} &&& \rowMATH & $#1$ \\%
 }
 
 \begin{document}
-\begin{tabular}{ll|ll|ll}  % chktex 44
+\begin{tabular}{cl|cc|cc}  % chktex 44
 \toprule
-symbol & meaning &  \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\textbf{math}} \\
-\midrule% Text symbols ----------------------------------
+symbol & meaning &  \multicolumn{2}{c|}{\textbf{text}} & \multicolumn{2}{c}{\textbf{math}}
+\\	\midrule% Text symbols ----------------------------------
 \maketext{ˆ}[text=\textasciicircum     ]
 \maketext{˜}[text=\textasciitilde      ]
 \maketext{⁎}[text=\textasteriskcentered]

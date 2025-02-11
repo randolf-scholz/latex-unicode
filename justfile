@@ -13,8 +13,8 @@ install:  # install the LaTeX package
 
 
 clean:  # remove all .build directories
-    find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {}
-    find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {}
+    find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {} \;
+    find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {} \;
     find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
 
 
@@ -23,12 +23,20 @@ test_setup:  # create the build and result directories
     rm -rf "{{TEST_DIR}}/{{BUILD_DIR}}"
     rm -rf "{{TEST_DIR}}/{{RESULT_DIR}}"
     rm -rf "{{TEST_DIR}}/{{TEXMF_DIR}}"
+    rm -rf "{{ROOT_DIR}}/{{TEXMF_DIR}}"
     # create the test directories
     mkdir -p "{{TEST_DIR}}/{{BUILD_DIR}}"
     mkdir -p "{{TEST_DIR}}/{{RESULT_DIR}}"
     mkdir -p "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex"
-    # simlink all files from src to tests/texmf/tex/latex
+    mkdir -p "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex"
+    # simlink all files from src/ to tests/texmf/tex/latex
     ln -sr "{{ROOT_DIR}}/src/"* "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
+    # simlink all files from src/ to texmf/tex/latex
+    ln -sr "{{ROOT_DIR}}/src/"* "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex/"
+    # simlink tests/utils to tests/texmf/tex/latex
+    ln -sr "{{ROOT_DIR}}/tests/utils" "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
+    # simlink tests/utils to texmf/tex/latex
+    ln -sr "{{ROOT_DIR}}/tests/utils" "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex/"
     # remove pdf files from the test directory
     find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
 

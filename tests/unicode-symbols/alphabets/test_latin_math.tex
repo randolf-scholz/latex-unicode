@@ -1,58 +1,67 @@
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
 \documentclass{unittest}
-\usepackage{booktabs}
-\usepackage{multicol}
+\usepackage{unicode-symbols}
 
-\usepackage{makerow_setup}
-\usepackage[nostix]{unicode-symbols}
-
-\NewDocumentCommand{\makerow}{m O{}}{%
-\pgfkeys{/makerow, default, #2}% set defaults
+\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
 %
-	#1            & $\NORMAL{#1}$%
+	#1              & $\NORMAL{#1}$
 	% serif
-	& \RM{#1}     & \rowRM
-	& \IT{#1}     & \rowIT
-	& \BF{#1}     & \rowBF
-	& \BI{#1}     & \rowBI
+	& $\RM{#1}$     & $\rowRM$
+	& $\IT{#1}$     & $\rowIT$
+	& $\BF{#1}$     & $\rowBF$
+	& $\BI{#1}$     & $\rowBI$
 	% sans
-	& \SF{#1}     & \rowSF
-	& \ISF{#1}    & \rowISF
-	& \BSF{#1}    & \rowBSF
-	& \BISF{#1}   & \rowBISF
-	% script
-	% & \SCR{#1}    & \rowSCR
-	& \CAL{#1}    & \rowCAL
-	% fraktur
-	& \FRAK{#1}   & \rowFRAK
-	& \BFRAK{#1}  & \rowBFRAK
+	& $\SF{#1}$     & $\rowSF$
+	& $\ISF{#1}$    & $\rowISF$
+	& $\BSF{#1}$    & $\rowBSF$
+	& $\BISF{#1}$   & $\rowBISF$
 	% misc
-	& \TT{#1}     & \rowTT
-	& \BB{#1}     & \rowBB
-	& \CIRC{#1}   & \rowCIRC
-	% end
+	& $\TT{#1}$     & $\rowTT$
+	& $\BB{#1}$     & $\rowBB$
+	& $\CIRC{#1}$   & $\rowCIRC$
+	% script
+	& $\CAL{#1}$    & $\rowCAL$
+	&&% & $\SCR{#1}$    & $\rowSCR$
+	% fraktur
+	& $\FRAK{#1}$   & $\rowFRAK$
+	& $\BFRAK{#1}$  & $\rowBFRAK$
+	%
 	\\%
 }
 
 
 \begin{document}
-\begin{tabular}{cc|cc cc cc cc|cc cc cc cc|cc cc|cc cc|cc cc cc}  % chktex 44
+\begin{tabular}{cc|cc:cc:cc:cc|cc:cc:cc:cc|cc:cc:cc|cc:cc|cc:cc}% chktex 44
 \toprule
-	& \multicolumn{31}{c}{\textbf{text mode}}
-\\	\multicolumn{2}{c|}{Base}
-	& \multicolumn{8}{|c|}{Serif}
-	& \multicolumn{8}{|c}{Sans}
-	& \multicolumn{4}{|c}{Script}
-	& \multicolumn{4}{|c}{Fraktur}
-	& \multicolumn{6}{|c}{Misc}
-\\ ref
-	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
-	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
-	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{bold}
-	& \multicolumn{2}{|c}{none} & \multicolumn{2}{c}{bold}
-	& \multicolumn{2}{|c}{tt}   & \multicolumn{2}{c}{bb} & \multicolumn{2}{c}{circ}
-\\
-\midrule% Latin uppercase --------------------------------------------------------------
+	\multicolumn{32}{|c}{\textbf{testing latin alphabet in math mode}}
+\\	\multicolumn{2}{c|}{base}
+	& \multicolumn{8}{|c|}{serif}
+	& \multicolumn{8}{|c}{sans}
+	& \multicolumn{6}{|c|}{misc}
+	& \multicolumn{4}{|c}{script}
+	& \multicolumn{4}{|c}{fraktur}
+\\	\multicolumn{2}{c|}{normal}
+	% serif
+	& \multicolumn{2}{|c}{rm}
+	& \multicolumn{2}{c}{italic}
+	& \multicolumn{2}{c}{bold}
+	& \multicolumn{2}{c}{bf+it}
+	% sans
+	& \multicolumn{2}{|c}{sf}
+	& \multicolumn{2}{c}{italic}
+	& \multicolumn{2}{c}{bold}
+	& \multicolumn{2}{c}{bf+it}
+	% misc
+	& \multicolumn{2}{|c}{tt}
+	& \multicolumn{2}{c}{bb}
+	& \multicolumn{2}{c|}{circ}
+	% script
+	& \multicolumn{2}{|c}{cal}
+	& \multicolumn{2}{|c}{scr}
+	% fraktur
+	& \multicolumn{2}{|c}{frak}
+	& \multicolumn{2}{|c}{bfrak}
+\\	\midrule% Latin uppercase --------------------------------------------------------------
 \makerow{A}[bf=𝐀, it=𝐴, bi=𝑨, sf=𝖠, bsf=𝗔, isf=𝘈, bisf=𝘼, tt=𝙰, bb=𝔸, scr=𝒜, cal=𝓐, frak=𝔄, bfrak=𝕬, circ=Ⓐ]
 \makerow{B}[bf=𝐁, it=𝐵, bi=𝑩, sf=𝖡, bsf=𝗕, isf=𝘉, bisf=𝘽, tt=𝙱, bb=𝔹, scr=ℬ, cal=𝓑, frak=𝔅, bfrak=𝕭, circ=Ⓑ]
 \makerow{C}[bf=𝐂, it=𝐶, bi=𝑪, sf=𝖢, bsf=𝗖, isf=𝘊, bisf=𝘾, tt=𝙲, bb=ℂ, scr=𝒞, cal=𝓒, frak=ℭ, bfrak=𝕮, circ=Ⓒ]

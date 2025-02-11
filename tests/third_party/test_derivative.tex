@@ -1,0 +1,35 @@
+
+\documentclass{unittest}
+\usepackage{amsmath}
+\usepackage{physics}
+
+\DeclareMathOperator*{\ddOP}{d}
+\DeclareMathOperator{\D}{\mathbf{D}}
+\NewDocumentCommand{\ddalt}{}{\mathop{}\!\mathrm{d}}
+\NewDocumentCommand{\ddord}{}{\mathord{\mathrm{d}}}
+\NewDocumentCommand{\ddop}{}{\operatorname{d}}
+\NewDocumentCommand{\pp}{}{\mathop{}\!\partial}
+\NewDocumentCommand{\DUP}{m}{\Bigg|#1\Bigg|#1\Bigg|#1\Bigg|}
+
+\everymath{\displaystyle}
+
+\begin{document}
+% NOTE: we prefer \newcommand{\ddalt}{\mathop{}\!\mathrm{d}}
+% SEE: https://tex.stackexchange.com/a/60546
+$\begin{array}{llll}
+\text{physics}   & \DUP{\pdv{x}{t}}       & \DUP{\pdv{z}{x}{y}}        \\\\
+\text{manual}    & \DUP{\frac{\pp{x}}{\pp{t}}} & \DUP{\frac{\pp^2{z}}{\pp{x}\pp{y}}}  \\\\
+\midrule
+\text{mathord}   & \DUP{\frac{\ddord{x}}{\ddord{t}}} & \DUP{\frac{\ddord^2{z}}{\ddord{x}\ddord{y}}}  \\\\
+\text{manual}    & \DUP{\frac{\ddalt{x}}{\ddalt{t}}} & \DUP{\frac{\ddalt^2{z}}{\ddalt{x}\ddalt{y}}}  \\\\
+\text{physics}   & \DUP{\frac{\dd{x}}{\dd{t}}}       & \DUP{\frac{\dd^2{z}}{\dd{x}\dd{y}}}        \\\\
+\text{opname}    & \DUP{\frac{\ddop{x}}{\ddop{t}}}   & \DUP{\frac{\ddop^2{z}}{\ddop{x}\ddop{y}}}    \\\\
+\text{declareop} & \DUP{\frac{\ddOP{x}}{\ddOP{t}}}   & \DUP{\frac{\ddOP^2{z}}{\ddOP{x}\ddOP{y}}}    \\\\
+\text{mathord}   & \DUP{\frac{\ddord{x}}{\ddord{t}}} & \DUP{\frac{\ddord^2{z}}{\ddord{x}\ddord{y}}}  \\\\
+\midrule
+\text{manual}    & \DUP{\int f(x)\ddalt{x}} & \DUP{\iint f(x)\ddalt(x,y)} \\\\
+\text{physics}   & \DUP{\int f(x)\dd{x}}    & \DUP{\iint f(x)\dd(x,y)} \\\\
+\text{opname}    & \DUP{\int f(x)\ddop{x}}  & \DUP{\iint f(x)\ddop(x,y)} \\\\
+\text{declareop} & \DUP{\int f(x)\ddOP{x}}  & \DUP{\iint f(x)\ddOP(x,y)} \\\\
+\end{array}$
+\end{document}

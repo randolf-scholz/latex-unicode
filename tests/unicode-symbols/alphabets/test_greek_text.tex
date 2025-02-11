@@ -1,38 +1,46 @@
-\documentclass{unittest}
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
-\usepackage[stix]{unicode-symbols}
+\documentclass{unittest}
+\usepackage{unicode-symbols}
 
-
-\NewDocumentCommand{\makerow}{m o}{\pgfkeys{/variants, default, #2}%
+\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
 	%
-	#1 & $\NORMAL{#1}$
+	#1 & \NORMAL{#1}
 	% serif
-	& $\RM{#1}$   & $\rowRM$
-	& $\IT{#1}$   & $\rowIT$
-	& $\BF{#1}$   & $\rowBF$
-	& $\BI{#1}$   & $\rowBI$
+	& \RM{#1}   & \rowRM
+	& \IT{#1}   & \rowIT
+	& \BF{#1}   & \rowBF
+	& \BI{#1}   & \rowBI
 	% sans
-	& $\SF{-}$    & $\rowSF$
-	& $\ISF{-}$   & $\rowISF$
-	& $\BSF{#1}$  & $\rowBSF$
-	& $\BISF{#1}$ & $\rowBISF$
+	& \SF{-}    & \rowSF
+	& \ISF{-}   & \rowISF
+	& \BSF{#1}  & \rowBSF
+	& \BISF{#1} & \rowBISF
 	%
 	\\%
 }
+
 
 \begin{document}
 \begin{tabular}{cc|cc:cc:cc:cc|cc:cc:cc:cc}% chktex 44
 \toprule
 	\multicolumn{18}{c}{\textbf{testing greek in math mode}}
-\\	\multicolumn{2}{c|}{Base}
-	& \multicolumn{8}{|c|}{Serif}
-	& \multicolumn{8}{|c}{Sans}
+\\	\multicolumn{2}{c|}{base}
+	& \multicolumn{8}{|c|}{serif}
+	& \multicolumn{8}{|c}{sans}
 \\	\multicolumn{2}{c|}{normal}
-	& \multicolumn{2}{|c}{rm} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
-	& \multicolumn{2}{|c}{sf} & \multicolumn{2}{c}{italic} & \multicolumn{2}{c}{bold} & \multicolumn{2}{c}{bf+it}
+	% serif
+	& \multicolumn{2}{|c}{rm}
+	& \multicolumn{2}{c}{italic}
+	& \multicolumn{2}{c}{bold}
+	& \multicolumn{2}{c}{bf+it}
+	% sans
+	& \multicolumn{2}{|c}{sf}
+	& \multicolumn{2}{c}{italic}
+	& \multicolumn{2}{c}{bold}
+	& \multicolumn{2}{c}{bf+it}
 \\
 \midrule% Greek uppercase --------------------------------------------------------------
-\makerow{Α}[bf=𝐀, it=𝛢, bi=𝜜, bsf=𝝖, bisf=𝞐]
+\makerow{Α}[bf=𝚨, it=𝛢, bi=𝜜, bsf=𝝖, bisf=𝞐]
 \makerow{Β}[bf=𝚩, it=𝛣, bi=𝜝, bsf=𝝗, bisf=𝞑]
 \makerow{Γ}[bf=𝚪, it=𝛤, bi=𝜞, bsf=𝝘, bisf=𝞒]
 \makerow{Δ}[bf=𝚫, it=𝛥, bi=𝜟, bsf=𝝙, bisf=𝞓]

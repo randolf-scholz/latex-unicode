@@ -1,24 +1,24 @@
-\documentclass{unittest}
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
+\documentclass{unittest}
 \usepackage{unicode-symbols}
 
-
-\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
+\NewDocumentCommand{\makerow}{m o}{\pgfkeys{/variants, default, #2}%
 	%
-	#1 & \NORMAL{#1}
+	#1 & $\NORMAL{#1}$
 	% serif
-	& \RM{#1}   & \rowRM
-	& \IT{#1}   & \rowIT
-	& \BF{#1}   & \rowBF
-	& \BI{#1}   & \rowBI
+	& $\RM{#1}$   & $\rowRM$
+	& $\IT{#1}$   & $\rowIT$
+	& $\BF{#1}$   & $\rowBF$
+	& $\BI{#1}$   & $\rowBI$
 	% sans
-	& \SF{-}    & \rowSF
-	& \ISF{-}   & \rowISF
-	& \BSF{#1}  & \rowBSF
-	& \BISF{#1} & \rowBISF
+	& $\SF{-}$    & $\rowSF$
+	& $\ISF{-}$   & $\rowISF$
+	& $\BSF{#1}$  & $\rowBSF$
+	& $\BISF{#1}$ & $\rowBISF$
 	%
 	\\%
 }
+
 
 \begin{document}
 \begin{tabular}{cc|cc:cc:cc:cc|cc:cc:cc:cc}% chktex 44

@@ -1,0 +1,32 @@
+\documentclass{unittest}
+\usepackage{unicode-symbols}
+
+% NOTE: We want to test which is the best way to do a tranpose
+\NewDocumentCommand{\T}{}{{\scriptscriptstyle\mathsf{T}}}
+\NewDocumentCommand{\tp}{}{^{\mkern-1.5mu\mathsf{T}}}
+\NewDocumentCommand{\tx}{}{^{\!\mathsf{T}}}
+\NewDocumentCommand{\ty}{}{^{\mkern-1.5mu\mathsf{T}\mkern-1.5mu}}
+\NewDocumentCommand{\tz}{}{^{\kern-0.1em\mathsf{T}\kern-0.1em}}
+\NewDocumentCommand{\REP}{m}{(#1) (#1) (#1)}
+
+\begin{document}
+\begin{tabular}{llll}
+\toprule
+	\verb|T|           & $\REP{u^T v}$  & $\REP{A^T B}$  & $\REP{𝐇^T 𝐗}$
+\\	\verb|\intercal|   & $\REP{u^⊺ v}$  & $\REP{A^⊺ B}$  & $\REP{𝐇^⊺ 𝐗}$
+\\	\verb|\top|        & $\REP{u^⊤ v}$  & $\REP{A^⊤ B}$  & $\REP{𝐇^⊤ 𝐗}$
+\\	\verb|\mathsf|     & $\REP{u^𝖳 v}$  & $\REP{A^𝖳 B}$  & $\REP{𝐇^𝖳 𝐗}$
+\\	\verb|sf+small|    & $\REP{u^\T v}$ & $\REP{A^\T B}$ & $\REP{𝐇^\T 𝐗}$
+\\	\verb|!sf|         & $\REP{u\tp v}$ & $\REP{A\tp B}$ & $\REP{𝐇\tp 𝐗}$
+\\	\verb|!!sf|        & $\REP{u\tx v}$ & $\REP{A\tx B}$ & $\REP{𝐇\tx 𝐗}$
+\\	\verb|!sf!|        & $\REP{u\ty v}$ & $\REP{A\ty B}$ & $\REP{𝐇\ty 𝐗}$
+\\	\verb|!sf!|        & $\REP{u\tz v}$ & $\REP{A\tz B}$ & $\REP{𝐇\tz 𝐗}$
+\\	\midrule
+	\verb|ours|        & $\REP{u𞁀v}$    & $\REP{A𞁀B}$     & $\REP{𝐇𞁀𝐗}$
+\\	\verb|ours|        & $\REP{u⁻𞁀v}$    & $\REP{A⁻𞁀B}$     & $\REP{𝐇⁻𞁀𝐗}$
+\\	& \REP{u\textsuperscript{\textsf{T}}v}
+\\	& \REP{u\textsuperscript{\kern-0.1em\textsf{T}}\kern-0.1emv}
+\\	\bottomrule
+\end{tabular}
+
+\end{document}

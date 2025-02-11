@@ -1,0 +1,18 @@
+\documentclass{unittest}
+\usepackage[stix]{unicode-symbols}
+
+\DeclareMathOperator*{\MyExpectation}{\mathbf{E}}
+\NewDocumentCommand{\E}{}{\MyExpectation\nolimits}
+\DeclareMathOperator{\D}{\mathbf{D}}
+\NewDocumentCommand{\DUP}{m}{(#1) (#1) (#1)}
+
+\everymath{\displaystyle}
+
+\begin{document}
+\begin{tabular}{ll}\toprule
+\DUP{$\lambda \E[x]$} & \DUP{$\lambda\cdot \Eₓ[x]$} \\
+\DUP{$\lambda 𝐄[x]$}  & \DUP{$\lambda\cdot 𝐄ₓ[x]$}  \\
+\DUP{$\lambda 𝔼[x]$}  & \DUP{$\lambda\cdot 𝔼ₓ[x]$}  \\ \midrule
+\DUP{$\lambda \D[f]$} & \DUP{$\lambda\cdot \D f$}   \\ \midrule
+\end{tabular}
+\end{document}

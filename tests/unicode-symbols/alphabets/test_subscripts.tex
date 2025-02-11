@@ -1,37 +1,32 @@
+% SEE: https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
 \documentclass{unittest}
-\usepackage{booktabs}
-\usepackage{multicol}
-
-
-\usepackage{makerow_setup}
 \usepackage{unicode-symbols}
 
-\def\0{\setlength{\fboxsep}{0pt}\fbox{\phantom{X}}}
+\NewDocumentCommand\dummy{}{\setlength{\fboxsep}{0pt}\fbox{\phantom{X}}}
 
-\NewDocumentCommand{\makerow}{m O{}}{%
-\pgfkeys{/makerow, default, #2}% set defaults
-	#1%
-	% math mode
-	& $\0_{#1}$              & \if-\rowSUB\else$\0\rowSUB$\fi
-	& $\0^{#1}$              & \if-\rowSUP\else$\0\rowSUP$\fi
-	& \0\textsubscript{#1}   & \if-\rowSUB\else\0\rowSUB\fi
-	& \0\textsuperscript{#1} & \if-\rowSUP\else\0\rowSUP\fi
-	% end
+\NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
+	%
+	#1
+	%
+	& $\dummy_{#1}$              & \if-\rowSUB\else$\dummy\rowSUB$\fi
+	& $\dummy^{#1}$              & \if-\rowSUP\else$\dummy\rowSUP$\fi
+	& \dummy\textsubscript{#1}   & \if-\rowSUB\else\dummy\rowSUB\fi
+	& \dummy\textsuperscript{#1} & \if-\rowSUP\else\dummy\rowSUP\fi
+	%
 	\\%
 }
 
 
 \begin{document}
-\begin{tabular}{l|ll ll|ll ll}  % chktex 44
+\begin{tabular}{c|ll ll|ll ll}  % chktex 44
 \toprule
 	\multicolumn{1}{c|}{}
 	& \multicolumn{4}{|c|}{\textbf{math mode}}
 	& \multicolumn{4}{|c}{\textbf{text mode}}
-\\ ref
-	& \multicolumn{2}{|c}{sub} & \multicolumn{2}{c|}{sup}
-	& \multicolumn{2}{|c}{sub} & \multicolumn{2}{c}{sub}
-\\
-\midrule% Latin uppercase --------------------------------------------------------------
+\\	char
+	& \multicolumn{2}{|c}{sub} & \multicolumn{2}{c|}{super}
+	& \multicolumn{2}{|c}{sub} & \multicolumn{2}{c}{super}
+\\	\midrule% Latin uppercase --------------------------------------------------------------
 \makerow{A}[sub=-, sup=ᴬ]
 \makerow{B}[sub=-, sup=ᴮ]
 \makerow{C}[sub=-, sup=-]

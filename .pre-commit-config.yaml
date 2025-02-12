@@ -21,25 +21,6 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
         exclude_types: [tsv]
-  # ruff
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.6
-    hooks:
-      - id: ruff-format
-        args: ["--preview"]
-        types_or: [python, pyi]
-      - id: ruff
-        name: ruff-isort
-        args: ["--select", "I", "--fix"]
-        types_or: [python, pyi]
-      - id: ruff
-        types_or: [python, pyi]
-        args: ["--select", "W,E", "--output-format", "concise"]
-  # pyright
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.393
-    hooks:
-      - id: pyright
   # markdownlint
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.44.0
@@ -58,7 +39,7 @@ repos:
       - id: shellcheck
         args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
   - repo: https://github.com/randolf-scholz/latex-hooks.git
-    rev: v0.0.2
+    rev: v0.0.4
     hooks:
       - id: check-separator-length-88
       - id: latex-avoid-def
@@ -67,5 +48,7 @@ repos:
       - id: latex-avoid-legacy-options
       - id: latex-avoid-double-dollar
       - id: latex-avoid-obsolete-packages
+      - id: latex-avoid-makeatletter
+      # - id: latex-avoid-manual-spacing
       - id: chktex
       - id: lacheck

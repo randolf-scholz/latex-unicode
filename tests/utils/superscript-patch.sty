@@ -3,7 +3,6 @@
 % chktex-file 41
 
 % region patch2 ------------------------------------------------------------------------
-\makeatletter
 \let\old@sup=^% save a copy of original ^ (catcode 7)
 \catcode`\^=12% 13 also work!?
 \mathcode`\^="8000% chktex 18
@@ -20,11 +19,9 @@
 		\egroup%
 	\fi\fi%
 }
-\makeatother
 % endregion patch2 ---------------------------------------------------------------------
 
 % region patch1 ------------------------------------------------------------------------
-%\makeatletter
 %\AtBeginDocument{%
 %  \begingroup % save standard superscript definition
 %    \catcode`\^=7
@@ -54,5 +51,4 @@
 %    \fi
 %  \fi}
 %\endgroup
-%\makeatother
 % endregion patch1 ---------------------------------------------------------------------

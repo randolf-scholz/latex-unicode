@@ -489,7 +489,10 @@
 \NewDocumentCommand{\QMARK}{}{\textcolor{unicode@navy}{\textbf{?}}}% ❓ (U+2753: Black Question Mark Ornament)
 % endregion checkmarks -----------------------------------------------------------------
 
-% region aliases -----------------------------------------------------------------------
+
+
+% region aliases/fallbacks -------------------------------------------------------------
+\AtBeginDocument{% Delay definition of aliases until begin document
 % Example: we want ≙ to be substituted by \hateq. stix has \wedgeq, fdsymbol has \hateq.
 %
 % So, in this case we want aliases to be resolved as follows:
@@ -509,9 +512,7 @@
 \ProvideDocumentCommand{\deleq}{}{\triangleq}
 \ProvideDocumentCommand{\defeq}{}{\eqdef}
 \ProvideDocumentCommand{\hateq}{}{\wedgeq}
-% endregion aliases --------------------------------------------------------------------
-
-% region text/math macros --------------------------------------------------------------
+% fallbacks
 \ProvideDocumentCommand{\transpose}{}{\unicode@transpose}
 \ProvideDocumentCommand{\hermitian}{}{\unicode@hermitian}
 \ProvideDocumentCommand{\indep}{}{\unicode@indep}
@@ -558,9 +559,10 @@
 \ProvideDocumentCommand{\smalltriangleup}{}{\unicode@smalltriangleup}
 \ProvideDocumentCommand{\minus}{}{\unicode@minus}
 \ProvideDocumentCommand{\QED}{}{\qedsymbol}% Use stix's \QED if loaded, else use amsthm's \qedsymbol
-\ProvideDocumentCommand{\Question}{}{??}% fallback
-\ProvideDocumentCommand{\Exclam}{}{!!}% fallback
-% endregion text/math macros -----------------------------------------------------------
+\ProvideDocumentCommand{\Question}{}{??}
+\ProvideDocumentCommand{\Exclam}{}{!!}
+}
+% endregion aliases/fallbacks ----------------------------------------------------------
 
 
 

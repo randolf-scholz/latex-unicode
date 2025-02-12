@@ -307,30 +307,30 @@
 
 % region aliases -----------------------------------------------------------------------
 % NOTE: based on Table 2 and Table 3 of symbols-a4.pdf
-\newcommand{\autodagger}{\ifmmode\dagger\else\textdagger\fi}% † also: \dag
-\newcommand{\autoddagger}{\ifmmode\ddagger\else\textdaggerdbl\fi}% ‡ also: \ddag
-\newcommand{\autotimes}{\ifmmode\times\else\texttimes\fi}% ×
-\newcommand{\autoleftarrow}{\ifmmode\leftarrow\else\textleftarrow\fi}% ←
-\newcommand{\autorightarrow}{\ifmmode\rightarrow\else\textrightarrow\fi}% →
-\newcommand{\autodownarrow}{\ifmmode\downarrow\else\textdownarrow\fi}% ↓
-\newcommand{\autouparrow}{\ifmmode\uparrow\else\textuparrow\fi}% ↑
-\newcommand{\autoellipsis}{\ifmmode\ldots\else\textellipsis\fi}% …
-\newcommand{\autorangle}{\ifmmode\rangle\else\textrangle\fi}% ⟩
-\newcommand{\autolangle}{\ifmmode\langle\else\textlangle\fi}% ⟨
-\newcommand{\autoneg}{\ifmmode\neg\else\textlnot\fi}% ¬
-\newcommand{\autodiv}{\ifmmode\div\else\textdiv\fi}% ÷
-\newcommand{\autopm}{\ifmmode\pm\else\textpm\fi}% ±
-% \newcommand{\autobigcirc}{\ifmmode\bigcirc\else\textbigcircle\fi}% ◯ (U+25CB) not the same as ◯ (U+25EF)
-% \newcommand{\autobullet}{\ifmmode\bullet\else\textbullet\fi}% • (U+2022) not the same as ∙ (U+2219)
-% \newcommand{\autocdotp}{\ifmmode\cdot\else\textperiodcentered\fi}% · (U+00B7) not the same as ⋅ (U+22C5)
-\newcommand{\autovert}{\ifmmode\vert\else\textbar\fi}% |
-\newcommand{\autoVert}{\ifmmode\Vert\else\textbardbl\fi}% ‖
-\newcommand{\autoi}{\ifmmode\imath\else\textimath\fi}% ı
-\newcommand{\autoj}{\ifmmode\jmath\else\textjmath\fi}% ȷ
-\newcommand{\automho}{\ifmmode\mho\else\textmho\fi}% ℧
-\newcommand{\autoast}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
-\newcommand{\autosmallplus}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}% ﹢
-\newcommand{\autosmallminus}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}% ﹣
+\NewDocumentCommand{\autodagger}{}{\ifmmode\dagger\else\textdagger\fi}% † also: \dag
+\NewDocumentCommand{\autoddagger}{}{\ifmmode\ddagger\else\textdaggerdbl\fi}% ‡ also: \ddag
+\NewDocumentCommand{\autotimes}{}{\ifmmode\times\else\texttimes\fi}% ×
+\NewDocumentCommand{\autoleftarrow}{}{\ifmmode\leftarrow\else\textleftarrow\fi}% ←
+\NewDocumentCommand{\autorightarrow}{}{\ifmmode\rightarrow\else\textrightarrow\fi}% →
+\NewDocumentCommand{\autodownarrow}{}{\ifmmode\downarrow\else\textdownarrow\fi}% ↓
+\NewDocumentCommand{\autouparrow}{}{\ifmmode\uparrow\else\textuparrow\fi}% ↑
+\NewDocumentCommand{\autoellipsis}{}{\ifmmode\ldots\else\textellipsis\fi}% …
+\NewDocumentCommand{\autorangle}{}{\ifmmode\rangle\else\textrangle\fi}% ⟩
+\NewDocumentCommand{\autolangle}{}{\ifmmode\langle\else\textlangle\fi}% ⟨
+\NewDocumentCommand{\autoneg}{}{\ifmmode\neg\else\textlnot\fi}% ¬
+\NewDocumentCommand{\autodiv}{}{\ifmmode\div\else\textdiv\fi}% ÷
+\NewDocumentCommand{\autopm}{}{\ifmmode\pm\else\textpm\fi}% ±
+% \NewDocumentCommand{\autobigcirc}{}{\ifmmode\bigcirc\else\textbigcircle\fi}% ◯ (U+25CB) not the same as ◯ (U+25EF)
+% \NewDocumentCommand{\autobullet}{}{\ifmmode\bullet\else\textbullet\fi}% • (U+2022) not the same as ∙ (U+2219)
+% \NewDocumentCommand{\autocdotp}{}{\ifmmode\cdot\else\textperiodcentered\fi}% · (U+00B7) not the same as ⋅ (U+22C5)
+\NewDocumentCommand{\autovert}{}{\ifmmode\vert\else\textbar\fi}% |
+\NewDocumentCommand{\autoVert}{}{\ifmmode\Vert\else\textbardbl\fi}% ‖
+\NewDocumentCommand{\autoi}{}{\ifmmode\imath\else\textimath\fi}% ı
+\NewDocumentCommand{\autoj}{}{\ifmmode\jmath\else\textjmath\fi}% ȷ
+\NewDocumentCommand{\automho}{}{\ifmmode\mho\else\textmho\fi}% ℧
+\NewDocumentCommand{\autoast}{}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
+\NewDocumentCommand{\autosmallplus}{}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}% ﹢
+\NewDocumentCommand{\autosmallminus}{}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}% ﹣
 % endregion aliases --------------------------------------------------------------------
 
 
@@ -344,61 +344,61 @@
 % \mathop: operator (\sum, \int, etc.)
 % \mathopen: opening delimiter
 % \mathclose: closing delimiter
-\newcommand{\unicode@smalltriangleup}{}%▵
-\newcommand{\unicode@transpose}{\ifmmode\mkern-1.5mu\mathsf{T}\mkern-1.5mu\else\kern-0.1em\textsf{T}\kern-0.1em\fi}
-\newcommand{\unicode@hermitian}{\ifmmode\mkern-1.5mu\mathsf{H}\mkern-1.5mu\else\kern-0.1em\textsf{H}\kern-0.1em\fi}
+\NewDocumentCommand{\unicode@smalltriangleup}{}{}%▵
+\NewDocumentCommand{\unicode@transpose}{}{\ifmmode\mkern-1.5mu\mathsf{T}\mkern-1.5mu\else\kern-0.1em\textsf{T}\kern-0.1em\fi}
+\NewDocumentCommand{\unicode@hermitian}{}{\ifmmode\mkern-1.5mu\mathsf{H}\mkern-1.5mu\else\kern-0.1em\textsf{H}\kern-0.1em\fi}
 % unary operators
-\newcommand{\unicode@contradiction}{\mathord{\downzigzagarrow}}
+\NewDocumentCommand{\unicode@contradiction}{}{\mathord{\downzigzagarrow}}
 % SEE: https://tex.stackexchange.com/a/655980
 \DeclareMathSymbol\unicode@increment{\mathord}{operators}{\Delta}
-% \newcommand{\unicode@increment}{\mathord{\Delta}}% U+2206
-\newcommand{\unicode@unaryminus}{\mathord{\texttt{-}}}
-\newcommand{\unicode@unaryplus}{\mathord{\texttt{+}}}
+% \NewDocumentCommand{\unicode@increment}{}{\mathord{\Delta}}% U+2206
+\NewDocumentCommand{\unicode@unaryminus}{}{\mathord{\texttt{-}}}
+\NewDocumentCommand{\unicode@unaryplus}{}{\mathord{\texttt{+}}}
 % binary operators
-\newcommand{\unicode@minus}{\mathbin{-}}% force binary
-\newcommand{\unicode@doubleplus}{\mathbin{+\!\!\!+}}% chktex 21
-\newcommand{\unicode@cupdot}{\mathbin{\mathaccent\cdot\cup}}% SEE: https://tex.stackexchange.com/a/91059
+\NewDocumentCommand{\unicode@minus}{}{\mathbin{-}}% force binary
+\NewDocumentCommand{\unicode@doubleplus}{}{\mathbin{+\!\!\!+}}% chktex 21
+\NewDocumentCommand{\unicode@cupdot}{}{\mathbin{\mathaccent\cdot\cup}}% SEE: https://tex.stackexchange.com/a/91059
 % operators
-\newcommand{\unicode@bigcupdot}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% SEE: https://tex.stackexchange.com/a/91059
+\NewDocumentCommand{\unicode@bigcupdot}{}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% SEE: https://tex.stackexchange.com/a/91059
 % relations
-\newcommand{\unicode@bagmember}{\mathrel{\mathsf{E}}}
-\newcommand{\unicode@indep}{\mathrel{\perp\!\!\!\perp}}% chktex 21
+\NewDocumentCommand{\unicode@bagmember}{}{\mathrel{\mathsf{E}}}
+\NewDocumentCommand{\unicode@indep}{}{\mathrel{\perp\!\!\!\perp}}% chktex 21
 % relations overset
-\newcommand{\unicode@eqdef}{\mathrel{\overset{\mathclap{\scriptscriptstyle\textsf{def}}}{=}}}
-\newcommand{\unicode@triangleq}{\mathrel{\overset{\smalltriangleup}{=}}}
-\newcommand{\unicode@exclameq}{\mathrel{\overset{!}{=}}}% not in Unicode!
-\newcommand{\unicode@wedgeq}{\mathrel{\hat{=}}}
-\newcommand{\unicode@questeq}{\mathrel{\overset{?}{=}}}
-\newcommand{\unicode@simneqq}{\mathrel{\mathaccent\sim{\neq}}}
-\newcommand{\unicode@circledequal}{\mathrel{\mathrlap{\bigcirc}=}}
+\NewDocumentCommand{\unicode@eqdef}{}{\mathrel{\overset{\mathclap{\scriptscriptstyle\textsf{def}}}{=}}}
+\NewDocumentCommand{\unicode@triangleq}{}{\mathrel{\overset{\smalltriangleup}{=}}}
+\NewDocumentCommand{\unicode@exclameq}{}{\mathrel{\overset{!}{=}}}% not in Unicode!
+\NewDocumentCommand{\unicode@wedgeq}{}{\mathrel{\hat{=}}}
+\NewDocumentCommand{\unicode@questeq}{}{\mathrel{\overset{?}{=}}}
+\NewDocumentCommand{\unicode@simneqq}{}{\mathrel{\mathaccent\sim{\neq}}}
+\NewDocumentCommand{\unicode@circledequal}{}{\mathrel{\mathrlap{\bigcirc}=}}
 % relations transform
 % SEE: reflectbox: https://tex.stackexchange.com/a/195027
-\newcommand{\unicode@backcong}{\mathrel{\reflectbox{$\cong$}}}
-\newcommand{\unicode@leftsquigarrow}{\mathrel{\reflectbox{$\rightsquigarrow$}}}
-\newcommand{\unicode@longmapsfrom}{\mathrel{\reflectbox{$\longmapsto$}}}
-\newcommand{\unicode@mapsfrom}{\mathrel{\reflectbox{$\mapsto$}}}
-\newcommand{\unicode@mapsdown}{\mathrel{\rotatebox[origin=c]{270}{$\mapsto$}}}
-\newcommand{\unicode@mapsup}{\mathrel{\rotatebox[origin=c]{90}{$\mapsto$}}}
+\NewDocumentCommand{\unicode@backcong}{}{\mathrel{\reflectbox{$\cong$}}}
+\NewDocumentCommand{\unicode@leftsquigarrow}{}{\mathrel{\reflectbox{$\rightsquigarrow$}}}
+\NewDocumentCommand{\unicode@longmapsfrom}{}{\mathrel{\reflectbox{$\longmapsto$}}}
+\NewDocumentCommand{\unicode@mapsfrom}{}{\mathrel{\reflectbox{$\mapsto$}}}
+\NewDocumentCommand{\unicode@mapsdown}{}{\mathrel{\rotatebox[origin=c]{270}{$\mapsto$}}}
+\NewDocumentCommand{\unicode@mapsup}{}{\mathrel{\rotatebox[origin=c]{90}{$\mapsto$}}}
 % relations negated
-\newcommand{\unicode@napprox}{\centernot{\approx}}
-\newcommand{\unicode@niff}{\centernot{\iff}}
-\newcommand{\unicode@nimpliedby}{\centernot{\impliedby}}
-\newcommand{\unicode@nimplies}{\centernot{\implies}}
-\newcommand{\unicode@nni}{\centernot{\ni}}
-\newcommand{\unicode@nsubset}{\centernot{\subset}}
-\newcommand{\unicode@nsupset}{\centernot{\supset}}
-\newcommand{\unicode@nsqsubseteq}{\centernot{\sqsubseteq}}
-\newcommand{\unicode@nsqsupseteq}{\centernot{\sqsupseteq}}
+\NewDocumentCommand{\unicode@napprox}{}{\centernot{\approx}}
+\NewDocumentCommand{\unicode@niff}{}{\centernot{\iff}}
+\NewDocumentCommand{\unicode@nimpliedby}{}{\centernot{\impliedby}}
+\NewDocumentCommand{\unicode@nimplies}{}{\centernot{\implies}}
+\NewDocumentCommand{\unicode@nni}{}{\centernot{\ni}}
+\NewDocumentCommand{\unicode@nsubset}{}{\centernot{\subset}}
+\NewDocumentCommand{\unicode@nsupset}{}{\centernot{\supset}}
+\NewDocumentCommand{\unicode@nsqsubseteq}{}{\centernot{\sqsubseteq}}
+\NewDocumentCommand{\unicode@nsqsupseteq}{}{\centernot{\sqsupseteq}}
 % delimiters
 % NOTE: negative thinspace "\!" is equal to "-3mu"
-\newcommand{\unicode@lParen}{\mathopen{\lparen\mkern-4.5mu\lparen}}
-\newcommand{\unicode@rParen}{\mathclose{\rparen\mkern-4.5mu\rparen}}
-\newcommand{\unicode@lBrace}{\mathopen{\lbrace\mkern-6mu\lbrace}}
-\newcommand{\unicode@rBrace}{\mathclose{\rbrace\mkern-6mu\rbrace}}
-\newcommand{\unicode@lAngle}{\mathopen{\langle\mkern-4.5mu\langle}}
-\newcommand{\unicode@rAngle}{\mathclose{\rangle\mkern-4.5mu\rangle}}
-\newcommand{\unicode@lBrack}{\mathopen{\lbrack\mkern-3mu\lbrack}}
-\newcommand{\unicode@rBrack}{\mathclose{\rbrack\mkern-3mu\rbrack}}
+\NewDocumentCommand{\unicode@lParen}{}{\mathopen{\lparen\mkern-4.5mu\lparen}}
+\NewDocumentCommand{\unicode@rParen}{}{\mathclose{\rparen\mkern-4.5mu\rparen}}
+\NewDocumentCommand{\unicode@lBrace}{}{\mathopen{\lbrace\mkern-6mu\lbrace}}
+\NewDocumentCommand{\unicode@rBrace}{}{\mathclose{\rbrace\mkern-6mu\rbrace}}
+\NewDocumentCommand{\unicode@lAngle}{}{\mathopen{\langle\mkern-4.5mu\langle}}
+\NewDocumentCommand{\unicode@rAngle}{}{\mathclose{\rangle\mkern-4.5mu\rangle}}
+\NewDocumentCommand{\unicode@lBrack}{}{\mathopen{\lbrack\mkern-3mu\lbrack}}
+\NewDocumentCommand{\unicode@rBrack}{}{\mathclose{\rbrack\mkern-3mu\rbrack}}
 % endregion fallbacks ------------------------------------------------------------------
 
 
@@ -459,34 +459,34 @@
 }%
 
 % region new modifiers -----------------------------------------------------------------
-\newcommand*{\romannumber}[1]{%
+\NewDocumentCommand{\romannumber}{m}{%
 \ifmmode\mathrm{\romannumeral#1\relax}%
 \else{\rmfamily\romannumeral#1\relax}\fi%
 }
-\newcommand*{\RomanNumber}[1]{%
+\NewDocumentCommand{\RomanNumber}{m}{%
 \ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
 \else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
 }
-\newcommand{\sans}[1]{\mathsf{#1}}
-\newcommand{\isans}[1]{\mathit{\mathsf{#1}}}
-\newcommand{\bsans}[1]{\boldsymbol{\mathsf{#1}}}
-\newcommand{\bisans}[1]{\boldsymbol{\mathit{\mathsf{#1}}}}
-\newcommand{\circled}[1]{\textcircled{\footnotesize #1}}
-\newcommand{\inftyabove}[1]{\overset{\infty}{#1}}
+\NewDocumentCommand{\sans}{m}{\mathsf{#1}}
+\NewDocumentCommand{\isans}{m}{\mathit{\mathsf{#1}}}
+\NewDocumentCommand{\bsans}{m}{\boldsymbol{\mathsf{#1}}}
+\NewDocumentCommand{\bisans}{m}{\boldsymbol{\mathit{\mathsf{#1}}}}
+\NewDocumentCommand{\circled}{m}{\textcircled{\footnotesize #1}}
+\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
 % endregion new modifiers --------------------------------------------------------------
 
 
 % region checkmarks --------------------------------------------------------------------
 % We use pifont's `\ding` for checkmarks and crosses, there are no good alternatives.
-\newcommand{\cmark}{\text{\ding{51}}}% ✓ (U+2713: Check Mark)
-\newcommand{\qmark}{?}% normal question mark
-\newcommand{\xmark}{\text{\ding{55}}}% ✗ (U+2717: Ballot X)
-\newcommand{\hcmark}{\text{\ding{52}}}% ✔ (U+2714: Heavy Check Mark)
-\newcommand{\hqmark}{\textbf{?}}% bold question mark
-\newcommand{\hxmark}{\text{\ding{56}}}% ✘ (U+2718: Heavy Ballot X)
-\newcommand{\CMARK}{\textcolor{unicode@green}{\textbf{\ding{52}}}}% ✅ (U+2705: White Heavy Check Mark)
-\newcommand{\XMARK}{\textcolor{unicode@crimson}{\textbf{\ding{56}}}}% ❌ (U+274C: Cross Mark)
-\newcommand{\QMARK}{\textcolor{unicode@navy}{\textbf{?}}}% ❓ (U+2753: Black Question Mark Ornament)
+\NewDocumentCommand{\cmark}{}{\text{\ding{51}}}% ✓ (U+2713: Check Mark)
+\NewDocumentCommand{\qmark}{}{?}% normal question mark
+\NewDocumentCommand{\xmark}{}{\text{\ding{55}}}% ✗ (U+2717: Ballot X)
+\NewDocumentCommand{\hcmark}{}{\text{\ding{52}}}% ✔ (U+2714: Heavy Check Mark)
+\NewDocumentCommand{\hqmark}{}{\textbf{?}}% bold question mark
+\NewDocumentCommand{\hxmark}{}{\text{\ding{56}}}% ✘ (U+2718: Heavy Ballot X)
+\NewDocumentCommand{\CMARK}{}{\textcolor{unicode@green}{\textbf{\ding{52}}}}% ✅ (U+2705: White Heavy Check Mark)
+\NewDocumentCommand{\XMARK}{}{\textcolor{unicode@crimson}{\textbf{\ding{56}}}}% ❌ (U+274C: Cross Mark)
+\NewDocumentCommand{\QMARK}{}{\textcolor{unicode@navy}{\textbf{?}}}% ❓ (U+2753: Black Question Mark Ornament)
 % endregion checkmarks -----------------------------------------------------------------
 
 % region aliases -----------------------------------------------------------------------
@@ -501,107 +501,107 @@
 % \ifdefined{\a}\let\uc@impl@canonical=\a\elifdefined\b\let\uc@impl@canonical=\b%
 % \providcommand{\canonical}{\uc@impl@canonical}
 %
-% \providecommand{\mapsup}{\upmapsto}
-% \providecommand{\mapsfrom}{\leftmapsto}
-% \providecommand{\mapsdown}{\downmapsto}
-\providecommand{\downzigzagarrow}{\lightning}
-\providecommand{\approxident}{\triplesim}
-\providecommand{\deleq}{\triangleq}
-\providecommand{\defeq}{\eqdef}
-\providecommand{\hateq}{\wedgeq}
+% \ProvideDocumentCommand{\mapsup}{}{\upmapsto}
+% \ProvideDocumentCommand{\mapsfrom}{}{\leftmapsto}
+% \ProvideDocumentCommand{\mapsdown}{}{\downmapsto}
+\ProvideDocumentCommand{\downzigzagarrow}{}{\lightning}
+\ProvideDocumentCommand{\approxident}{}{\triplesim}
+\ProvideDocumentCommand{\deleq}{}{\triangleq}
+\ProvideDocumentCommand{\defeq}{}{\eqdef}
+\ProvideDocumentCommand{\hateq}{}{\wedgeq}
 % endregion aliases --------------------------------------------------------------------
 
 % region text/math macros --------------------------------------------------------------
-\providecommand{\transpose}{\unicode@transpose}
-\providecommand{\hermitian}{\unicode@hermitian}
-\providecommand{\indep}{\unicode@indep}
-\providecommand{\contradiction}{\unicode@contradiction}
-\providecommand{\wedgeq}{\unicode@wedgeq}
-\providecommand{\triangleq}{\unicode@triangleq}
-\providecommand{\eqdef}{\unicode@eqdef}
-\providecommand{\questeq}{\unicode@questeq}
-\providecommand{\exclameq}{\unicode@exclameq}
-\providecommand{\nimplies}{\unicode@nimplies}
-\providecommand{\nimpliedby}{\unicode@nimpliedby}
-\providecommand{\niff}{\unicode@niff}
-\providecommand{\napprox}{\unicode@napprox}
-\providecommand{\unaryplus}{\unicode@unaryplus}
-\providecommand{\unaryminus}{\unicode@unaryminus}
-\providecommand{\smallplus}{\autosmallplus}
-\providecommand{\smallminus}{\autosmallminus}
-\providecommand{\increment}{\unicode@increment}
-\providecommand{\bagmember}{\unicode@bagmember}
-\providecommand{\doubleplus}{\unicode@doubleplus}
-\providecommand{\rParen}{\unicode@rParen}
-\providecommand{\lParen}{\unicode@lParen}
-\providecommand{\rBrace}{\unicode@rBrace}
-\providecommand{\lBrace}{\unicode@lBrace}
-\providecommand{\rAngle}{\unicode@rAngle}
-\providecommand{\lAngle}{\unicode@lAngle}
-\providecommand{\rBrack}{\unicode@rBrack}
-\providecommand{\lBrack}{\unicode@lBrack}
-\providecommand{\nni}{\unicode@nni}
-\providecommand{\nsubset}{\unicode@nsubset}
-\providecommand{\nsupset}{\unicode@nsupset}
-\providecommand{\cupdot}{\unicode@cupdot}
-\providecommand{\bigcupdot}{\unicode@bigcupdot}
-\providecommand{\nsqsubseteq}{\unicode@nsqsubseteq}
-\providecommand{\nsqsupseteq}{\unicode@nsqsupseteq}
-\providecommand{\leftsquigarrow}{\unicode@leftsquigarrow}
-\providecommand{\longmapsfrom}{\unicode@longmapsfrom}
-\providecommand{\circledequal}{\unicode@circledequal}
-\providecommand{\simneqq}{\unicode@simneqq}
-\providecommand{\backcong}{\unicode@backcong}
-\providecommand{\mapsfrom}{\unicode@mapsfrom}
-\providecommand{\mapsdown}{\unicode@mapsdown}
-\providecommand{\mapsup}{\unicode@mapsup}
-\providecommand{\smalltriangleup}{\unicode@smalltriangleup}
-\providecommand{\minus}{\unicode@minus}
-\providecommand{\QED}{\qedsymbol}% Use stix's \QED if loaded, else use amsthm's \qedsymbol
-\providecommand{\Question}{??}% fallback
-\providecommand{\Exclam}{!!}% fallback
+\ProvideDocumentCommand{\transpose}{}{\unicode@transpose}
+\ProvideDocumentCommand{\hermitian}{}{\unicode@hermitian}
+\ProvideDocumentCommand{\indep}{}{\unicode@indep}
+\ProvideDocumentCommand{\contradiction}{}{\unicode@contradiction}
+\ProvideDocumentCommand{\wedgeq}{}{\unicode@wedgeq}
+\ProvideDocumentCommand{\triangleq}{}{\unicode@triangleq}
+\ProvideDocumentCommand{\eqdef}{}{\unicode@eqdef}
+\ProvideDocumentCommand{\questeq}{}{\unicode@questeq}
+\ProvideDocumentCommand{\exclameq}{}{\unicode@exclameq}
+\ProvideDocumentCommand{\nimplies}{}{\unicode@nimplies}
+\ProvideDocumentCommand{\nimpliedby}{}{\unicode@nimpliedby}
+\ProvideDocumentCommand{\niff}{}{\unicode@niff}
+\ProvideDocumentCommand{\napprox}{}{\unicode@napprox}
+\ProvideDocumentCommand{\unaryplus}{}{\unicode@unaryplus}
+\ProvideDocumentCommand{\unaryminus}{}{\unicode@unaryminus}
+\ProvideDocumentCommand{\smallplus}{}{\autosmallplus}
+\ProvideDocumentCommand{\smallminus}{}{\autosmallminus}
+\ProvideDocumentCommand{\increment}{}{\unicode@increment}
+\ProvideDocumentCommand{\bagmember}{}{\unicode@bagmember}
+\ProvideDocumentCommand{\doubleplus}{}{\unicode@doubleplus}
+\ProvideDocumentCommand{\rParen}{}{\unicode@rParen}
+\ProvideDocumentCommand{\lParen}{}{\unicode@lParen}
+\ProvideDocumentCommand{\rBrace}{}{\unicode@rBrace}
+\ProvideDocumentCommand{\lBrace}{}{\unicode@lBrace}
+\ProvideDocumentCommand{\rAngle}{}{\unicode@rAngle}
+\ProvideDocumentCommand{\lAngle}{}{\unicode@lAngle}
+\ProvideDocumentCommand{\rBrack}{}{\unicode@rBrack}
+\ProvideDocumentCommand{\lBrack}{}{\unicode@lBrack}
+\ProvideDocumentCommand{\nni}{}{\unicode@nni}
+\ProvideDocumentCommand{\nsubset}{}{\unicode@nsubset}
+\ProvideDocumentCommand{\nsupset}{}{\unicode@nsupset}
+\ProvideDocumentCommand{\cupdot}{}{\unicode@cupdot}
+\ProvideDocumentCommand{\bigcupdot}{}{\unicode@bigcupdot}
+\ProvideDocumentCommand{\nsqsubseteq}{}{\unicode@nsqsubseteq}
+\ProvideDocumentCommand{\nsqsupseteq}{}{\unicode@nsqsupseteq}
+\ProvideDocumentCommand{\leftsquigarrow}{}{\unicode@leftsquigarrow}
+\ProvideDocumentCommand{\longmapsfrom}{}{\unicode@longmapsfrom}
+\ProvideDocumentCommand{\circledequal}{}{\unicode@circledequal}
+\ProvideDocumentCommand{\simneqq}{}{\unicode@simneqq}
+\ProvideDocumentCommand{\backcong}{}{\unicode@backcong}
+\ProvideDocumentCommand{\mapsfrom}{}{\unicode@mapsfrom}
+\ProvideDocumentCommand{\mapsdown}{}{\unicode@mapsdown}
+\ProvideDocumentCommand{\mapsup}{}{\unicode@mapsup}
+\ProvideDocumentCommand{\smalltriangleup}{}{\unicode@smalltriangleup}
+\ProvideDocumentCommand{\minus}{}{\unicode@minus}
+\ProvideDocumentCommand{\QED}{}{\qedsymbol}% Use stix's \QED if loaded, else use amsthm's \qedsymbol
+\ProvideDocumentCommand{\Question}{}{??}% fallback
+\ProvideDocumentCommand{\Exclam}{}{!!}% fallback
 % endregion text/math macros -----------------------------------------------------------
 
 
 
 % region greek macros ------------------------------------------------------------------
 % region greek uppercase macros --------------------------------------------------------
-\newcommand{\Alpha}  {A}
-\newcommand{\Beta}   {B}
-\newcommand{\Epsilon}{E}
-\newcommand{\Zeta}   {Z}
-\newcommand{\Eta}    {H}
-\newcommand{\Iota}   {I}
-\newcommand{\Kappa}  {K}
-\newcommand{\Mu}     {M}
-\newcommand{\Nu}     {N}
-\newcommand{\Omicron}{O}
-\newcommand{\Rho}    {P}
-\newcommand{\Tau}    {T}
-\newcommand{\Chi}    {X}
-\newcommand{\Heta}   {\Eta}
+\NewDocumentCommand{\Alpha}  {}{A}
+\NewDocumentCommand{\Beta}   {}{B}
+\NewDocumentCommand{\Epsilon}{}{E}
+\NewDocumentCommand{\Zeta}   {}{Z}
+\NewDocumentCommand{\Eta}    {}{H}
+\NewDocumentCommand{\Iota}   {}{I}
+\NewDocumentCommand{\Kappa}  {}{K}
+\NewDocumentCommand{\Mu}     {}{M}
+\NewDocumentCommand{\Nu}     {}{N}
+\NewDocumentCommand{\Omicron}{}{O}
+\NewDocumentCommand{\Rho}    {}{P}
+\NewDocumentCommand{\Tau}    {}{T}
+\NewDocumentCommand{\Chi}    {}{X}
+\NewDocumentCommand{\Heta}   {}{\Eta}
 % endregion greek uppercase macros -----------------------------------------------------
 
 % region greek lowercase macros --------------------------------------------------------
-\newcommand{\omicron}{o}
-\newcommand{\heta}   {\eta} % used for bold short (name conflict Beta)
+\NewDocumentCommand{\omicron}{}{o}
+\NewDocumentCommand{\heta}   {}{\eta} % used for bold short (name conflict Beta)
 % endregion greek lowercase macros -----------------------------------------------------
 
 % region greek shorthand macros --------------------------------------------------------
-\newcommand{\eps}   {\epsilon}
-\newcommand{\Eps}   {\Epsilon}
-\newcommand{\ups}   {\upsilon}
-\newcommand{\Ups}   {\Upsilon}
-\newcommand{\omi}   {\omicron}
-\newcommand{\lam}   {\lambda}
-\newcommand{\Lam}   {\Lambda}
-\newcommand{\veps}  {\varepsilon} % ϵ vs ε
-\newcommand{\vkappa}{\varkappa} % κ vs ϰ
-\newcommand{\vphi}  {\varphi} % ϕ vs φ
-\newcommand{\vtheta}{\vartheta} % θ vs ϑ
-\newcommand{\vpi}   {\varpi}% π vs ϖ
-\newcommand{\vrho}  {\varrho} % ρ vs ϱ
-\newcommand{\vsigma}{\varsigma} % σ vs ς
+\NewDocumentCommand{\eps}   {}{\epsilon}
+\NewDocumentCommand{\Eps}   {}{\Epsilon}
+\NewDocumentCommand{\ups}   {}{\upsilon}
+\NewDocumentCommand{\Ups}   {}{\Upsilon}
+\NewDocumentCommand{\omi}   {}{\omicron}
+\NewDocumentCommand{\lam}   {}{\lambda}
+\NewDocumentCommand{\Lam}   {}{\Lambda}
+\NewDocumentCommand{\veps}  {}{\varepsilon} % ϵ vs ε
+\NewDocumentCommand{\vkappa}{}{\varkappa} % κ vs ϰ
+\NewDocumentCommand{\vphi}  {}{\varphi} % ϕ vs φ
+\NewDocumentCommand{\vtheta}{}{\vartheta} % θ vs ϑ
+\NewDocumentCommand{\vpi}   {}{\varpi}% π vs ϖ
+\NewDocumentCommand{\vrho}  {}{\varrho} % ρ vs ϱ
+\NewDocumentCommand{\vsigma}{}{\varsigma} % σ vs ς
 % endregion greek shorthand macros -----------------------------------------------------
 % endregion greek macros ---------------------------------------------------------------
 % endregion public interface ===========================================================

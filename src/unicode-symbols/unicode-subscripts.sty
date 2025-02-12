@@ -33,22 +33,22 @@
 
 % region globals and helper functions --------------------------------------------------
 % global subscript list variable
-\newcommand{\usubscript@start}{\relax}%  marker for the start of a subscript
-\newcommand{\usubscript@list@reset}{\let\usubscript@list=\usubscript@start}
-\newcommand{\usubscript@list@append}[1]{\edef\usubscript@list{\unexpanded\expandafter{\usubscript@list#1}}}
+\NewDocumentCommand{\usubscript@start}{}{\relax}%  marker for the start of a subscript
+\NewDocumentCommand{\usubscript@list@reset}{}{\let\usubscript@list=\usubscript@start}
+\NewDocumentCommand{\usubscript@list@append}{m}{\edef\usubscript@list{\unexpanded\expandafter{\usubscript@list#1}}}
 \usubscript@list@reset% initialize the list
 
 
 \ifusubscript@debug
 	% Prints the given message if the debug flag is set.
-	\newcommand{\usubscript@log}[1]{\PackageInfo{subscript}{#1}}
+	\NewDocumentCommand{\usubscript@log}{m}{\PackageInfo{subscript}{#1}}
 \else
 	% Does nothing if the debug flag is not set.
-	\newcommand{\usubscript@log}[1]{}
+	\NewDocumentCommand{\usubscript@log}{m}{}
 \fi
 
 
-\newcommand{\usubscript@getfirsttok}[2]{%
+\NewDocumentCommand{\usubscript@getfirsttok}{m m}{%
 %
 % stores the first token of #2 in #1
 %
@@ -66,7 +66,7 @@
 
 
 % region public interface --------------------------------------------------------------
-\newcommand{\subscript}[1]{%
+\NewDocumentCommand{\subscript}{m}{%
 %
 % 1. If we are already in a subscript, \subscript appends the given tokens to the \usubscript@list
 %    Else, it resets the \subscriptlist
@@ -91,7 +91,7 @@
 
 
 % region private implementation --------------------------------------------------------
-\newcommand{\usubscript@check}[1]{%
+\NewDocumentCommand{\usubscript@check}{m}{%
 %
 % Test whether to terminate the subscript
 %
@@ -106,7 +106,7 @@
 }
 
 
-\newcommand{\usubscript@finalize}{%
+\NewDocumentCommand{\usubscript@finalize}{}{%
 %
 % Terminate the subscript and insert the result
 %
@@ -124,7 +124,7 @@
 }
 
 
-\newcommand{\usubscript@check@successor@pdftex}{%
+\NewDocumentCommand{\usubscript@check@successor@pdftex}{}{%
 %
 % There are 2 cases we consider:
 % 1. The next token is a subscript, in which case we continue the process.
@@ -155,7 +155,7 @@
 }%
 
 
-\newcommand{\usubscript@check@unicode@four}[5]{% grabs 1+4 tokens
+\NewDocumentCommand{\usubscript@check@unicode@four}{m m m m m}{% grabs 1+4 tokens
 %
 \usubscript@log{>>> Expand Unicode Quadruplet}%
 %
@@ -174,7 +174,7 @@
 }
 
 
-\newcommand{\usubscript@check@unicode@three}[4]{% grabs 1+3 tokens
+\NewDocumentCommand{\usubscript@check@unicode@three}{m m m m}{% grabs 1+3 tokens
 %
 \usubscript@log{>>> Expand Unicode Triplet}%
 %
@@ -193,7 +193,7 @@
 }
 
 
-\newcommand{\usubscript@check@unicode@two}[3]{% grabs 1+2 tokens
+\NewDocumentCommand{\usubscript@check@unicode@two}{m m m}{% grabs 1+2 tokens
 %
 \usubscript@log{>>> Expand Unicode Duplet}%
 %

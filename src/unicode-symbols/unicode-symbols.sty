@@ -390,14 +390,15 @@
 \newcommand{\unicode@nsqsubseteq}{\centernot{\sqsubseteq}}
 \newcommand{\unicode@nsqsupseteq}{\centernot{\sqsupseteq}}
 % delimiters
-\newcommand{\unicode@rParen}{\mathclose{)\mkern-4.5mu)}}% chktex 10
-\newcommand{\unicode@lParen}{\mathopen{(\mkern-4.5mu(}}% chktex 10 chktex 36
-\newcommand{\unicode@rBrace}{\mathclose{\}\mkern-6mu\}}}% NOTE: \!=-3mu
-\newcommand{\unicode@lBrace}{\mathopen{\{\mkern-6mu\{}}% NOTE: \!=-3mu
-\newcommand{\unicode@rAngle}{\mathclose{\rangle\mkern-4.5mu\rangle}}
+% NOTE: negative thinspace "\!" is equal to "-3mu"
+\newcommand{\unicode@lParen}{\mathopen{\lparen\mkern-4.5mu\lparen}}
+\newcommand{\unicode@rParen}{\mathclose{\rparen\mkern-4.5mu\rparen}}
+\newcommand{\unicode@lBrace}{\mathopen{\lbrace\mkern-6mu\lbrace}}
+\newcommand{\unicode@rBrace}{\mathclose{\rbrace\mkern-6mu\rbrace}}
 \newcommand{\unicode@lAngle}{\mathopen{\langle\mkern-4.5mu\langle}}
-\newcommand{\unicode@rBrack}{\mathclose{]\mkern-3mu]}}% chktex 15
-\newcommand{\unicode@lBrack}{\mathopen{[\mkern-3mu[}}% chktex 15
+\newcommand{\unicode@rAngle}{\mathclose{\rangle\mkern-4.5mu\rangle}}
+\newcommand{\unicode@lBrack}{\mathopen{\lbrack\mkern-3mu\lbrack}}
+\newcommand{\unicode@rBrack}{\mathclose{\rbrack\mkern-3mu\rbrack}}
 % endregion fallbacks ------------------------------------------------------------------
 
 

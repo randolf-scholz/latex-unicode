@@ -6,8 +6,8 @@ _*/
 !.vscode/
 
 # test results
-**/dev/*.pdf
-**/tests/*.pdf
+**/dev/**/*.pdf
+**/tests/**/*.pdf
 # drawio files
 *.drawio.bkp
 *.drawio.dtmp

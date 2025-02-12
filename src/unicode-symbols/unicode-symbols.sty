@@ -329,11 +329,11 @@
 \newcommand{\autoj}{\ifmmode\jmath\else\textjmath\fi}% ȷ
 \newcommand{\automho}{\ifmmode\mho\else\textmho\fi}% ℧
 \newcommand{\autoast}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
+\newcommand{\autosmallplus}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}% ﹢
+\newcommand{\autosmallminus}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}% ﹣
 % endregion aliases --------------------------------------------------------------------
 
 
-\newcommand{\autosmallplus}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}
-\newcommand{\autosmallminus}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}
 
 % region fallbacks ---------------------------------------------------------------------
 % NOTE: These only emulate characters, but are not real unicode glyphs.
@@ -361,7 +361,6 @@
 % operators
 \newcommand{\unicode@bigcupdot}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% SEE: https://tex.stackexchange.com/a/91059
 % relations
-% SEE: reflectbox: https://tex.stackexchange.com/a/195027
 \newcommand{\unicode@bagmember}{\mathrel{\mathsf{E}}}
 \newcommand{\unicode@indep}{\mathrel{\perp\!\!\!\perp}}% chktex 21
 % relations overset
@@ -373,6 +372,7 @@
 \newcommand{\unicode@simneqq}{\mathrel{\mathaccent\sim{\neq}}}
 \newcommand{\unicode@circledequal}{\mathrel{\mathrlap{\bigcirc}=}}
 % relations transform
+% SEE: reflectbox: https://tex.stackexchange.com/a/195027
 \newcommand{\unicode@backcong}{\mathrel{\reflectbox{$\cong$}}}
 \newcommand{\unicode@leftsquigarrow}{\mathrel{\reflectbox{$\rightsquigarrow$}}}
 \newcommand{\unicode@longmapsfrom}{\mathrel{\reflectbox{$\longmapsto$}}}

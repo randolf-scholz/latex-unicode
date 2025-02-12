@@ -6,6 +6,8 @@ export ROOT_DIR := `git rev-parse --show-toplevel`
 export TEST_DIR := ROOT_DIR + "/tests"
 export TEXMF_DIR := "texmf"
 export DEV_DIR := ROOT_DIR + "/dev"
+# use the C locale for numeric formatting
+export LC_NUMERIC := "C"
 
 default:
   @just --list
@@ -124,6 +126,8 @@ test $case="*":  # run all tests
     # echo "Current directory: $PWD"
     # cd "$TEST_DIR" || exit 1
     # echo "Current directory: $PWD"
+    # start the timer
+    start_time=$(date +%s.%N)
 
     # run the tests in parallel
     pids=()
@@ -138,9 +142,14 @@ test $case="*":  # run all tests
         wait "$pid" || ((fail_count++))
     done
 
+    # stop the timer
+    end_time=$(date +%s.%N)
+    runtime=$(echo "$end_time - $start_time" | bc)
+
     total=${#pids[@]}
     pass_count=$(( total - fail_count ))
     echo "$pass_count/$total passed"
+    printf "Total runtime: %.1f seconds\n" "$runtime"
 
     # Optionally, exit with non-zero if any test failed
     exit "$fail_count"

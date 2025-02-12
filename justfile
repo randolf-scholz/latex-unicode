@@ -1,4 +1,5 @@
 # Define the default task
+export NAME := "unicode-symbols"
 export BUILD_DIR := ".build"
 export RESULT_DIR := ".results"
 export ROOT_DIR := `git rev-parse --show-toplevel`
@@ -8,6 +9,7 @@ export DEV_DIR := ROOT_DIR + "/dev"
 
 default:
   @just --list
+
 
 install:  # install the LaTeX package
     cp -r src/* "$(kpsewhich -var-value TEXMFHOME)/tex/latex/"
@@ -26,23 +28,22 @@ test_setup:  # create the build and result directories
     rm -rf "{{TEST_DIR}}/{{RESULT_DIR}}"
     rm -rf "{{TEST_DIR}}/{{TEXMF_DIR}}"
     rm -rf "{{ROOT_DIR}}/{{TEXMF_DIR}}"
+    # remove pdf files from the test and dev directory
+    find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
+    find "{{DEV_DIR}}" -type f -name "*.pdf" -delete
     # create the test directories
     mkdir -p "{{TEST_DIR}}/{{BUILD_DIR}}"
     mkdir -p "{{TEST_DIR}}/{{RESULT_DIR}}"
     mkdir -p "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex"
     mkdir -p "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex"
-    # simlink all files from src/ to tests/texmf/tex/latex
+    # simlink all files from src/ to texmf/
     ln -sr "{{ROOT_DIR}}/src/"* "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    # simlink all files from src/ to texmf/tex/latex
     ln -sr "{{ROOT_DIR}}/src/"* "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    # simlink tests/utils to tests/texmf/tex/latex
+    # simlink tests/utils to texmf/
     ln -sr "{{ROOT_DIR}}/tests/utils" "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    # simlink tests/utils to texmf/tex/latex
     ln -sr "{{ROOT_DIR}}/tests/utils" "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    # remove pdf files from the test directory
-    find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
 
-# [no-cd]
+
 [no-exit-message]
 [working-directory: 'tests']  # FIXME: doesn't seem to support {{TEST_DIR}}
 test_compile $file $compiler:

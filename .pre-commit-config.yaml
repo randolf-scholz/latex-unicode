@@ -69,4 +69,3 @@ repos:
       - id: latex-avoid-obsolete-packages
       - id: chktex
       - id: lacheck
-        exclude: tests/

@@ -5,17 +5,16 @@
 \ProvidesClass{unittest}[2024-12-13 Unit test class]
 \tracinglostchars=3% error if a glyph is missing
 \errorcontextlines=5% <-- useful for debugging
-\LoadClass{standalone}
-% load newunicodechar package with verbose
-\RequirePackage[verbose]{newunicodechar}
-\RequirePackage{booktabs}
-\RequirePackage{multicol}
-\usepackage{arydshln}
 
+\LoadClass{standalone}
+\RequirePackage[verbose]{newunicodechar}
+\RequirePackage{booktabs,multicol,arydshln}
+
+\NewDocumentCommand\Meaning{m}{\safe@strip@prefix{\meaning#1}}
+\NewDocumentCommand\ShowFont{}{\fontname\font}
 
 % TODO: Add reproducible build settings
 % SEE: https://tex.stackexchange.com/questions/229605
-
 
 \AtBeginDocument{%
 %
@@ -61,8 +60,6 @@
 \ProvideDocumentCommand\BFRAK{m}{\ifmmode\mathbffrak{#1}\else\textbffrak{#1}\fi}
 %
 }
-
-
 
 
 \RequirePackage{pgfkeys}

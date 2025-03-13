@@ -253,17 +253,6 @@
 \fi%
 % endregion apply patches --------------------------------------------------------------
 
-% TODO: fix and use this command
-\NewDocumentCommand{\unicode@makealias}{m O{} O{} O{} m}{%
-% Create alias for existing command. Up to 3 options can be provided.
-% \unicode@makealias{\alias}[\option1][\option2][\option3]{\fallback}
-\ifdefined{#2}\let#1=#2%
-\else\ifdefined{#3}\let#1=#3%
-\else\ifdefined{#4}\let#1=#4%
-\else\providecommand{#1}{#5}%
-\fi\fi\fi%
-}
-
 % custom colors
 \definecolor{unicode@green}{RGB}{00, 79, 00}% identical to svgname "dark green" #004F00
 \definecolor{unicode@red}{RGB}{79, 00, 00}% identical to svgname "dark red"  #4F0000

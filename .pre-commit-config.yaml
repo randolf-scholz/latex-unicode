@@ -52,3 +52,4 @@ repos:
       # - id: latex-avoid-manual-spacing
       - id: chktex
       - id: lacheck
+        exclude: 'test_single_char_commands\.tex'

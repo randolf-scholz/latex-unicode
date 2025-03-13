@@ -1,0 +1,139 @@
+\documentclass{standalone}%
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{multicol}
+
+\makeatletter
+\NewDocumentCommand{\safestrip}{m}{%
+%
+% Safe version of the strip@prefix command
+% If the input is empty, it returns empty
+%
+\edef\@temp{\expandafter\strip@prefix#1>}% chktex 41
+% The temp is <<\meaning\temp>>%
+% check if \temp is empty
+\ifx\@temp\@empty%
+	#1%
+\else%
+	\expandafter\strip@prefix#1% chktex 41
+\fi
+}
+\makeatother
+
+\NewDocumentCommand{\row}{m v o o}{%
+	\texttt{\string#1}
+&	\ifdefined#1%
+		\texttt{\string#2}={}\frame{#3}{}%
+	\else
+		\meaning#1
+	\fi%
+&   \IfValueT{#4}{#4}%
+&	\ifdefined#1\safestrip{\meaning#1\relax}\fi%
+}
+
+
+\begin{document}
+\begin{tabular}{llll}
+\\	\toprule
+\\	\textbf{Command} & \textbf{Example} & \textbf{Meaning} & \textbf{Macro}
+\\	\midrule\multicolumn{3}{c}{Latin uppercase}% -------------------------------
+\\	\row{\a} {\a.x}        [\a.x]
+\\	\row{\b} {\b{x}}       [\b{x}]
+\\	\row{\c} {\c{x}}       [\c{x}]
+\\	\row{\d} {\d{x}}       [\d{x}]
+\\	\row{\e} {}            []
+\\	\row{\f} {}            []
+\\	\row{\g} {}            []
+\\	\row{\h} {}            []
+\\	\row{\i} {\i}          [\i]
+\\	\row{\j} {\j}          [\j]
+\\	\row{\k} {\k{x}}       [\k{x}]
+\\	\row{\l} {\l}          [\l]
+\\	\row{\m} {}            []
+\\	\row{\n} {}            []
+\\	\row{\o} {\o}          [\o]
+\\	\row{\p} {}            []
+\\	\row{\q} {}            []
+\\	\row{\r} {\r{x}}       [\r{x}]
+\\	\row{\s} {}            []
+\\	\row{\t} {\t{x}}       [\t{x}]
+\\	\row{\u} {\u{x}}       [\u{x}]
+\\	\row{\v} {\v{x}}       [\v{x}]
+\\	\row{\w} {}            []
+\\	\row{\x} {}            []
+\\	\row{\y} {}            []
+\\	\row{\z} {}            []
+\\	\midrule\multicolumn{3}{c}{Latin lowercase}% -------------------------------
+\\	\row{\A} {}       []
+\\	\row{\B} {}       []
+\\	\row{\C} {}       []
+\\	\row{\D} {}       []
+\\	\row{\E} {}       []
+\\	\row{\F} {}       []
+\\	\row{\G} {}       []
+\\	\row{\H} {\H{x}}  [\H{x}]
+\\	\row{\I} {}       []
+\\	\row{\J} {}       []
+\\	\row{\K} {}       []
+\\	\row{\L} {\L}     [\L]
+\\	\row{\M} {}       []
+\\	\row{\N} {}       []
+\\	\row{\O} {\O}     [\O]
+\\	\row{\P} {\P}     [\P]
+\\	\row{\Q} {}       []
+\\	\row{\R} {}       []
+\\	\row{\S} {\S}     [\S]
+\\	\row{\T} {}       []
+\\	\row{\U} {}       []
+\\	\row{\V} {}       []
+\\	\row{\W} {}       []
+\\	\row{\X} {}       []
+\\	\row{\Y} {}       []
+\\	\row{\Z} {}       []
+\\	\midrule\multicolumn{3}{c}{digits}% ----------------------------------------
+\\	\row{\0} {}       []
+\\	\row{\1} {}       []
+\\	\row{\2} {}       []
+\\	\row{\3} {}       []
+\\	\row{\4} {}       []
+\\	\row{\5} {}       []
+\\	\row{\6} {}       []
+\\	\row{\7} {}       []
+\\	\row{\8} {}       []
+\\	\row{\9} {}       []
+\\	\midrule\multicolumn{3}{c}{punctuation}% -----------------------------------
+\\	\row{\_} {\_}      [\_]       []
+\\	\row{\-} {\-}      []         [hyphen (line break)]
+\\	\row{\,} {x\,x}    [x\,x]     []
+\\	\row{\;} {x\;x}    [x\;x]     []
+\\	\row{\:} {x\:x}    [x\:x]     []
+\\	\row{\!} {x\!x}    [x\!x]     []
+\\	\row{\?} {}        []         []
+\\	\row{\.} {\.x}     [\.x]      []
+\\	\row{\'} {\'x}     [\'x]      []
+\\	\row{\"} {\"x}     [\"x]      []
+\\	\row{\(} {\(}      []         [begin math]
+\\	\row{\)} {\)}      []         [end math]
+\\	\row{\[} {\[}      []         [begin math]
+\\	\row{\]} {\]}      []         [end math]
+\\	\row{\{} |\{|      [$\{$]     []
+\\	\row{\}} |\}|      [$\}$]     []
+\\	\row{\@} {NN\@: x} [NN\@: x]  [EOS spacing]
+\\	\row{\*} {\*}      [\*]       [times (line break)]
+\\	\row{\/} {\/}      []         [italic correction]% chktex 4
+\\	\row{\\} {\\}      []         [line break]
+\\	\row{\&} {\&}      [\&]       []
+\\	\row{\#} {\#}      [\#]       []
+\\	\row{\%} {\%}      [\%]       []
+\\	\row{\`} {\`x}     [\`x]      []
+\\	\row{\^} {\^x}     [\^x]      []
+\\	\row{\+} {}        []         []
+\\	\row{\<} {}        []         []
+\\	\row{\=} {\=x}     [\=x]      []
+\\	\row{\>} {\>}      [\>]       []
+\\	\row{\|} {$\|$}    [$\|$]     []
+\\	\row{\~} {\~x}     [\~x]      []
+\\	\row{\$} {\$}      [\$]       []
+\\	\bottomrule
+\end{tabular}
+\end{document}

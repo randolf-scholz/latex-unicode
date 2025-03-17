@@ -341,11 +341,11 @@
 % SEE: https://tex.stackexchange.com/a/655980
 \DeclareMathSymbol\unicode@increment{\mathord}{operators}{\Delta}
 % \NewDocumentCommand{\unicode@increment}{}{\mathord{\Delta}}% U+2206
-\NewDocumentCommand{\unicode@unaryminus}{}{\mathord{\texttt{-}}}
-\NewDocumentCommand{\unicode@unaryplus}{}{\mathord{\texttt{+}}}
+\NewDocumentCommand{\unicode@unaryminus}{}{\ifmmode\mathord{\mathtt{-}}\else\texttt{-}\fi}
+\NewDocumentCommand{\unicode@unaryplus}{}{\ifmmode\mathord{\mathtt{+}}\else\texttt{+}\fi}
 % binary operators
 \NewDocumentCommand{\unicode@minus}{}{\mathbin{-}}% force binary
-\NewDocumentCommand{\unicode@doubleplus}{}{\mathbin{+\!\!\!+}}% chktex 21
+\NewDocumentCommand{\unicode@doubleplus}{}{\mathbin{+\!\!\!+}}% ⧺ (U+29FA) % chktex 21
 \NewDocumentCommand{\unicode@cupdot}{}{\mathbin{\mathaccent\cdot\cup}}% SEE: https://tex.stackexchange.com/a/91059
 % operators
 \NewDocumentCommand{\unicode@bigcupdot}{}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% SEE: https://tex.stackexchange.com/a/91059
@@ -353,7 +353,7 @@
 \NewDocumentCommand{\unicode@bagmember}{}{\mathrel{\mathsf{E}}}
 \NewDocumentCommand{\unicode@indep}{}{\mathrel{\perp\!\!\!\perp}}% chktex 21
 % relations overset
-\NewDocumentCommand{\unicode@eqdef}{}{\mathrel{\overset{\mathclap{\scriptscriptstyle\textsf{def}}}{=}}}
+\NewDocumentCommand{\unicode@eqdef}{}{\mathrel{\overset{\mathclap{\scriptscriptstyle\mathsf{def}}}{=}}}
 \NewDocumentCommand{\unicode@triangleq}{}{\mathrel{\overset{\smalltriangleup}{=}}}
 \NewDocumentCommand{\unicode@exclameq}{}{\mathrel{\overset{!}{=}}}% not in Unicode!
 \NewDocumentCommand{\unicode@wedgeq}{}{\mathrel{\hat{=}}}

@@ -135,7 +135,7 @@
 % load lmodern to get rid of font shape warning
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
 \RequirePackage{dsfont}% provides \mathds, best looking \mathbb
-\RequirePackage{pifont}% used for checkmark and xmark
+\RequirePackage{pifont}% used for \checkmark and \xmark
 \RequirePackage{etoolbox}
 \RequirePackage{centernot}
 \RequirePackage{xcolor}
@@ -260,41 +260,84 @@
 \definecolor{unicode@navy}{RGB}{00, 00, 128}% identical to svgname "navy" #000080
 
 % region font families -----------------------------------------------------------------
-\NewDocumentCommand\unicode@normal{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+% NOTE: automatic variants
+\ProvideDocumentCommand{\textbfit}{m}{\textbf{\textit{#1}}}
+\ProvideDocumentCommand{\textitsf}{m}{\textsf{\textit{#1}}}
+\ProvideDocumentCommand{\textbfsf}{m}{\textbf{\textsf{#1}}}
+\ProvideDocumentCommand{\textbfsfit}{m}{\textbf{\textsf{\textit{#1}}}}
+\ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{\ensuremath{#1}}}}
+
+% Serifs: rm, bf, it, bfit
+\NewDocumentCommand{\autorm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
+\NewDocumentCommand{\autobf}{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+\NewDocumentCommand{\autoit}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
+\NewDocumentCommand{\autobfit}{m}{\ifmmode\mathbfit{#1}\else\textbfit{#1}\fi}
+% sf, bfsf, sfit, bfsfit
+\NewDocumentCommand{\autosf}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
+\NewDocumentCommand{\autobfsf}{m}{\ifmmode\mathbfsf{#1}\else\textbfsf{#1}\fi}
+\NewDocumentCommand{\autosfit}{m}{\ifmmode\mathsfit{#1}\else\textitsf{#1}\fi}
+\NewDocumentCommand{\autobfsfit}{m}{\ifmmode\mathbfsfit{#1}\else\textbfsfit{#1}\fi}
+% Miscellaneous
+\NewDocumentCommand{\autonormal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+\NewDocumentCommand{\autott}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\NewDocumentCommand{\autocircled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
+
+
+% region new modifiers -----------------------------------------------------------------
+\NewDocumentCommand{\romannumber}{m}{%
+	\ifmmode\mathrm{\romannumeral#1\relax}%
+	\else{\rmfamily\romannumeral#1\relax}\fi%
+}
+\NewDocumentCommand{\RomanNumber}{m}{%
+	\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
+	\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
+}
+\NewDocumentCommand{\circled}{m}{\autocircled{\footnotesize #1}}
+\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
+% endregion new modifiers --------------------------------------------------------------
+
+
+
 % Serif modifiers
-\NewDocumentCommand\unicode@rm{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\NewDocumentCommand\unicode@it{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\NewDocumentCommand\unicode@bf{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
-\NewDocumentCommand\unicode@bi{m}{\ifmmode\mathbfit{#1}\else\textbf{\textit{#1}}\fi}
+\NewDocumentCommand{\unicode@rm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
+\NewDocumentCommand{\unicode@it}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
+\NewDocumentCommand{\unicode@bf}{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+\NewDocumentCommand{\unicode@bi}{m}{\ifmmode\mathbfit{#1}\else\textbf{\textit{#1}}\fi}
 % Sans-variants
 \NewDocumentCommand\unicode@sf{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\NewDocumentCommand\unicode@itsf{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
+\NewDocumentCommand\unicode@sfit{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
 \NewDocumentCommand\unicode@bfsf{m}{\ifmmode\mathbfsf{#1}\else\textbf{\textsf{#1}}\fi}
 \NewDocumentCommand\unicode@bisf{m}{\ifmmode\mathbfsfit{#1}\else\textbf{\textsf{\textit{#1}}}\fi}
+% Miscellaneous
+\NewDocumentCommand{\unicode@normal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+\NewDocumentCommand\unicode@tt{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\NewDocumentCommand\unicode@circled{m}{\ifmmode\mathcircled{\footnotesize#1}\else\textcircled{\footnotesize#1}\fi}
 % Fraktur
 \NewDocumentCommand\unicode@frak{m}{\ensuremath{\mathfrak{#1}}}
 \NewDocumentCommand\unicode@bfrak{m}{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
 % Script
 \NewDocumentCommand\unicode@cal{m}{\ensuremath{\mathcal{#1}}}
 \NewDocumentCommand\unicode@scr{m}{\ensuremath{\mathscr{#1}}}
-% Misc
-\NewDocumentCommand\unicode@tt{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+% Blackboard Bold
 \NewDocumentCommand\unicode@bb{m}{%
-% We use mathds as primary, and fallback to mathbb.
-\ifnum`#1=\uccode`#1\relax % Check if the character is uppercase
-	\ensuremath{\mathds{#1}}% Use dsfont
-\else\if#11% Check if the character is literal `1'
-	\ensuremath{\mathds{#1}}%
-\else% Use fallback
-    \ensuremath{\mathbb{#1}}%
-\fi\fi%
+	% We use mathds as primary, and fallback to mathbb.
+	\ifnum`#1=\uccode`#1\relax % Check if the character is uppercase
+		\ensuremath{\mathds{#1}}% Use dsfont
+	\else\if#11% Check if the character is literal `1'
+		\ensuremath{\mathds{#1}}%
+	\else% Use fallback
+		\ensuremath{\mathbb{#1}}%
+	\fi\fi%
 }
 \NewDocumentCommand\unicode@bbi{m}{\mathbb{\mathit{#1}}}
-\NewDocumentCommand\unicode@circled{m}{\ifmmode\text{\textcircled{\ensuremath{\footnotesize #1}}}\else\textcircled{\footnotesize #1}\fi}
 % endregion font families --------------------------------------------------------------
 
 
+
 % region aliases -----------------------------------------------------------------------
+\ProvideDocumentCommand{\textleftrightarrow}{}{\ensuremath{{}\leftrightarrow{}}}
+\ProvideDocumentCommand{\textupdownarrow}{}{\ensuremath{{}\updownarrow{}}}
+
 % NOTE: based on Table 2 and Table 3 of symbols-a4.pdf
 \NewDocumentCommand{\autodagger}{}{\ifmmode\dagger\else\textdagger\fi}% † also: \dag
 \NewDocumentCommand{\autoddagger}{}{\ifmmode\ddagger\else\textdaggerdbl\fi}% ‡ also: \ddag
@@ -318,6 +361,9 @@
 \NewDocumentCommand{\autoj}{}{\ifmmode\jmath\else\textjmath\fi}% ȷ
 \NewDocumentCommand{\automho}{}{\ifmmode\mho\else\textmho\fi}% ℧
 \NewDocumentCommand{\autoast}{}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
+% NOTE: addtional custom symbols
+\NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\textleftrightarrow\fi}% ↔
+\NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\textupdownarrow\fi}% ↕
 \NewDocumentCommand{\autosmallplus}{}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}% ﹢
 \NewDocumentCommand{\autosmallminus}{}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}% ﹣
 % endregion aliases --------------------------------------------------------------------
@@ -398,71 +444,55 @@
 % These allow chaining of unicode subscripts, e.g. X\subscript{1}\subcsript{2} is identical to X₁₂
 
 \NewDocumentCommand{\safe@strip@prefix}{m}{%
-%
-% Safe version of the strip@prefix command
-% If the input is empty, it returns empty
-%
-\edef\@temp{\expandafter\strip@prefix#1>}%
-% The temp is <<\meaning\temp>>%
-% check if \temp is empty
-\ifx\@temp\@empty%
-	#1%
-\else%
-	\expandafter\strip@prefix#1%
-\fi
+	%
+	% Safe version of the strip@prefix command
+	% If the input is empty, it returns empty
+	%
+	\edef\@temp{\expandafter\strip@prefix#1>}%
+	% The temp is <<\meaning\temp>>%
+	% check if \temp is empty
+	\ifx\@temp\@empty%
+		#1%
+	\else%
+		\expandafter\strip@prefix#1%
+	\fi
 }
 
 \NewDocumentCommand{\umeaning}{m}{%
-%
-% Prints the meaning of a character
-%
-\edef\unicode@meaning@temp{\detokenize{#1}}%
-% check if the result is empty
-\ifx\unicode@meaning@temp\empty%
-	---empty---%
-\else%
-	\ifPDFTeX%
-		% check if the result defines a csname
-		\ifcsname u8:\unicode@meaning@temp\endcsname%
-			\expandafter\expandafter\expandafter\strip@prefix%
-			\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
-		\else%
-			\expandafter\meaning\unicode@meaning@temp\relax%
-		\fi%
+	%
+	% Prints the meaning of a character
+	%
+	\edef\unicode@meaning@temp{\detokenize{#1}}%
+	% check if the result is empty
+	\ifx\unicode@meaning@temp\empty%
+		---empty---%
 	\else%
-		\safe@strip@prefix{\meaning#1}%
+		\ifPDFTeX%
+			% check if the result defines a csname
+			\ifcsname u8:\unicode@meaning@temp\endcsname%
+				\expandafter\expandafter\expandafter\strip@prefix%
+				\expandafter\meaning\csname u8:\unicode@meaning@temp\endcsname%
+			\else%
+				\expandafter\meaning\unicode@meaning@temp\relax%
+			\fi%
+		\else%
+			\safe@strip@prefix{\meaning#1}%
+		\fi%
 	\fi%
-\fi%
 }%
 
 \NewDocumentCommand\PrintMathFonts{}{%
-%
-% Displays the used math fonts
-% SEE: https://tex.stackexchange.com/a/40767
-%
-\count255=0%
-\loop\ifnum\count255<16%
-	(\the\count255:~\fontname\textfont\count255)\newline%
-	\advance\count255 by 1%
-\repeat%
+	%
+	% Displays the used math fonts
+	% SEE: https://tex.stackexchange.com/a/40767
+	%
+	\count255=0%
+	\loop\ifnum\count255<16%
+		(\the\count255:~\fontname\textfont\count255)\newline%
+		\advance\count255 by 1%
+	\repeat%
 }%
 
-% region new modifiers -----------------------------------------------------------------
-\NewDocumentCommand{\romannumber}{m}{%
-\ifmmode\mathrm{\romannumeral#1\relax}%
-\else{\rmfamily\romannumeral#1\relax}\fi%
-}
-\NewDocumentCommand{\RomanNumber}{m}{%
-\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
-\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
-}
-\NewDocumentCommand{\sans}{m}{\mathsf{#1}}
-\NewDocumentCommand{\isans}{m}{\mathit{\mathsf{#1}}}
-\NewDocumentCommand{\bsans}{m}{\boldsymbol{\mathsf{#1}}}
-\NewDocumentCommand{\bisans}{m}{\boldsymbol{\mathit{\mathsf{#1}}}}
-\NewDocumentCommand{\circled}{m}{\textcircled{\footnotesize #1}}
-\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
-% endregion new modifiers --------------------------------------------------------------
 
 
 % region checkmarks --------------------------------------------------------------------
@@ -808,13 +838,13 @@
 \newunicodechar{↓}{\autodownarrow}
 \newunicodechar{↑}{\autouparrow}
 
+\newunicodechar{↕}{\autoupdownarrow}
+\newunicodechar{↔}{\autoleftrightarrow}
+
 \newunicodechar{↗}{\nearrow}
 \newunicodechar{↘}{\searrow}
 \newunicodechar{↙}{\swarrow}
 \newunicodechar{↖}{\nwarrow}
-
-\newunicodechar{↕}{\updownarrow}
-\newunicodechar{↔}{\leftrightarrow}
 
 \newunicodechar{⟶}{\longrightarrow}
 \newunicodechar{⟵}{\longleftarrow}
@@ -1817,61 +1847,61 @@
 % \isans<char>
 % region sans serif italic characters (\isans<char>) -----------------------------------
 % region sans serif italic uppercase latin ---------------------------------------------
-\newunicodechar{𝘈}{\unicode@itsf{A}}% U+1D608 Mathematical Sans-Serif Italic Capital A
-\newunicodechar{𝘉}{\unicode@itsf{B}}% U+1D609 Mathematical Sans-Serif Italic Capital B
-\newunicodechar{𝘊}{\unicode@itsf{C}}% U+1D60A Mathematical Sans-Serif Italic Capital C
-\newunicodechar{𝘋}{\unicode@itsf{D}}% U+1D60B Mathematical Sans-Serif Italic Capital D
-\newunicodechar{𝘌}{\unicode@itsf{E}}% U+1D60C Mathematical Sans-Serif Italic Capital E
-\newunicodechar{𝘍}{\unicode@itsf{F}}% U+1D60D Mathematical Sans-Serif Italic Capital F
-\newunicodechar{𝘎}{\unicode@itsf{G}}% U+1D60E Mathematical Sans-Serif Italic Capital G
-\newunicodechar{𝘏}{\unicode@itsf{H}}% U+1D60F Mathematical Sans-Serif Italic Capital H
-\newunicodechar{𝘐}{\unicode@itsf{I}}% U+1D610 Mathematical Sans-Serif Italic Capital I
-\newunicodechar{𝘑}{\unicode@itsf{J}}% U+1D611 Mathematical Sans-Serif Italic Capital J
-\newunicodechar{𝘒}{\unicode@itsf{K}}% U+1D612 Mathematical Sans-Serif Italic Capital K
-\newunicodechar{𝘓}{\unicode@itsf{L}}% U+1D613 Mathematical Sans-Serif Italic Capital L
-\newunicodechar{𝘔}{\unicode@itsf{M}}% U+1D614 Mathematical Sans-Serif Italic Capital M
-\newunicodechar{𝘕}{\unicode@itsf{N}}% U+1D615 Mathematical Sans-Serif Italic Capital N
-\newunicodechar{𝘖}{\unicode@itsf{O}}% U+1D616 Mathematical Sans-Serif Italic Capital O
-\newunicodechar{𝘗}{\unicode@itsf{P}}% U+1D617 Mathematical Sans-Serif Italic Capital P
-\newunicodechar{𝘘}{\unicode@itsf{Q}}% U+1D618 Mathematical Sans-Serif Italic Capital Q
-\newunicodechar{𝘙}{\unicode@itsf{R}}% U+1D619 Mathematical Sans-Serif Italic Capital R
-\newunicodechar{𝘚}{\unicode@itsf{S}}% U+1D61A Mathematical Sans-Serif Italic Capital S
-\newunicodechar{𝘛}{\unicode@itsf{T}}% U+1D61B Mathematical Sans-Serif Italic Capital T
-\newunicodechar{𝘜}{\unicode@itsf{U}}% U+1D61C Mathematical Sans-Serif Italic Capital U
-\newunicodechar{𝘝}{\unicode@itsf{V}}% U+1D61D Mathematical Sans-Serif Italic Capital V
-\newunicodechar{𝘞}{\unicode@itsf{W}}% U+1D61E Mathematical Sans-Serif Italic Capital W
-\newunicodechar{𝘟}{\unicode@itsf{X}}% U+1D61F Mathematical Sans-Serif Italic Capital X
-\newunicodechar{𝘠}{\unicode@itsf{Y}}% U+1D620 Mathematical Sans-Serif Italic Capital Y
-\newunicodechar{𝘡}{\unicode@itsf{Z}}% U+1D621 Mathematical Sans-Serif Italic Capital Z
+\newunicodechar{𝘈}{\unicode@sfit{A}}% U+1D608 Mathematical Sans-Serif Italic Capital A
+\newunicodechar{𝘉}{\unicode@sfit{B}}% U+1D609 Mathematical Sans-Serif Italic Capital B
+\newunicodechar{𝘊}{\unicode@sfit{C}}% U+1D60A Mathematical Sans-Serif Italic Capital C
+\newunicodechar{𝘋}{\unicode@sfit{D}}% U+1D60B Mathematical Sans-Serif Italic Capital D
+\newunicodechar{𝘌}{\unicode@sfit{E}}% U+1D60C Mathematical Sans-Serif Italic Capital E
+\newunicodechar{𝘍}{\unicode@sfit{F}}% U+1D60D Mathematical Sans-Serif Italic Capital F
+\newunicodechar{𝘎}{\unicode@sfit{G}}% U+1D60E Mathematical Sans-Serif Italic Capital G
+\newunicodechar{𝘏}{\unicode@sfit{H}}% U+1D60F Mathematical Sans-Serif Italic Capital H
+\newunicodechar{𝘐}{\unicode@sfit{I}}% U+1D610 Mathematical Sans-Serif Italic Capital I
+\newunicodechar{𝘑}{\unicode@sfit{J}}% U+1D611 Mathematical Sans-Serif Italic Capital J
+\newunicodechar{𝘒}{\unicode@sfit{K}}% U+1D612 Mathematical Sans-Serif Italic Capital K
+\newunicodechar{𝘓}{\unicode@sfit{L}}% U+1D613 Mathematical Sans-Serif Italic Capital L
+\newunicodechar{𝘔}{\unicode@sfit{M}}% U+1D614 Mathematical Sans-Serif Italic Capital M
+\newunicodechar{𝘕}{\unicode@sfit{N}}% U+1D615 Mathematical Sans-Serif Italic Capital N
+\newunicodechar{𝘖}{\unicode@sfit{O}}% U+1D616 Mathematical Sans-Serif Italic Capital O
+\newunicodechar{𝘗}{\unicode@sfit{P}}% U+1D617 Mathematical Sans-Serif Italic Capital P
+\newunicodechar{𝘘}{\unicode@sfit{Q}}% U+1D618 Mathematical Sans-Serif Italic Capital Q
+\newunicodechar{𝘙}{\unicode@sfit{R}}% U+1D619 Mathematical Sans-Serif Italic Capital R
+\newunicodechar{𝘚}{\unicode@sfit{S}}% U+1D61A Mathematical Sans-Serif Italic Capital S
+\newunicodechar{𝘛}{\unicode@sfit{T}}% U+1D61B Mathematical Sans-Serif Italic Capital T
+\newunicodechar{𝘜}{\unicode@sfit{U}}% U+1D61C Mathematical Sans-Serif Italic Capital U
+\newunicodechar{𝘝}{\unicode@sfit{V}}% U+1D61D Mathematical Sans-Serif Italic Capital V
+\newunicodechar{𝘞}{\unicode@sfit{W}}% U+1D61E Mathematical Sans-Serif Italic Capital W
+\newunicodechar{𝘟}{\unicode@sfit{X}}% U+1D61F Mathematical Sans-Serif Italic Capital X
+\newunicodechar{𝘠}{\unicode@sfit{Y}}% U+1D620 Mathematical Sans-Serif Italic Capital Y
+\newunicodechar{𝘡}{\unicode@sfit{Z}}% U+1D621 Mathematical Sans-Serif Italic Capital Z
 % endregion sans serif italic uppercase latin ------------------------------------------
 
 % region sans serif italic lowercase latin ---------------------------------------------
-\newunicodechar{𝘢}{\unicode@itsf{a}}% U+1D622 Mathematical Sans-Serif Italic Small A
-\newunicodechar{𝘣}{\unicode@itsf{b}}% U+1D623 Mathematical Sans-Serif Italic Small B
-\newunicodechar{𝘤}{\unicode@itsf{c}}% U+1D624 Mathematical Sans-Serif Italic Small C
-\newunicodechar{𝘥}{\unicode@itsf{d}}% U+1D625 Mathematical Sans-Serif Italic Small D
-\newunicodechar{𝘦}{\unicode@itsf{e}}% U+1D626 Mathematical Sans-Serif Italic Small E
-\newunicodechar{𝘧}{\unicode@itsf{f}}% U+1D627 Mathematical Sans-Serif Italic Small F
-\newunicodechar{𝘨}{\unicode@itsf{g}}% U+1D628 Mathematical Sans-Serif Italic Small G
-\newunicodechar{𝘩}{\unicode@itsf{h}}% U+1D629 Mathematical Sans-Serif Italic Small H
-\newunicodechar{𝘪}{\unicode@itsf{i}}% U+1D62A Mathematical Sans-Serif Italic Small I
-\newunicodechar{𝘫}{\unicode@itsf{j}}% U+1D62B Mathematical Sans-Serif Italic Small J
-\newunicodechar{𝘬}{\unicode@itsf{k}}% U+1D62C Mathematical Sans-Serif Italic Small K
-\newunicodechar{𝘭}{\unicode@itsf{l}}% U+1D62D Mathematical Sans-Serif Italic Small L
-\newunicodechar{𝘮}{\unicode@itsf{m}}% U+1D62E Mathematical Sans-Serif Italic Small M
-\newunicodechar{𝘯}{\unicode@itsf{n}}% U+1D62F Mathematical Sans-Serif Italic Small N
-\newunicodechar{𝘰}{\unicode@itsf{o}}% U+1D630 Mathematical Sans-Serif Italic Small O
-\newunicodechar{𝘱}{\unicode@itsf{p}}% U+1D631 Mathematical Sans-Serif Italic Small P
-\newunicodechar{𝘲}{\unicode@itsf{q}}% U+1D632 Mathematical Sans-Serif Italic Small Q
-\newunicodechar{𝘳}{\unicode@itsf{r}}% U+1D633 Mathematical Sans-Serif Italic Small R
-\newunicodechar{𝘴}{\unicode@itsf{s}}% U+1D634 Mathematical Sans-Serif Italic Small S
-\newunicodechar{𝘵}{\unicode@itsf{t}}% U+1D635 Mathematical Sans-Serif Italic Small T
-\newunicodechar{𝘶}{\unicode@itsf{u}}% U+1D636 Mathematical Sans-Serif Italic Small U
-\newunicodechar{𝘷}{\unicode@itsf{v}}% U+1D637 Mathematical Sans-Serif Italic Small V
-\newunicodechar{𝘸}{\unicode@itsf{w}}% U+1D638 Mathematical Sans-Serif Italic Small W
-\newunicodechar{𝘹}{\unicode@itsf{x}}% U+1D639 Mathematical Sans-Serif Italic Small X
-\newunicodechar{𝘺}{\unicode@itsf{y}}% U+1D63A Mathematical Sans-Serif Italic Small Y
-\newunicodechar{𝘻}{\unicode@itsf{z}}% U+1D63B Mathematical Sans-Serif Italic Small Z
+\newunicodechar{𝘢}{\unicode@sfit{a}}% U+1D622 Mathematical Sans-Serif Italic Small A
+\newunicodechar{𝘣}{\unicode@sfit{b}}% U+1D623 Mathematical Sans-Serif Italic Small B
+\newunicodechar{𝘤}{\unicode@sfit{c}}% U+1D624 Mathematical Sans-Serif Italic Small C
+\newunicodechar{𝘥}{\unicode@sfit{d}}% U+1D625 Mathematical Sans-Serif Italic Small D
+\newunicodechar{𝘦}{\unicode@sfit{e}}% U+1D626 Mathematical Sans-Serif Italic Small E
+\newunicodechar{𝘧}{\unicode@sfit{f}}% U+1D627 Mathematical Sans-Serif Italic Small F
+\newunicodechar{𝘨}{\unicode@sfit{g}}% U+1D628 Mathematical Sans-Serif Italic Small G
+\newunicodechar{𝘩}{\unicode@sfit{h}}% U+1D629 Mathematical Sans-Serif Italic Small H
+\newunicodechar{𝘪}{\unicode@sfit{i}}% U+1D62A Mathematical Sans-Serif Italic Small I
+\newunicodechar{𝘫}{\unicode@sfit{j}}% U+1D62B Mathematical Sans-Serif Italic Small J
+\newunicodechar{𝘬}{\unicode@sfit{k}}% U+1D62C Mathematical Sans-Serif Italic Small K
+\newunicodechar{𝘭}{\unicode@sfit{l}}% U+1D62D Mathematical Sans-Serif Italic Small L
+\newunicodechar{𝘮}{\unicode@sfit{m}}% U+1D62E Mathematical Sans-Serif Italic Small M
+\newunicodechar{𝘯}{\unicode@sfit{n}}% U+1D62F Mathematical Sans-Serif Italic Small N
+\newunicodechar{𝘰}{\unicode@sfit{o}}% U+1D630 Mathematical Sans-Serif Italic Small O
+\newunicodechar{𝘱}{\unicode@sfit{p}}% U+1D631 Mathematical Sans-Serif Italic Small P
+\newunicodechar{𝘲}{\unicode@sfit{q}}% U+1D632 Mathematical Sans-Serif Italic Small Q
+\newunicodechar{𝘳}{\unicode@sfit{r}}% U+1D633 Mathematical Sans-Serif Italic Small R
+\newunicodechar{𝘴}{\unicode@sfit{s}}% U+1D634 Mathematical Sans-Serif Italic Small S
+\newunicodechar{𝘵}{\unicode@sfit{t}}% U+1D635 Mathematical Sans-Serif Italic Small T
+\newunicodechar{𝘶}{\unicode@sfit{u}}% U+1D636 Mathematical Sans-Serif Italic Small U
+\newunicodechar{𝘷}{\unicode@sfit{v}}% U+1D637 Mathematical Sans-Serif Italic Small V
+\newunicodechar{𝘸}{\unicode@sfit{w}}% U+1D638 Mathematical Sans-Serif Italic Small W
+\newunicodechar{𝘹}{\unicode@sfit{x}}% U+1D639 Mathematical Sans-Serif Italic Small X
+\newunicodechar{𝘺}{\unicode@sfit{y}}% U+1D63A Mathematical Sans-Serif Italic Small Y
+\newunicodechar{𝘻}{\unicode@sfit{z}}% U+1D63B Mathematical Sans-Serif Italic Small Z
 % endregion sans serif italic lowercase latin ------------------------------------------
 % endregion sans serif italic characters (\isans<char>) --------------------------------
 

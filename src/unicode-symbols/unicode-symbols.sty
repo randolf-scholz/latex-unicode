@@ -135,7 +135,7 @@
 % load lmodern to get rid of font shape warning
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
 \RequirePackage{dsfont}% provides \mathds, best looking \mathbb
-\RequirePackage{pifont}% used for \checkmark and \xmark
+\RequirePackage{pifont}% used for checkmark and xmark
 \RequirePackage{etoolbox}
 \RequirePackage{centernot}
 \RequirePackage{xcolor}
@@ -281,22 +281,6 @@
 \NewDocumentCommand{\autonormal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
 \NewDocumentCommand{\autott}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
 \NewDocumentCommand{\autocircled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
-
-
-% region new modifiers -----------------------------------------------------------------
-\NewDocumentCommand{\romannumber}{m}{%
-	\ifmmode\mathrm{\romannumeral#1\relax}%
-	\else{\rmfamily\romannumeral#1\relax}\fi%
-}
-\NewDocumentCommand{\RomanNumber}{m}{%
-	\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
-	\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
-}
-\NewDocumentCommand{\circled}{m}{\autocircled{\footnotesize #1}}
-\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
-% endregion new modifiers --------------------------------------------------------------
-
-
 
 % Serif modifiers
 \NewDocumentCommand{\unicode@rm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
@@ -807,7 +791,7 @@
 
 
 % region fractions ---------------------------------------------------------------------
-\newunicodechar{⁄}{\over}
+\newunicodechar{⁄}{\over}% U+2044 (Fraction Slash) % tex: ignore
 \newunicodechar{↉}{\tfrac{0}{3}}
 \newunicodechar{⅟}{\tfrac{1}}
 \newunicodechar{½}{\tfrac{1}{2}}

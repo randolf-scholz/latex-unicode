@@ -39,15 +39,17 @@ repos:
       - id: shellcheck
         args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
   - repo: https://github.com/randolf-scholz/latex-hooks.git
-    rev: v0.0.5
+    rev: v0.0.8
     hooks:
       - id: check-separator-length-88
       - id: latex-avoid-def
       - id: latex-avoid-let
       - id: latex-avoid-newcommand
-      - id: latex-avoid-legacy-options
       - id: latex-avoid-double-dollar
-      - id: latex-avoid-obsolete-packages
+      - id: latex-avoid-legacy-options
+      - id: latex-avoid-legacy-packages
+      - id: latex-avoid-legacy-commands
+      - id: latex-avoid-legacy-environments
       - id: latex-avoid-makeatletter
       # - id: latex-avoid-manual-spacing
       - id: chktex

@@ -267,43 +267,29 @@
 \ProvideDocumentCommand{\textbfsfit}{m}{\textbf{\textsf{\textit{#1}}}}
 \ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{\ensuremath{#1}}}}
 
-% Serifs: rm, bf, it, bfit
-\NewDocumentCommand{\autorm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\NewDocumentCommand{\autobf}{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
-\NewDocumentCommand{\autoit}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\NewDocumentCommand{\autobfit}{m}{\ifmmode\mathbfit{#1}\else\textbfit{#1}\fi}
-% sf, bfsf, sfit, bfsfit
-\NewDocumentCommand{\autosf}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\NewDocumentCommand{\autobfsf}{m}{\ifmmode\mathbfsf{#1}\else\textbfsf{#1}\fi}
-\NewDocumentCommand{\autosfit}{m}{\ifmmode\mathsfit{#1}\else\textitsf{#1}\fi}
-\NewDocumentCommand{\autobfsfit}{m}{\ifmmode\mathbfsfit{#1}\else\textbfsfit{#1}\fi}
-% Miscellaneous
-\NewDocumentCommand{\autonormal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
-\NewDocumentCommand{\autott}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-\NewDocumentCommand{\autocircled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
-
+% region internal commands -------------------------------------------------------------
 % Serif modifiers
 \NewDocumentCommand{\unicode@rm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\NewDocumentCommand{\unicode@it}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
 \NewDocumentCommand{\unicode@bf}{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+\NewDocumentCommand{\unicode@it}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
 \NewDocumentCommand{\unicode@bi}{m}{\ifmmode\mathbfit{#1}\else\textbf{\textit{#1}}\fi}
 % Sans-variants
-\NewDocumentCommand\unicode@sf{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\NewDocumentCommand\unicode@sfit{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
-\NewDocumentCommand\unicode@bfsf{m}{\ifmmode\mathbfsf{#1}\else\textbf{\textsf{#1}}\fi}
-\NewDocumentCommand\unicode@bisf{m}{\ifmmode\mathbfsfit{#1}\else\textbf{\textsf{\textit{#1}}}\fi}
+\NewDocumentCommand{\unicode@sf}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
+\NewDocumentCommand{\unicode@sfit}{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
+\NewDocumentCommand{\unicode@bfsf}{m}{\ifmmode\mathbfsf{#1}\else\textbf{\textsf{#1}}\fi}
+\NewDocumentCommand{\unicode@bisf}{m}{\ifmmode\mathbfsfit{#1}\else\textbf{\textsf{\textit{#1}}}\fi}
 % Miscellaneous
 \NewDocumentCommand{\unicode@normal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
-\NewDocumentCommand\unicode@tt{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-\NewDocumentCommand\unicode@circled{m}{\ifmmode\mathcircled{\footnotesize#1}\else\textcircled{\footnotesize#1}\fi}
+\NewDocumentCommand{\unicode@tt}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\NewDocumentCommand{\unicode@circled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
 % Fraktur
-\NewDocumentCommand\unicode@frak{m}{\ensuremath{\mathfrak{#1}}}
-\NewDocumentCommand\unicode@bfrak{m}{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
+\NewDocumentCommand{\unicode@frak}{m}{\ensuremath{\mathfrak{#1}}}
+\NewDocumentCommand{\unicode@bfrak}{m}{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
 % Script
-\NewDocumentCommand\unicode@cal{m}{\ensuremath{\mathcal{#1}}}
-\NewDocumentCommand\unicode@scr{m}{\ensuremath{\mathscr{#1}}}
+\NewDocumentCommand{\unicode@cal}{m}{\ensuremath{\mathcal{#1}}}
+\NewDocumentCommand{\unicode@scr}{m}{\ensuremath{\mathscr{#1}}}
 % Blackboard Bold
-\NewDocumentCommand\unicode@bb{m}{%
+\NewDocumentCommand{\unicode@bb}{m}{%
 	% We use mathds as primary, and fallback to mathbb.
 	\ifnum`#1=\uccode`#1\relax % Check if the character is uppercase
 		\ensuremath{\mathds{#1}}% Use dsfont
@@ -313,14 +299,44 @@
 		\ensuremath{\mathbb{#1}}%
 	\fi\fi%
 }
-\NewDocumentCommand\unicode@bbi{m}{\mathbb{\mathit{#1}}}
+\NewDocumentCommand{\unicode@bbi}{m}{\mathbb{\mathit{#1}}}
+% endregion internal commands ----------------------------------------------------------
+
+% region aliases -----------------------------------------------------------------------
+% Serifs: rm, bf, it, bfit
+\NewCommandCopy{\autorm}{\unicode@rm}
+\NewCommandCopy{\autobf}{\unicode@bf}
+\NewCommandCopy{\autoit}{\unicode@it}
+\NewCommandCopy{\autobfit}{\unicode@bfit}
+% sf, bfsf, sfit, bfsfit
+\NewCommandCopy{\autosf}{\unicode@sf}
+\NewCommandCopy{\autobfsf}{\unicode@bfsf}
+\NewCommandCopy{\autosfit}{\unicode@sfit}
+\NewCommandCopy{\autobfsfit}{\unicode@bfsfit}
+% Miscellaneous
+\NewCommandCopy{\autonormal}{\unicode@normal}
+\NewCommandCopy{\autott}{\unicode@tt}
+\NewCommandCopy{\autocircled}{\unicode@circled}
+% endregion aliases --------------------------------------------------------------------
+
+
+\NewDocumentCommand{\circled}{m}{\autocircled{\footnotesize #1}}
+\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
+
+\NewDocumentCommand{\romannumber}{m}{%
+	\ifmmode\mathrm{\romannumeral#1\relax}%
+	\else{\rmfamily\romannumeral#1\relax}\fi%
+}
+\NewDocumentCommand{\RomanNumber}{m}{%
+	\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
+	\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
+}
 % endregion font families --------------------------------------------------------------
 
 
-
 % region aliases -----------------------------------------------------------------------
-\ProvideDocumentCommand{\textleftrightarrow}{}{\ensuremath{{}\leftrightarrow{}}}
-\ProvideDocumentCommand{\textupdownarrow}{}{\ensuremath{{}\updownarrow{}}}
+\NewDocumentCommand{\@textleftrightarrow}{}{\ensuremath{{}\leftrightarrow{}}}
+\NewDocumentCommand{\@textupdownarrow}{}{\ensuremath{{}\updownarrow{}}}
 
 % NOTE: based on Table 2 and Table 3 of symbols-a4.pdf
 \NewDocumentCommand{\autodagger}{}{\ifmmode\dagger\else\textdagger\fi}% † also: \dag
@@ -346,8 +362,8 @@
 \NewDocumentCommand{\automho}{}{\ifmmode\mho\else\textmho\fi}% ℧
 \NewDocumentCommand{\autoast}{}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
 % NOTE: addtional custom symbols
-\NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\textleftrightarrow\fi}% ↔
-\NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\textupdownarrow\fi}% ↕
+\NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\@textleftrightarrow\fi}% ↔
+\NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\@textupdownarrow\fi}% ↕
 \NewDocumentCommand{\autosmallplus}{}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}% ﹢
 \NewDocumentCommand{\autosmallminus}{}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}% ﹣
 % endregion aliases --------------------------------------------------------------------

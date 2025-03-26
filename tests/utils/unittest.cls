@@ -29,14 +29,14 @@
 \ProvideDocumentCommand\textsfit{m}{\textsf{\textit{#1}}}
 \ProvideDocumentCommand\textbfsf{m}{\textbf{\textsf{#1}}}
 \ProvideDocumentCommand\textbfsfit{m}{\textbf{\textsf{\textit{#1}}}}
-\ProvideDocumentCommand\textcirc{m}{\textcircled{\footnotesize #1}}
+\ProvideDocumentCommand\textcirc{m}{\textcircled{\textsf{\scriptsize#1}}}
 
-\ProvideDocumentCommand\mathcirc{m}{\text{\textcirc{#1}}}
+\ProvideDocumentCommand\mathcirc{m}{\text{\textcirc{\textsf{\scriptsize#1}}}}
 \ProvideDocumentCommand\mathbffrak{m}{\bm{\mathfrak{#1}}}
 \ProvideDocumentCommand\mathbfscr{m}{\bm{\mathscr{#1}}}
 \ProvideDocumentCommand\mathbfsf{m}{\bm{\mathsf{#1}}}
 \ProvideDocumentCommand\mathbfsfit{m}{\bm{\mathsfit{#1}}}
-\ProvideDocumentCommand\mathbfit{m}{\bm{\mathit{}}}
+\ProvideDocumentCommand\mathbfit{m}{\bm{\mathit{#1}}}
 
 % Serif modifiers
 \ProvideDocumentCommand\RM{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}

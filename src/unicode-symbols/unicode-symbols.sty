@@ -265,23 +265,54 @@
 \ProvideDocumentCommand{\textitsf}{m}{\textsf{\textit{#1}}}
 \ProvideDocumentCommand{\textbfsf}{m}{\textbf{\textsf{#1}}}
 \ProvideDocumentCommand{\textbfsfit}{m}{\textbf{\textsf{\textit{#1}}}}
-\ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{\ensuremath{#1}}}}
+\ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{#1}}}
 
 % region internal commands -------------------------------------------------------------
-% Serif modifiers
-\NewDocumentCommand{\unicode@rm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\NewDocumentCommand{\unicode@bf}{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
-\NewDocumentCommand{\unicode@it}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\NewDocumentCommand{\unicode@bi}{m}{\ifmmode\mathbfit{#1}\else\textbf{\textit{#1}}\fi}
-% Sans-variants
-\NewDocumentCommand{\unicode@sf}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\NewDocumentCommand{\unicode@sfit}{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
-\NewDocumentCommand{\unicode@bfsf}{m}{\ifmmode\mathbfsf{#1}\else\textbf{\textsf{#1}}\fi}
-\NewDocumentCommand{\unicode@bisf}{m}{\ifmmode\mathbfsfit{#1}\else\textbf{\textsf{\textit{#1}}}\fi}
+
+% region aliases -----------------------------------------------------------------------
+% Serifs: rm, bf, it, bfit
+\NewDocumentCommand{\autorm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
+\NewDocumentCommand{\autobf}{m}{\ifmmode\bm{\mathbf{#1}}\else\textbf{#1}\fi}
+\NewDocumentCommand{\autoit}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
+\NewDocumentCommand{\autobfit}{m}{\ifmmode\bm{\mathbfit{#1}}\else\textbf{\textit{#1}}\fi}
+% sf, bfsf, sfit, bfsfit
+\NewDocumentCommand{\autosf}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
+\NewDocumentCommand{\autobfsf}{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
+\NewDocumentCommand{\autosfit}{m}{\ifmmode\bm{\mathbfsf{#1}}\else\textbf{\textsf{#1}}\fi}
+\NewDocumentCommand{\autobfsfit}{m}{\ifmmode\bm{\mathbfsfit{#1}}\else\textbf{\textsf{\textit{#1}}}\fi}
 % Miscellaneous
-\NewDocumentCommand{\unicode@normal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
-\NewDocumentCommand{\unicode@tt}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-\NewDocumentCommand{\unicode@circled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
+\NewDocumentCommand{\autonormal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+\NewDocumentCommand{\autott}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\NewDocumentCommand{\autocircled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
+
+\NewDocumentCommand{\circled}{m}{\autocircled{\textsf{\scriptsize#1}}}
+\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
+
+\NewDocumentCommand{\romannumber}{m}{%
+	\ifmmode\mathrm{\romannumeral#1\relax}%
+	\else{\rmfamily\romannumeral#1\relax}\fi%
+}
+\NewDocumentCommand{\RomanNumber}{m}{%
+	\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
+	\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
+}
+% endregion aliases --------------------------------------------------------------------
+
+
+% Serif modifiers
+\NewCommandCopy{\unicode@rm}{\autorm}
+\NewCommandCopy{\unicode@bf}{\autobf}
+\NewCommandCopy{\unicode@it}{\autoit}
+\NewCommandCopy{\unicode@bi}{\autobfit}
+% Sans-variants
+\NewCommandCopy{\unicode@sf}{\autosf}
+\NewCommandCopy{\unicode@sfit}{\autobfsf}
+\NewCommandCopy{\unicode@bfsf}{\autosfit}
+\NewCommandCopy{\unicode@bisf}{\autobfsfit}
+% Miscellaneous
+\NewCommandCopy{\unicode@normal}{\autonormal}
+\NewCommandCopy{\unicode@tt}{\autott}
+\NewDocumentCommand{\unicode@circled}{m}{\textcircled{\footnotesize#1}}
 % Fraktur
 \NewDocumentCommand{\unicode@frak}{m}{\ensuremath{\mathfrak{#1}}}
 \NewDocumentCommand{\unicode@bfrak}{m}{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
@@ -301,36 +332,6 @@
 }
 \NewDocumentCommand{\unicode@bbi}{m}{\mathbb{\mathit{#1}}}
 % endregion internal commands ----------------------------------------------------------
-
-% region aliases -----------------------------------------------------------------------
-% Serifs: rm, bf, it, bfit
-\NewCommandCopy{\autorm}{\unicode@rm}
-\NewCommandCopy{\autobf}{\unicode@bf}
-\NewCommandCopy{\autoit}{\unicode@it}
-\NewCommandCopy{\autobfit}{\unicode@bfit}
-% sf, bfsf, sfit, bfsfit
-\NewCommandCopy{\autosf}{\unicode@sf}
-\NewCommandCopy{\autobfsf}{\unicode@bfsf}
-\NewCommandCopy{\autosfit}{\unicode@sfit}
-\NewCommandCopy{\autobfsfit}{\unicode@bfsfit}
-% Miscellaneous
-\NewCommandCopy{\autonormal}{\unicode@normal}
-\NewCommandCopy{\autott}{\unicode@tt}
-\NewCommandCopy{\autocircled}{\unicode@circled}
-% endregion aliases --------------------------------------------------------------------
-
-
-\NewDocumentCommand{\circled}{m}{\autocircled{\footnotesize #1}}
-\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
-
-\NewDocumentCommand{\romannumber}{m}{%
-	\ifmmode\mathrm{\romannumeral#1\relax}%
-	\else{\rmfamily\romannumeral#1\relax}\fi%
-}
-\NewDocumentCommand{\RomanNumber}{m}{%
-	\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
-	\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
-}
 % endregion font families --------------------------------------------------------------
 
 
@@ -587,25 +588,42 @@
 
 % region greek macros ------------------------------------------------------------------
 % region greek uppercase macros --------------------------------------------------------
-\NewDocumentCommand{\Alpha}  {}{A}
-\NewDocumentCommand{\Beta}   {}{B}
-\NewDocumentCommand{\Epsilon}{}{E}
-\NewDocumentCommand{\Zeta}   {}{Z}
-\NewDocumentCommand{\Eta}    {}{H}
-\NewDocumentCommand{\Iota}   {}{I}
-\NewDocumentCommand{\Kappa}  {}{K}
-\NewDocumentCommand{\Mu}     {}{M}
-\NewDocumentCommand{\Nu}     {}{N}
-\NewDocumentCommand{\Omicron}{}{O}
-\NewDocumentCommand{\Rho}    {}{P}
-\NewDocumentCommand{\Tau}    {}{T}
-\NewDocumentCommand{\Chi}    {}{X}
-\NewDocumentCommand{\Heta}   {}{\Eta}
-% endregion greek uppercase macros -----------------------------------------------------
+% \NewDocumentCommand{\Alpha}  {}{A}
+% \NewDocumentCommand{\Beta}   {}{B}
+% \NewDocumentCommand{\Epsilon}{}{E}
+% \NewDocumentCommand{\Zeta}   {}{Z}
+% \NewDocumentCommand{\Eta}    {}{H}
+% \NewDocumentCommand{\Iota}   {}{I}
+% \NewDocumentCommand{\Kappa}  {}{K}
+% \NewDocumentCommand{\Mu}     {}{M}
+% \NewDocumentCommand{\Nu}     {}{N}
+% \NewDocumentCommand{\Omicron}{}{O}
+% \NewDocumentCommand{\Rho}    {}{P}
+% \NewDocumentCommand{\Tau}    {}{T}
+% \NewDocumentCommand{\Chi}    {}{X}
+% \NewDocumentCommand{\Heta}   {}{\Eta}
+% \NewDocumentCommand{\omicron}{}{o}
+% \NewDocumentCommand{\heta}   {}{\eta}
 
-% region greek lowercase macros --------------------------------------------------------
-\NewDocumentCommand{\omicron}{}{o}
-\NewDocumentCommand{\heta}   {}{\eta} % used for bold short (name conflict Beta)
+
+\DeclareMathSymbol{\Alpha}{\mathalpha}{operators}{"41}
+\DeclareMathSymbol{\Beta}{\mathalpha}{operators}{"42}
+\DeclareMathSymbol{\Epsilon}{\mathalpha}{operators}{"45}
+\DeclareMathSymbol{\Zeta}{\mathalpha}{operators}{"5A}
+\DeclareMathSymbol{\Eta}{\mathalpha}{operators}{"48}
+\DeclareMathSymbol{\Heta}{\mathalpha}{operators}{"48}
+\DeclareMathSymbol{\Iota}{\mathalpha}{operators}{"49}
+\DeclareMathSymbol{\Kappa}{\mathalpha}{operators}{"4B}
+\DeclareMathSymbol{\Mu}{\mathalpha}{operators}{"4D}
+\DeclareMathSymbol{\Nu}{\mathalpha}{operators}{"4E}
+\DeclareMathSymbol{\Omicron}{\mathalpha}{operators}{"4F}
+\DeclareMathSymbol{\Rho}{\mathalpha}{operators}{"50}
+\DeclareMathSymbol{\Tau}{\mathalpha}{operators}{"54}
+\DeclareMathSymbol{\Chi}{\mathalpha}{operators}{"58}
+
+\DeclareMathSymbol{\omicron}{\mathord}{letters}{"6F}
+\DeclareMathSymbol{\heta}{\mathord}{letters}{"11}
+
 % endregion greek lowercase macros -----------------------------------------------------
 
 % region greek shorthand macros --------------------------------------------------------

@@ -89,6 +89,8 @@
 	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
 \else
 	% \RequirePackage{fontspec}  <--- causes errors with stix!!
+	% TODO: Consider using mathfont for LuaTex
+	%\RequirePackage{mathfont}
 \fi
 
 % === Load requiremnts ===
@@ -99,22 +101,85 @@
 \else%
 	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 	\RequirePackage{amssymb}% not needed with stix2
+	% NOTE: dsfont lacks lowercase letters and digits other than 𝟙.
+	\RequirePackage{dsfont}% THE BEST double-struck font.
 	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
-	\RequirePackage{mathrsfs}% provides \mathscr
-	\RequirePackage{mathtools}% provides \mathclap
+	% \RequirePackage{mathrsfs}% provides \mathscr (worse than rsfso, boondoxo)
+	% \RequirePackage[mathscr]{eucal}% provides \bm
+	\RequirePackage[
+		scr=boondoxo,
+		% bb=libus, slightly worse than dsfont, and no digits either.
+	]{mathalpha}
 
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
 	% SEE: https://tex.stackexchange.com/a/82747
+
+	% NOTE: Font specfication is documented in 'fntguide'.
+	%   \DeclareMathAlphabet{<name>}{<encoding>}{<family>}{<series>}{<shape>}
+
+	% Encoding: (see also 'encguide')
+	%   OT1:	7-bit text encoding (Knuth)
+	%   OT2-6:	7-bit text encoding for cyrillic and other alphabets
+	%   T1: 	8-bit text encoding (Cork)
+	%   T2-T7:  8-bit text encoding for cyrillic and other alphabets
+	%   TS1:	8-bit text encoding (Jörg Knappen)
+	%   OML:	7-bit math italic encoding (Knuth)
+	%   OMS:	7-bit math symbol encoding (Knuth)
+	%   OMX:	7-bit math extension encoding (Knuth)
+
+	% Series values:
+	%   m:   Medium weight and width
+	%   b:   Bold weight and medium width
+	%   bx:  Bold extended (wider characters)
+	%   sb:  Semi-bold and medium width
+	%   sbx: Semi-bold extended
+	%   c:   medium weight, condensed width
+
+	% Shapes:
+	%   n:   	Normal
+	%   it:  	Italic
+	%   sl:  	Slanted (fake italics via oblique transform)
+	%   sc:  	Small caps
+	%   scit:	Small caps italic
+	%   scsl:	Small caps slanted
+	%   sw:  	swash
+
+	% Question: \DeclareSymbolFont vs \DeclareMathAlphabet?
+	%  - \DeclareSymbolFont
+
+	% NOTE: \rmdefault is set to cmr by default, and \sfdefault is set to cmss.
+	% \rmdefault: cmr
+	% \sfdefault: cmss
+
+	% lmodern does the following:
+	% \SetSymbolFont{operators}   {normal}{OT1}{lmr} {m}{n}
+	% \SetSymbolFont{letters}     {normal}{OML}{lmm} {m}{it}
+	% \SetSymbolFont{symbols}     {normal}{OMS}{lmsy}{m}{n}
+	% \SetSymbolFont{largesymbols}{normal}{OMX}{lmex}{m}{n}
+	% \SetSymbolFont{operators}   {bold}  {OT1}{lmr} {bx}{n}
+	% \SetSymbolFont{letters}     {bold}  {OML}{lmm} {b}{it}
+	% \SetSymbolFont{symbols}     {bold}  {OMS}{lmsy}{b}{n}
+	% \SetSymbolFont{largesymbols}{bold}  {OMX}{lmex}{m}{n}
+
+	% \SetMathAlphabet{\mathbf}{normal}{OT1}{lmr}{bx}{n}
+	% \SetMathAlphabet{\mathsf}{normal}{OT1}{lmss}{m}{n}
+	% \SetMathAlphabet{\mathit}{normal}{OT1}{lmr}{m}{it}
+	% \SetMathAlphabet{\mathtt}{normal}{OT1}{lmtt}{m}{n}
+	% \SetMathAlphabet{\mathbf}{bold}  {OT1}{lmr}{bx}{n}
+	% \SetMathAlphabet{\mathsf}{bold}  {OT1}{lmss}{bx}{n}
+	% \SetMathAlphabet{\mathit}{bold}  {OT1}{lmr}{bx}{it}
+	% \SetMathAlphabet{\mathtt}{bold}  {OT1}{lmtt}{m}{n}
+
 	% bf + it
-	\DeclareMathAlphabet{\mathbfit}{OT1}{\rmdefault}{b}{sl}
+	\DeclareMathAlphabet{\mathbfit}{T1}{lmr}{b}{sl}
 	% sf + bf
-	\DeclareMathAlphabet{\mathbfsf}{OT1}{\sfdefault}{b}{n}
+	\DeclareMathAlphabet{\mathbfsf}{T1}{lmss}{b}{n}
 	% sf + bf + it
-	\DeclareMathAlphabet{\mathbfsfit}{OT1}{\sfdefault}{b}{sl}
+	\DeclareMathAlphabet{\mathbfsfit}{T1}{lmss}{b}{it}
 	% sf + it
-	\DeclareMathAlphabet{\mathsfit}{OT1}{\sfdefault}{m}{sl}
+	\DeclareMathAlphabet{\mathsfit}{T1}{lmss}{m}{it}
 	% bold version of sf + if = bfsfit
-	\SetMathAlphabet{\mathsfit}{bold}{OT1}{\sfdefault}{b}{sl}
+	\SetMathAlphabet{\mathsfit}{bold}{T1}{lmss}{b}{it}
 \fi
 
 \ifunicode@fdsymbol%
@@ -126,15 +191,13 @@
 	\RequirePackage{MnSymbol}
 \fi
 
-% TODO: Consider using mathfont for LuaTex
-%\RequirePackage{mathfont}
+
 \RequirePackage{newunicodechar}
 \RequirePackage{unicode-subscripts}
 \RequirePackage{unicode-superscripts}
 
-% load lmodern to get rid of font shape warning
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
-\RequirePackage{dsfont}% provides \mathds, best looking \mathbb
+\RequirePackage{mathtools}% provides \mathclap
 \RequirePackage{pifont}% used for checkmark and xmark
 \RequirePackage{etoolbox}
 \RequirePackage{centernot}
@@ -266,7 +329,7 @@
 \ProvideDocumentCommand{\textbfsf}{m}{\textbf{\textsf{#1}}}
 \ProvideDocumentCommand{\textbfsfit}{m}{\textbf{\textsf{\textit{#1}}}}
 \ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{#1}}}
-
+\ProvideDocumentCommand{\mathds}{m}{\mathbb{#1}}
 % region internal commands -------------------------------------------------------------
 
 % region aliases -----------------------------------------------------------------------
@@ -489,7 +552,7 @@
 	%
 	\count255=0%
 	\loop\ifnum\count255<16%
-		(\the\count255:~\fontname\textfont\count255)\newline%
+		\newline(\the\count255:~\fontname\textfont\count255)%
 		\advance\count255 by 1%
 	\repeat%
 }%

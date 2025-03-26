@@ -1,6 +1,7 @@
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
 \documentclass{unittest}
 \usepackage{unicode-symbols}
+% \usepackage[infoshow]{tracefnt}
 
 \NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
 %
@@ -21,7 +22,7 @@
 	& $\CIRC{#1}$   & $\rowCIRC$
 	% script
 	& $\CAL{#1}$    & $\rowCAL$
-	&&% & $\SCR{#1}$    & $\rowSCR$
+	& $\SCR{#1}$    & $\rowSCR$
 	% fraktur
 	& $\FRAK{#1}$   & $\rowFRAK$
 	& $\BFRAK{#1}$  & $\rowBFRAK$

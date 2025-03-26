@@ -1,0 +1,35 @@
+\documentclass[varwidth]{standalone}
+\tracinglostchars=3% error if a glyph is missing
+
+\usepackage{tracefnt}
+\usepackage{bm}
+\usepackage{stix2}
+
+\begin{document}
+\begin{tabular}{lll llll llll llll llll}
+	$A$
+	& $\mathnormal{A}$
+	& $\mathtt{A}$
+	% serif
+	& $\mathrm{A}$
+	& $\mathbf{A}$
+	& $\mathit{A}$
+	& $\bm{\mathit{A}}$
+	% sans
+	& $\mathsf{A}$
+	& $\mathsfit{A}$
+	& $\bm{\mathsf{A}}$
+	& $\bm{\mathsfit{A}}$
+	% bm
+	& $\bm{A}$
+	& $\bm{\mathrm{A}}$
+	& $\bm{\mathit{A}}$
+	& $\bm{\mathbf{A}}$
+	%
+	& $\mathcal{A}$
+	& $\mathscr{A}$
+	& $\mathfrak{A}$
+	& $\mathbb{A}$
+	%
+\end{tabular}
+\end{document}

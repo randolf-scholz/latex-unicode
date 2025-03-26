@@ -3,13 +3,45 @@
 %   Adds some default configurations
 
 \ProvidesClass{unittest}[2024-12-13 Unit test class]
+\ExplSyntaxOn
+  \str_const:Nn \ClassName {unittest}
+\ExplSyntaxOff
+
 \tracinglostchars=3% error if a glyph is missing
 \errorcontextlines=5% <-- useful for debugging
+% Forward options to standalone
 
-\LoadClass{standalone}
+\DeclareKeys[\ClassName]{
+	debug.if    = @unittest@debug,
+	debug.usage = preamble,
+}
+\DeclareUnknownKeyHandler[\ClassName]{%
+	\PassOptionsToClass{\CurrentOption}{standalone}
+}
+\SetKeys[\ClassName]{debug=false}
+\ProcessKeyOptions[\ClassName]\relax%
+
+\LoadClassWithOptions{standalone}
 \RequirePackage[verbose]{newunicodechar}
 \RequirePackage{booktabs,multicol,arydshln}
 
+
+\NewDocumentCommand{\ShowMathFonts}{}{%
+	%
+	% Displays the used math fonts
+	% SEE: https://tex.stackexchange.com/a/40767
+	%
+	\count255=0%
+	\loop\ifnum\count255<16%
+		\newline(\the\count255:~\fontname\textfont\count255)%
+		\advance\count255 by 1%
+	\repeat%
+}%
+
+
+
+
+% SEE: https://tex.stackexchange.com/a/60494
 \NewDocumentCommand\Meaning{m}{\safe@strip@prefix{\meaning#1}}
 \NewDocumentCommand\ShowFont{}{\fontname\font}
 
@@ -61,6 +93,12 @@
 %
 }
 
+
+\AtEndDocument{
+	\if@unittest@debug%
+	\noindent\textbf{Used Math Fonts:}\ShowMathFonts\clearpage%
+	\fi
+}
 
 \RequirePackage{pgfkeys}
 % SEE: https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols

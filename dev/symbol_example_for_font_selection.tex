@@ -1,4 +1,8 @@
 % NOTE: TEST FILE FOR https://www.programmingfonts.org/
+% Some good fonts to test:
+% - Noto Mono
+% - Julia Mono
+
 
 % special characters
 â é ù ï ø ç Ã Ē Æ œ
@@ -51,19 +55,33 @@ X⃗, Ȳ, Z̃, Ẋ, Ÿ, Z⃛, X̂
 ⟿⟿⟿⟿⟿⟿⟿⟿
 
 % mono-space test: dash
-12× emdash: ————————————
-6×2 emdash: ⸺⸺⸺⸺⸺⸺
-4×3 emdash: ⸻⸻⸻⸻
+12× regular  minus  (U+002D): -------------
+12× regular  hyphen (U+2010): ‐‐‐‐‐‐‐‐‐‐‐‐‐
+12× regular en-dash (U+2013): –––––––––––––
+12× regular em-dash (U+2014): —————————————
+ 6× double  em-dash (U+2E3A): ⸺⸺⸺⸺⸺⸺⸺
+ 4× triple  em-dash (U+2E3B): ⸻⸻⸻⸻
 
 % mono-space test: greek subscripts
-\textsubscript{α} & — & $_{α}$ & $—$ & \textsuperscript{α} & ᵅ & $^{α}$ & $ᵅ$ \\
+\textsubscript{α} & - & $_{α}$ & $-$ & \textsuperscript{α} & ᵅ & $^{α}$ & $ᵅ$ \\
 \textsubscript{β} & ᵦ & $_{β}$ & $ᵦ$ & \textsuperscript{β} & ᵝ & $^{β}$ & $ᵝ$ \\
 \textsubscript{γ} & ᵧ & $_{γ}$ & $ᵧ$ & \textsuperscript{γ} & ᵞ & $^{γ}$ & $ᵞ$ \\
-\textsubscript{δ} & — & $_{δ}$ & $—$ & \textsuperscript{δ} & ᵟ & $^{δ}$ & $ᵟ$ \\
-\textsubscript{ε} & — & $_{ε}$ & $—$ & \textsuperscript{ε} & ᵋ & $^{ε}$ & $ᵋ$ \\
-\textsubscript{θ} & — & $_{θ}$ & $—$ & \textsuperscript{θ} & ᶿ & $^{θ}$ & $ᶿ$ \\
-\textsubscript{ι} & — & $_{ι}$ & $—$ & \textsuperscript{ι} & ᶥ & $^{ι}$ & $ᶥ$ \\
-\textsubscript{υ} & — & $_{υ}$ & $—$ & \textsuperscript{υ} & ᶹ & $^{υ}$ & $ᶹ$ \\
+\textsubscript{δ} & - & $_{δ}$ & $-$ & \textsuperscript{δ} & ᵟ & $^{δ}$ & $ᵟ$ \\
+\textsubscript{ε} & - & $_{ε}$ & $-$ & \textsuperscript{ε} & ᵋ & $^{ε}$ & $ᵋ$ \\
+\textsubscript{θ} & - & $_{θ}$ & $-$ & \textsuperscript{θ} & ᶿ & $^{θ}$ & $ᶿ$ \\
+\textsubscript{ι} & - & $_{ι}$ & $-$ & \textsuperscript{ι} & ᶥ & $^{ι}$ & $ᶥ$ \\
+\textsubscript{υ} & - & $_{υ}$ & $-$ & \textsuperscript{υ} & ᶹ & $^{υ}$ & $ᶹ$ \\
 \textsubscript{φ} & ᵩ & $_{φ}$ & $ᵩ$ & \textsuperscript{φ} & ᵠ & $^{φ}$ & $ᵠ$ \\
 \textsubscript{χ} & ᵪ & $_{χ}$ & $ᵪ$ & \textsuperscript{χ} & ᵡ & $^{χ}$ & $ᵡ$ \\
-\textsubscript{ϱ} & ᵨ & $_{ϱ}$ & $ᵨ$ & \textsuperscript{ϱ} & — & $^{ϱ}$ & $—$ \\
+\textsubscript{ϱ} & ᵨ & $_{ϱ}$ & $ᵨ$ & \textsuperscript{ϱ} & - & $^{ϱ}$ & $-$ \\
+
+\makerow{0}[rm=0, bf=𝟎, sf=𝟢, bsf=𝟢, tt=𝟶, bb=𝟘, circ=⓪, roman=-, Roman=-]
+\makerow{1}[rm=1, bf=𝟏, sf=𝟣, bsf=𝟣, tt=𝟷, bb=𝟙, circ=①, roman=ⅰ, Roman=Ⅰ]
+\makerow{2}[rm=2, bf=𝟐, sf=𝟤, bsf=𝟤, tt=𝟸, bb=𝟚, circ=②, roman=ⅱ, Roman=Ⅱ]
+\makerow{3}[rm=3, bf=𝟑, sf=𝟥, bsf=𝟥, tt=𝟹, bb=𝟛, circ=③, roman=ⅲ, Roman=Ⅲ]
+\makerow{4}[rm=4, bf=𝟒, sf=𝟦, bsf=𝟦, tt=𝟺, bb=𝟜, circ=④, roman=ⅳ, Roman=Ⅳ]
+\makerow{5}[rm=5, bf=𝟓, sf=𝟧, bsf=𝟧, tt=𝟻, bb=𝟝, circ=⑤, roman=ⅴ, Roman=Ⅴ]
+\makerow{6}[rm=6, bf=𝟔, sf=𝟨, bsf=𝟨, tt=𝟼, bb=𝟞, circ=⑥, roman=ⅵ, Roman=Ⅵ]
+\makerow{7}[rm=7, bf=𝟕, sf=𝟩, bsf=𝟩, tt=𝟽, bb=𝟟, circ=⑦, roman=ⅶ, Roman=Ⅶ]
+\makerow{8}[rm=8, bf=𝟖, sf=𝟪, bsf=𝟪, tt=𝟾, bb=𝟠, circ=⑧, roman=ⅷ, Roman=Ⅷ]
+\makerow{9}[rm=9, bf=𝟗, sf=𝟫, bsf=𝟫, tt=𝟿, bb=𝟡, circ=⑨, roman=ⅸ, Roman=Ⅸ]

@@ -1,0 +1,33 @@
+\documentclass[varwidth]{standalone}
+\tracinglostchars=3% error if a glyph is missing
+
+\usepackage{tracefnt}
+\usepackage{booktabs}
+
+\usepackage{amssymb}% not needed with stix2
+\usepackage{mathbbol}% provides \mathbb for digits and lower case letters.
+\usepackage{mathrsfs}% provides \mathscr
+\usepackage{bm}
+
+\begin{document}
+\begin{tabular}{l llll lllll llll l}
+	$A$
+	% serif
+	& $\mathrm{A}$
+	& $\mathbf{A}$
+	& $\mathit{A}$
+	& $\mathsf{A}$
+	% sans
+	& $\bm{A}$
+	& $\bm{\mathit{A}}$
+	& $\bm{\mathsf{A}}$
+	& $\bm{\mathbf{A}}$
+	& $\bm{\mathrm{A}}$
+	%
+	& $\mathcal{A}$
+	& $\mathscr{A}$
+	& $\mathfrak{A}$
+	& $\mathbb{A}$
+	& $\mathtt{A}$
+\end{tabular}
+\end{document}

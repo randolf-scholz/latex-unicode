@@ -50,46 +50,46 @@
 
 \AtBeginDocument{%
 %
-\ProvideDocumentCommand\textbb{m}{--}
-\ProvideDocumentCommand\textcal{m}{--}
-\ProvideDocumentCommand\textscr{m}{--}
-\ProvideDocumentCommand\textbfscr{m}{--}
-\ProvideDocumentCommand\textfrak{m}{--}
-\ProvideDocumentCommand\textbffrak{m}{--}
+\ProvideDocumentCommand{\textbb}{m}{--}
+\ProvideDocumentCommand{\textcal}{m}{--}
+\ProvideDocumentCommand{\textscr}{m}{--}
+\ProvideDocumentCommand{\textbfscr}{m}{--}
+\ProvideDocumentCommand{\textfrak}{m}{--}
+\ProvideDocumentCommand{\textbffrak}{m}{--}
 
-\ProvideDocumentCommand\textbfit{m}{\textbf{\textit{#1}}}
-\ProvideDocumentCommand\textsfit{m}{\textsf{\textit{#1}}}
-\ProvideDocumentCommand\textbfsf{m}{\textbf{\textsf{#1}}}
-\ProvideDocumentCommand\textbfsfit{m}{\textbf{\textsf{\textit{#1}}}}
-\ProvideDocumentCommand\textcirc{m}{\textcircled{\textsf{\scriptsize#1}}}
+\ProvideDocumentCommand{\textbfit}{m}{\textbf{\textit{#1}}}
+\ProvideDocumentCommand{\textsfit}{m}{\textsf{\textit{#1}}}
+\ProvideDocumentCommand{\textbfsf}{m}{\textbf{\textsf{#1}}}
+\ProvideDocumentCommand{\textbfsfit}{m}{\textbf{\textsf{\textit{#1}}}}
+\ProvideDocumentCommand{\textcirc}{m}{\textcircled{\textsf{\scriptsize#1}}}
 
-\ProvideDocumentCommand\mathcirc{m}{\text{\textcirc{\textsf{\scriptsize#1}}}}
-\ProvideDocumentCommand\mathbffrak{m}{\bm{\mathfrak{#1}}}
-\ProvideDocumentCommand\mathbfscr{m}{\bm{\mathscr{#1}}}
-\ProvideDocumentCommand\mathbfsf{m}{\bm{\mathsf{#1}}}
-\ProvideDocumentCommand\mathbfsfit{m}{\bm{\mathsfit{#1}}}
-\ProvideDocumentCommand\mathbfit{m}{\bm{\mathit{#1}}}
+\ProvideDocumentCommand{\mathcirc}{m}{\text{\textcirc{\textsf{\scriptsize#1}}}}
+\ProvideDocumentCommand{\mathbffrak}{m}{\bm{\mathfrak{#1}}}
+\ProvideDocumentCommand{\mathbfscr}{m}{\bm{\mathscr{#1}}}
+\ProvideDocumentCommand{\mathbfsf}{m}{\bm{\mathsf{#1}}}
+\ProvideDocumentCommand{\mathbfsfit}{m}{\bm{\mathsfit{#1}}}
+\ProvideDocumentCommand{\mathbfit}{m}{\boldsymbol{\mathit{#1}}}
 
 % Serif modifiers
-\ProvideDocumentCommand\RM{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\ProvideDocumentCommand\IT{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\ProvideDocumentCommand\BF{m}{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
-\ProvideDocumentCommand\BI{m}{\ifmmode\mathbfit{#1}\else\textbfit{#1}\fi}
+\ProvideDocumentCommand{\RM}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
+\ProvideDocumentCommand{\IT}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
+\ProvideDocumentCommand{\BF}{m}{\ifmmode\bm{\mathbf{#1}}\else\textbf{#1}\fi}
+\ProvideDocumentCommand{\BI}{m}{\ifmmode\mathbfit{#1}\else\textbfit{#1}\fi}
 % Sans-variants
-\ProvideDocumentCommand\SF{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\ProvideDocumentCommand\ISF{m}{\ifmmode\mathsfit{#1}\else\textsfit{#1}\fi}
-\ProvideDocumentCommand\BSF{m}{\ifmmode\mathbfsf{#1}\else\textbfsf{#1}\fi}
-\ProvideDocumentCommand\BISF{m}{\ifmmode\mathbfsfit{#1}\else\textbfsfit{#1}\fi}
+\ProvideDocumentCommand{\SF}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
+\ProvideDocumentCommand{\ISF}{m}{\ifmmode\mathsfit{#1}\else\textsfit{#1}\fi}
+\ProvideDocumentCommand{\BSF}{m}{\ifmmode\mathbfsf{#1}\else\textbfsf{#1}\fi}
+\ProvideDocumentCommand{\BISF}{m}{\ifmmode\mathbfsfit{#1}\else\textbfsfit{#1}\fi}
 %
-\ProvideDocumentCommand\NORMAL{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
-\ProvideDocumentCommand\TT{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-\ProvideDocumentCommand\BB{m}{\ifmmode\mathbb{#1}\else\textbb{#1}\fi}
-\ProvideDocumentCommand\CIRC{m}{\ifmmode\mathcirc{#1}\else\textcirc{#1}\fi}
+\ProvideDocumentCommand{\NORMAL}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
+\ProvideDocumentCommand{\TT}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
+\ProvideDocumentCommand{\BB}{m}{\ifmmode\mathbb{#1}\else\textbb{#1}\fi}
+\ProvideDocumentCommand{\CIRC}{m}{\ifmmode\mathcirc{#1}\else\textcirc{#1}\fi}
 %
-\ProvideDocumentCommand\CAL{m}{\ifmmode\mathcal{#1}\else\textcal{#1}\fi}
-\ProvideDocumentCommand\SCR{m}{\ifmmode\mathscr{#1}\else\textscr{#1}\fi}
-\ProvideDocumentCommand\FRAK{m}{\ifmmode\mathfrak{#1}\else\textfrak{#1}\fi}
-\ProvideDocumentCommand\BFRAK{m}{\ifmmode\mathbffrak{#1}\else\textbffrak{#1}\fi}
+\ProvideDocumentCommand{\CAL}{m}{\ifmmode\mathcal{#1}\else\textcal{#1}\fi}
+\ProvideDocumentCommand{\SCR}{m}{\ifmmode\mathscr{#1}\else\textscr{#1}\fi}
+\ProvideDocumentCommand{\FRAK}{m}{\ifmmode\mathfrak{#1}\else\textfrak{#1}\fi}
+\ProvideDocumentCommand{\BFRAK}{m}{\ifmmode\mathbffrak{#1}\else\textbffrak{#1}\fi}
 %
 }
 

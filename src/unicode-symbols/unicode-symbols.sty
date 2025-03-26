@@ -99,17 +99,20 @@
 	% Used to get rid of dont shape warning
 	\RequirePackage{anyfontsize}% SEE: https://tex.stackexchange.com/questions/58087
 \else%
+\RequirePackage[
+	frak=euler,
+	scr=boondoxo,
+	% bb=libus, slightly worse than dsfont, and no digits either.
+]{mathalpha}
+
 	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 	\RequirePackage{amssymb}% not needed with stix2
+	\RequirePackage{amsfonts}% not needed with stix2
 	% NOTE: dsfont lacks lowercase letters and digits other than 𝟙.
 	\RequirePackage{dsfont}% THE BEST double-struck font.
 	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
 	% \RequirePackage{mathrsfs}% provides \mathscr (worse than rsfso, boondoxo)
 	% \RequirePackage[mathscr]{eucal}% provides \bm
-	\RequirePackage[
-		scr=boondoxo,
-		% bb=libus, slightly worse than dsfont, and no digits either.
-	]{mathalpha}
 
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
 	% SEE: https://tex.stackexchange.com/a/82747
@@ -170,16 +173,20 @@
 	% \SetMathAlphabet{\mathit}{bold}  {OT1}{lmr}{bx}{it}
 	% \SetMathAlphabet{\mathtt}{bold}  {OT1}{lmtt}{m}{n}
 
-	% bf + it
-	\DeclareMathAlphabet{\mathbfit}{T1}{lmr}{b}{sl}
-	% sf + bf
-	\DeclareMathAlphabet{\mathbfsf}{T1}{lmss}{b}{n}
-	% sf + bf + it
-	\DeclareMathAlphabet{\mathbfsfit}{T1}{lmss}{b}{it}
 	% sf + it
-	\DeclareMathAlphabet{\mathsfit}{T1}{lmss}{m}{it}
-	% bold version of sf + if = bfsfit
-	\SetMathAlphabet{\mathsfit}{bold}{T1}{lmss}{b}{it}
+	\DeclareMathAlphabet{\mathsfit}{OT1}{lmss}{m}{it}
+	\SetMathAlphabet{\mathsfit}{bold}{OT1}{lmss}{bx}{it}
+	% bf + it
+	% \DeclareMathAlphabet{\mathbfit}{OT1}{lmr}{bx}{it}
+	\NewDocumentCommand{\mathbfit}{m}{\bm{\mathit{#1}}}
+	% bf + sf
+	% \DeclareMathAlphabet{\mathbfsf}{OT1}{lmss}{bx}{n}
+	\NewDocumentCommand{\mathbfsf}{m}{\bm{\mathsf{#1}}}
+	% bf + sf + it
+	% \DeclareMathAlphabet{\mathbfsfit}{OT1}{lmss}{bx}{it}
+	\NewDocumentCommand{\mathbfsfit}{m}{\bm{\mathsfit{#1}}}
+	%  bffrak
+	% \DeclareMathAlphabet{\mathbffrak}{OT1}{euf}{b}{n}
 \fi
 
 \ifunicode@fdsymbol%
@@ -328,28 +335,40 @@
 \ProvideDocumentCommand{\textitsf}{m}{\textsf{\textit{#1}}}
 \ProvideDocumentCommand{\textbfsf}{m}{\textbf{\textsf{#1}}}
 \ProvideDocumentCommand{\textbfsfit}{m}{\textbf{\textsf{\textit{#1}}}}
-\ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{#1}}}
+
+\ProvideDocumentCommand{\mathcircled}{m}{\text{\textcircled{\ensuremath{#1}}}}
 \ProvideDocumentCommand{\mathds}{m}{\mathbb{#1}}
+
+\ProvideDocumentCommand{\mathbm}    {m} {\bm{\mathbf{#1}}}
+\ProvideDocumentCommand{\mathbfit}  {m} {\bm{\mathit{#1}}}
+\ProvideDocumentCommand{\mathbfsf}  {m} {\bm{\mathsf{#1}}}
+\ProvideDocumentCommand{\mathbfsfit}{m} {\bm{\mathsfit{#1}}}
+\ProvideDocumentCommand{\mathbffrak}{m} {\bm{\mathfrak{#1}}}
+\ProvideDocumentCommand{\mathbfscr} {m} {\bm{\mathscr{#1}}}
+\ProvideDocumentCommand{\mathbfcal} {m} {\bm{\mathcal{#1}}}
+\ProvideDocumentCommand{\mathbfbb}  {m} {\bm{\mathbb{#1}}}
+\ProvideDocumentCommand{\mathbftt}  {m} {\bm{\mathsfit{#1}}}
 % region internal commands -------------------------------------------------------------
 
 % region aliases -----------------------------------------------------------------------
 % Serifs: rm, bf, it, bfit
-\NewDocumentCommand{\autorm}{m}{\ifmmode\mathrm{#1}\else\textrm{#1}\fi}
-\NewDocumentCommand{\autobf}{m}{\ifmmode\bm{\mathbf{#1}}\else\textbf{#1}\fi}
-\NewDocumentCommand{\autoit}{m}{\ifmmode\mathit{#1}\else\textit{#1}\fi}
-\NewDocumentCommand{\autobfit}{m}{\ifmmode\bm{\mathbfit{#1}}\else\textbf{\textit{#1}}\fi}
+\NewDocumentCommand{\autorm}  {m}{\ifmmode{\mathrm{#1}}\else{\textrm{#1}}\fi}
+\NewDocumentCommand{\autobf}  {m}{\ifmmode{\mathbm{#1}}\else{\textbf{#1}}\fi}
+\NewDocumentCommand{\autoit}  {m}{\ifmmode{\mathit{#1}}\else{\textit{#1}}\fi}
+\NewDocumentCommand{\autobfit}{m}{\ifmmode{\mathbfit{#1}}\else{\textbfit{#1}}\fi}
 % sf, bfsf, sfit, bfsfit
-\NewDocumentCommand{\autosf}{m}{\ifmmode\mathsf{#1}\else\textsf{#1}\fi}
-\NewDocumentCommand{\autobfsf}{m}{\ifmmode\mathsfit{#1}\else\textsf{\textit{#1}}\fi}
-\NewDocumentCommand{\autosfit}{m}{\ifmmode\bm{\mathbfsf{#1}}\else\textbf{\textsf{#1}}\fi}
-\NewDocumentCommand{\autobfsfit}{m}{\ifmmode\bm{\mathbfsfit{#1}}\else\textbf{\textsf{\textit{#1}}}\fi}
+\NewDocumentCommand{\autosf}    {m}{\ifmmode{\mathsf{#1}}\else{\textsf{#1}}\fi}
+\NewDocumentCommand{\autobfsf}  {m}{\ifmmode{\mathsfit{#1}}\else{\textsfit{#1}}\fi}
+\NewDocumentCommand{\autosfit}  {m}{\ifmmode{\mathbfsf{#1}}\else{\textbfsf{#1}}\fi}
+\NewDocumentCommand{\autobfsfit}{m}{\ifmmode{\mathbfsfit{#1}}\else{\textbfsfit{#1}}\fi}
 % Miscellaneous
-\NewDocumentCommand{\autonormal}{m}{\ifmmode\mathnormal{#1}\else\textnormal{#1}\fi}
-\NewDocumentCommand{\autott}{m}{\ifmmode\mathtt{#1}\else\texttt{#1}\fi}
-\NewDocumentCommand{\autocircled}{m}{\ifmmode\mathcircled{#1}\else\textcircled{#1}\fi}
+\NewDocumentCommand{\autonormal} {m}{\ifmmode{\mathnormal{#1}}\else{\textnormal{#1}}\fi}
+\NewDocumentCommand{\autott}     {m}{\ifmmode{\mathtt{#1}}\else{\texttt{#1}}\fi}
+\NewDocumentCommand{\autocircled}{m}{\ifmmode{\mathcircled{#1}}\else{\textcircled{#1}}\fi}
 
-\NewDocumentCommand{\circled}{m}{\autocircled{\textsf{\scriptsize#1}}}
 \NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
+\NewDocumentCommand{\circled}{m}{\ifmmode{\mathcircled{\mathsf{\scriptstyle#1}}}\else\textcircled{\textsf{\scriptsize#1}}\fi}
+
 
 \NewDocumentCommand{\romannumber}{m}{%
 	\ifmmode\mathrm{\romannumeral#1\relax}%
@@ -375,10 +394,10 @@
 % Miscellaneous
 \NewCommandCopy{\unicode@normal}{\autonormal}
 \NewCommandCopy{\unicode@tt}{\autott}
-\NewDocumentCommand{\unicode@circled}{m}{\textcircled{\footnotesize#1}}
+\NewCommandCopy{\unicode@circled}{\circled}
 % Fraktur
 \NewDocumentCommand{\unicode@frak}{m}{\ensuremath{\mathfrak{#1}}}
-\NewDocumentCommand{\unicode@bfrak}{m}{\ensuremath{\boldsymbol{\mathfrak{#1}}}}
+\NewDocumentCommand{\unicode@bfrak}{m}{\ensuremath{\mathbffrak{#1}}}
 % Script
 \NewDocumentCommand{\unicode@cal}{m}{\ensuremath{\mathcal{#1}}}
 \NewDocumentCommand{\unicode@scr}{m}{\ensuremath{\mathscr{#1}}}

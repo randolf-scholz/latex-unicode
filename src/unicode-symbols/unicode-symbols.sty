@@ -664,6 +664,9 @@
 \ProvideDocumentCommand{\Question}{}{??}
 \ProvideDocumentCommand{\Exclam}{}{!!}
 \ProvideDocumentCommand{\micro}{}{\ifmmode\text{\textmu}\else\textmu\fi}% micro sign
+\ProvideDocumentCommand{\degree}{}{\ifmmode\text{\textdegree}\else\textdegree\fi}% degree sign
+\ProvideDocumentCommand{\degreeC}{}{\degree\autorm{C}}% degree Celsius
+\ProvideDocumentCommand{\degreeF}{}{\degree\autorm{F}}% degree Fahrenheit
 }
 % endregion aliases/fallbacks ----------------------------------------------------------
 
@@ -790,6 +793,7 @@
 \newunicodechar{‡}{\ddag}% U+2021 (Double Dagger)
 \newunicodechar{…}{\dots}% U+2026 (Horizontal Ellipsis)
 \newunicodechar{µ}{\micro}% U+00B5 (Micro Sign)
+\newunicodechar{°}{\degree}% U+00B0 (Degree Sign)
 % endregion builtin auto-mode commands -------------------------------------------------
 
 % region misc --------------------------------------------------------------------------
@@ -823,6 +827,8 @@
 \newunicodechar{□}{\Box}% also: \square
 \newunicodechar{℧}{\automho}
 \newunicodechar{∎}{\QED}% U+220E (End of Proof)
+\newunicodechar{℃}{\degreeC}% U+2103 (Degree Celsius)
+\newunicodechar{℉}{\degreeF}% U+2109 (Degree Fahrenheit
 % endregion misc -----------------------------------------------------------------------
 
 % region combining characters ----------------------------------------------------------

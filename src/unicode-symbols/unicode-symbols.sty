@@ -663,6 +663,7 @@
 \ProvideDocumentCommand{\QED}{}{\qedsymbol}% Use stix's \QED if loaded, else use amsthm's \qedsymbol
 \ProvideDocumentCommand{\Question}{}{??}
 \ProvideDocumentCommand{\Exclam}{}{!!}
+\ProvideDocumentCommand{\micro}{}{\ifmmode\text{\textmu}\else\textmu\fi}% micro sign
 }
 % endregion aliases/fallbacks ----------------------------------------------------------
 
@@ -775,6 +776,7 @@
 \expandafter\let\csname u8:\detokenize{ı}\endcsname\relax% use \autoi
 \expandafter\let\csname u8:\detokenize{ȷ}\endcsname\relax% use \autoj
 \expandafter\let\csname u8:\detokenize{℧}\endcsname\relax% use \automho
+\expandafter\let\csname u8:\detokenize{µ}\endcsname\relax% use \micro
 % endregion free previously defined unicode chars --------------------------------------
 
 
@@ -787,6 +789,7 @@
 \newunicodechar{†}{\dag}% U+2020 (Dagger)
 \newunicodechar{‡}{\ddag}% U+2021 (Double Dagger)
 \newunicodechar{…}{\dots}% U+2026 (Horizontal Ellipsis)
+\newunicodechar{µ}{\micro}% U+00B5 (Micro Sign)
 % endregion builtin auto-mode commands -------------------------------------------------
 
 % region misc --------------------------------------------------------------------------

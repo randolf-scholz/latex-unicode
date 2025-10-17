@@ -135,11 +135,11 @@
 	% Used to get rid of dont shape warning
 	\RequirePackage{anyfontsize}% SEE: https://tex.stackexchange.com/questions/58087
 \else%
-\RequirePackage[
-	frak=euler,
-	scr=boondoxo,
-	% bb=libus, slightly worse than dsfont, and no digits either.
-]{mathalpha}
+	\RequirePackage[
+		frak=euler,
+		scr=boondoxo,
+		% bb=libus, slightly worse than dsfont, and no digits either.
+	]{mathalpha}
 
 	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 	\RequirePackage{amssymb}% not needed with stix2
@@ -504,9 +504,12 @@
 \NewDocumentCommand{\textjmath}{}{\ensuremath{\jmath}}% ȷ
 \NewDocumentCommand{\autojmath}{}{\ifmmode\jmath\else\textjmath\fi}% ȷ
 
-\NewDocumentCommand{\textleftrightarrow}{}{\ensuremath{{}\leftrightarrow{}}}
+
+% NOTE: https://github.com/latex3/hyperref/issues/379
+% Due to some strange interaction we need to use the not well documented \DeclareTextCommandDefault instead of \NewDocumentCommand.
+\DeclareTextCommandDefault{\textleftrightarrow}{\ensuremath{{}\leftrightarrow{}}}
+\DeclareTextCommandDefault{\textupdownarrow}{\ensuremath{{}\updownarrow{}}}
 \NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\textleftrightarrow\fi}% ↔
-\NewDocumentCommand{\textupdownarrow}{}{\ensuremath{{}\updownarrow{}}}
 \NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\textupdownarrow\fi}% ↕
 
 % NOTE: addtional custom symbols

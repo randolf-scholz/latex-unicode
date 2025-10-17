@@ -1,5 +1,6 @@
 \documentclass{unittest}
 \usepackage{unicode-symbols}
+\usepackage{hyperref}  % SEE: https://github.com/latex3/hyperref/issues/379
 
 \NewDocumentCommand{\makerow}{m O{}}{\pgfkeys{/variants, default, #2}%
 	%
@@ -179,16 +180,16 @@ meaning & \textbf{math mode} & \textbf{text mode} \\
 \makerow{≠}[math=≠]
 \makerow{≡}[math=≡]
 \midrule% arrows -----------------------------------------------------------------------
-\makerow{←}[math=←]
-\makerow{→}[math=→]
-\makerow{↓}[math=↓]
-\makerow{↑}[math=↑]
+\makerow{←}[math=←, text=←]
+\makerow{→}[math=→, text=→]
+\makerow{↓}[math=↓, text=↓]
+\makerow{↑}[math=↑, text=↑]
 \makerow{↗}[math=↗]
 \makerow{↘}[math=↘]
 \makerow{↙}[math=↙]
 \makerow{↖}[math=↖]
-\makerow{↕}[math=↕]
-\makerow{↔}[math=↔]
+\makerow{↕}[math=↕, text=↕]
+\makerow{↔}[math=↔, text=↔]
 \makerow{↞}[math=↞]
 \makerow{↠}[math=↠]
 \makerow{⟶}[math=⟶]

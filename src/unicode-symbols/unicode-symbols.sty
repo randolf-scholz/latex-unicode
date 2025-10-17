@@ -507,6 +507,7 @@
 
 % NOTE: https://github.com/latex3/hyperref/issues/379
 % Due to some strange interaction we need to use the not well documented \DeclareTextCommandDefault instead of \NewDocumentCommand.
+% Essentially the hyperref package fudges with commands prefixed by text.
 \DeclareTextCommandDefault{\textleftrightarrow}{\ensuremath{{}\leftrightarrow{}}}
 \DeclareTextCommandDefault{\textupdownarrow}{\ensuremath{{}\updownarrow{}}}
 \NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\textleftrightarrow\fi}% ↔

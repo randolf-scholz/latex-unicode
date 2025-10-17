@@ -43,6 +43,42 @@
 % cal: computer modern
 % endregion notes ----------------------------------------------------------------------
 
+% MATH CODES / character class
+% each glyph in math mode has a unique single byte to mark what type of math symbol
+% it represents. This affects spacing.
+
+%	0: \mathord     (ordinary symbols like 'x', 'a', etc.)
+%	1: \mathop      (operators like \sum, \int)
+%	2: \mathbin     (binary operators like '+', '-', etc.)
+%	3: \mathrel     (relations like '=', '<', etc.)
+%	4: \mathopen    (opening bracket like '[' or '\langle')
+%	5: \mathclose   (closing bracket like ']' or '\rangle')
+%	6: \mathpunct   (punctuation like ',', ';', etc.)
+%	7: \mathinner   (inner constructions like \frac or \left\right)
+
+
+
+% BUILTIN MATH FONTS:
+% (\mathnormal)
+% \mathrm
+% \mathbf
+% \mathsf
+% \mathit
+% \mathtt
+% \mathcal
+% ADDITIONAL MATH FONTS
+% \mathbb
+% \mathscr
+% \mathbfscr <--> \mathcal
+% \mathfrak
+% \mathbffrak  (bold+fraktur)
+% \mathsfit  (sans-serif+italic)
+% \mathbfit  (bold+italic)
+% \mathbfsf  (sans-serif+bold)
+% \mathbfsfit (sans-serif+bold+italic)
+
+
+
 
 % chktex-file 18
 % chktex-file 41
@@ -217,26 +253,6 @@
 % FIXME: Patch centernot to support \not as macro with argument.
 % SEE: https://tex.stackexchange.com/a/424007
 \patchcmd\@centernot{\not}{\not{\hphantom{=}}}{}{\errmessage{Patching \noexpand\@centernot failed.}}
-
-
-% BUILTIN MATH FONTS:
-% (\mathnormal)
-% \mathrm
-% \mathbf
-% \mathsf
-% \mathit
-% \mathtt
-% \mathcal
-% ADDITIONAL MATH FONTS
-% \mathbb
-% \mathscr
-% \mathbfscr <--> \mathcal
-% \mathfrak
-% \mathbffrak  (bold+fraktur)
-% \mathsfit  (sans-serif+italic)
-% \mathbfit  (bold+italic)
-% \mathbfsf  (sans-serif+bold)
-% \mathbfsfit (sans-serif+bold+italic)
 
 
 % FIXME Get some missing symbols
@@ -418,9 +434,7 @@
 
 
 % region aliases -----------------------------------------------------------------------
-\NewDocumentCommand{\@textleftrightarrow}{}{\ensuremath{{}\leftrightarrow{}}}
-\NewDocumentCommand{\@textupdownarrow}{}{\ensuremath{{}\updownarrow{}}}
-
+% Allow math-only commands to be used in text mode by using their text-mode equivalents.
 % NOTE: based on Table 2 and Table 3 of symbols-a4.pdf
 \NewDocumentCommand{\autodagger}{}{\ifmmode\dagger\else\textdagger\fi}% † also: \dag
 \NewDocumentCommand{\autoddagger}{}{\ifmmode\ddagger\else\textdaggerdbl\fi}% ‡ also: \ddag
@@ -429,27 +443,87 @@
 \NewDocumentCommand{\autorightarrow}{}{\ifmmode\rightarrow\else\textrightarrow\fi}% →
 \NewDocumentCommand{\autodownarrow}{}{\ifmmode\downarrow\else\textdownarrow\fi}% ↓
 \NewDocumentCommand{\autouparrow}{}{\ifmmode\uparrow\else\textuparrow\fi}% ↑
-\NewDocumentCommand{\autoellipsis}{}{\ifmmode\ldots\else\textellipsis\fi}% …
 \NewDocumentCommand{\autorangle}{}{\ifmmode\rangle\else\textrangle\fi}% ⟩
 \NewDocumentCommand{\autolangle}{}{\ifmmode\langle\else\textlangle\fi}% ⟨
 \NewDocumentCommand{\autoneg}{}{\ifmmode\neg\else\textlnot\fi}% ¬
 \NewDocumentCommand{\autodiv}{}{\ifmmode\div\else\textdiv\fi}% ÷
 \NewDocumentCommand{\autopm}{}{\ifmmode\pm\else\textpm\fi}% ±
+\NewDocumentCommand{\autoVert}{}{\ifmmode\Vert\else\textbardbl\fi}% ‖
+\NewDocumentCommand{\autoast}{}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
+\NewDocumentCommand{\autosurd}{}{\ifmmode\surd\else\textsurd\fi}% √
+\NewDocumentCommand{\autovert}{}{\ifmmode\vert\else\textbar\fi}% |
 % \NewDocumentCommand{\autobigcirc}{}{\ifmmode\bigcirc\else\textbigcircle\fi}% ◯ (U+25CB) not the same as ◯ (U+25EF)
 % \NewDocumentCommand{\autobullet}{}{\ifmmode\bullet\else\textbullet\fi}% • (U+2022) not the same as ∙ (U+2219)
 % \NewDocumentCommand{\autocdotp}{}{\ifmmode\cdot\else\textperiodcentered\fi}% · (U+00B7) not the same as ⋅ (U+22C5)
-\NewDocumentCommand{\autovert}{}{\ifmmode\vert\else\textbar\fi}% |
-\NewDocumentCommand{\autoVert}{}{\ifmmode\Vert\else\textbardbl\fi}% ‖
-\NewDocumentCommand{\autoi}{}{\ifmmode\imath\else\textimath\fi}% ı
-\NewDocumentCommand{\autoj}{}{\ifmmode\jmath\else\textjmath\fi}% ȷ
-\NewDocumentCommand{\automho}{}{\ifmmode\mho\else\textmho\fi}% ℧
-\NewDocumentCommand{\autoast}{}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
+
+
+% allow text-only commands to be used in math mode by wrapping them in \text{}
+\NewDocumentCommand{\mathmu}             {} {\mathord{\text{\textmu}}}             % micro sign in math mode
+\NewDocumentCommand{\mathdegree}         {} {\mathord{\text{\textdegree}}}         % degree sign in math mode
+\NewDocumentCommand{\mathcelsius}        {} {\mathord{\text{\textcelsius}}}        % degree Celsius sign in math mode
+\NewDocumentCommand{\mathmho}            {} {\mathord{\text{\textmho}}}            % mho sign in math mode
+\NewDocumentCommand{\mathohm}            {} {\mathord{\text{\textohm}}}            % ohm sign in math mode
+% currency symbols
+\NewDocumentCommand{\mathbaht}           {} {\mathord{\text{\textbaht}}}           % ฿
+\NewDocumentCommand{\mathcent}           {} {\mathord{\text{\textcent}}}           % ¢
+\NewDocumentCommand{\mathcentoldstyle}   {} {\mathord{\text{\textcentoldstyle}}}   % 
+\NewDocumentCommand{\mathcolonmonetary}  {} {\mathord{\text{\textcolonmonetary}}}  % ₡
+\NewDocumentCommand{\mathcurrency}       {} {\mathord{\text{\textcurrency}}}       % ¤
+\NewDocumentCommand{\mathdollar}         {} {\mathord{\text{\textdollar}}}         % $ (use \$)
+\NewDocumentCommand{\mathdollaroldstyle} {} {\mathord{\text{\textdollaroldstyle}}} %  
+\NewDocumentCommand{\mathdong}           {} {\mathord{\text{\textdong}}}           % ₫ 
+\NewDocumentCommand{\matheuro}           {} {\mathord{\text{\texteuro}}}           % € 
+\NewDocumentCommand{\mathflorin}         {} {\mathord{\text{\textflorin}}}         % ƒ 
+\NewDocumentCommand{\mathguarani}        {} {\mathord{\text{\textguarani}}}        %  
+\NewDocumentCommand{\mathlira}           {} {\mathord{\text{\textlira}}}           % ₤ 
+\NewDocumentCommand{\mathnaira}          {} {\mathord{\text{\textnaira}}}          % ₦ 
+\NewDocumentCommand{\mathpeso}           {} {\mathord{\text{\textpeso}}}           %  
+\NewDocumentCommand{\mathsterling}       {} {\mathord{\text{\textsterling}}}       % £ (use \pounds)
+\NewDocumentCommand{\mathwon}            {} {\mathord{\text{\textwon}}}            % ₩
+\NewDocumentCommand{\mathyen}            {} {\mathord{\text{\textyen}}}            % ¥
+% legal symbols
+\NewDocumentCommand{\mathcopyleft}       {} {\mathord{\text{\textcopyleft}}}       % ⓒ
+\NewDocumentCommand{\mathcopyright}      {} {\mathord{\text{\textcopyright}}}      % © (use \copyright)
+\NewDocumentCommand{\mathregistered}     {} {\mathord{\text{\textregistered}}}     % ®
+\NewDocumentCommand{\mathtrademark}      {} {\mathord{\text{\texttrademark}}}      % ™
+\NewDocumentCommand{\mathservicemark}    {} {\mathord{\text{\textservicemark}}}    % ℠
+
+\NewDocumentCommand{\automu}{}{\ifmmode\mathmu\else\textmu\fi}% micro sign
+\NewDocumentCommand{\autodegree}{}{\ifmmode\mathdegree\else\textdegree\fi}% degree sign
+\NewDocumentCommand{\automho}{}{\ifmmode\mathmho\else\textmho\fi}% ℧
+\NewDocumentCommand{\autoohm}{}{\ifmmode\mathohm\else\textohm\fi}% Ω
+
+% allow math-only commands to be used in text mode by wrapping them in \ensuremath{}
+\NewDocumentCommand{\textimath}{}{\ensuremath{\imath}}% ı
+\NewDocumentCommand{\autoimath}{}{\ifmmode\imath\else\textimath\fi}% ı
+\NewDocumentCommand{\textjmath}{}{\ensuremath{\jmath}}% ȷ
+\NewDocumentCommand{\autojmath}{}{\ifmmode\jmath\else\textjmath\fi}% ȷ
+
+\NewDocumentCommand{\textleftrightarrow}{}{\ensuremath{{}\leftrightarrow{}}}
+\NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\textleftrightarrow\fi}% ↔
+\NewDocumentCommand{\textupdownarrow}{}{\ensuremath{{}\updownarrow{}}}
+\NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\textupdownarrow\fi}% ↕
+
 % NOTE: addtional custom symbols
-\NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\@textleftrightarrow\fi}% ↔
-\NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\@textupdownarrow\fi}% ↕
-\NewDocumentCommand{\autosmallplus}{}{\ifmmode\mathbin{\texttt{+}}\else\texttt{+}\fi}% ﹢
-\NewDocumentCommand{\autosmallminus}{}{\ifmmode\mathbin{\texttt{-}}\else\texttt{-}\fi}% ﹣
+\NewDocumentCommand{\textunaryminus}{}{\texttt{+}}% ﹢ (U+FE62)
+\NewDocumentCommand{\textunaryplus}{}{\texttt{-}}% ﹣ (U+FE63)
+\NewDocumentCommand{\mathunaryminus}{}{\mathord{\textunaryminus}}%
+\NewDocumentCommand{\mathunaryplus}{}{\mathord{\textunaryplus}}%
+\NewDocumentCommand{\autounaryminus}{}{\ifmmode\mathunaryminus\else\textunaryminus\fi}%
+\NewDocumentCommand{\autounaryplus}{}{\ifmmode\mathunaryplus\else\textunaryplus\fi}%
+
+\NewDocumentCommand{\textfahrenheit}{}{\textrm{\textdegree{}F}}% ℉ (U+2109) degree Fahrenheit sign
+\NewDocumentCommand{\mathfahrenheit}{}{\mathord{\textrm{\textdegree{}F}}}% degree Fahrenheit sign in math mode
+\NewDocumentCommand{\mathfahrenheit}{}{\mathord{\textrm{\textdegree{}F}}}% degree Fahrenheit sign in math mode
+
+\ProvideDocumentCommand{\degreeC}{}{\degree\autorm{C}}% degree Celsius
+\ProvideDocumentCommand{\degreeF}{}{\degree\autorm{F}}% degree Fahrenheit
 % endregion aliases --------------------------------------------------------------------
+
+
+% region math-variants of text-only commands -------------------------------------------
+
+% endregion math-variants of text-only commands ----------------------------------------
 
 
 
@@ -462,6 +536,13 @@
 % \mathop: operator (\sum, \int, etc.)
 % \mathopen: opening delimiter
 % \mathclose: closing delimiter
+\let\unicode@micro=\automicro%
+\let\unicode@degree=\autodegree%
+\let\unicode@unaryplus=\autounaryplus%
+\let\unicode@unaryminus=\autounaryminus%
+
+
+
 \NewDocumentCommand{\unicode@smalltriangleup}{}{}%▵
 \NewDocumentCommand{\unicode@transpose}{}{\ifmmode\mkern-1.5mu\mathsf{T}\mkern-1.5mu\else\kern-0.1em\textsf{T}\kern-0.1em\fi}
 \NewDocumentCommand{\unicode@hermitian}{}{\ifmmode\mkern-1.5mu\mathsf{H}\mkern-1.5mu\else\kern-0.1em\textsf{H}\kern-0.1em\fi}
@@ -470,8 +551,8 @@
 % SEE: https://tex.stackexchange.com/a/655980
 \DeclareMathSymbol\unicode@increment{\mathord}{operators}{\Delta}
 % \NewDocumentCommand{\unicode@increment}{}{\mathord{\Delta}}% U+2206
-\NewDocumentCommand{\unicode@unaryminus}{}{\ifmmode\mathord{\mathtt{-}}\else\texttt{-}\fi}
-\NewDocumentCommand{\unicode@unaryplus}{}{\ifmmode\mathord{\mathtt{+}}\else\texttt{+}\fi}
+\NewDocumentCommand{\unicode@unaryminus}{}{\ifmmode\mathord{\texttt{-}}\else\texttt{-}\fi}
+\NewDocumentCommand{\unicode@unaryplus}{}{\ifmmode\mathord{\texttt{+}}\else\texttt{+}\fi}
 % binary operators
 \NewDocumentCommand{\unicode@minus}{}{\mathbin{-}}% force binary
 \NewDocumentCommand{\unicode@doubleplus}{}{\mathbin{+\!\!\!+}}% ⧺ (U+29FA) % chktex 21
@@ -577,20 +658,30 @@
 }%
 
 
-
 % region checkmarks --------------------------------------------------------------------
 % We use pifont's `\ding` for checkmarks and crosses, there are no good alternatives.
-\NewDocumentCommand{\cmark}{}{\text{\ding{51}}}% ✓ (U+2713: Check Mark)
-\NewDocumentCommand{\qmark}{}{?}% normal question mark
-\NewDocumentCommand{\xmark}{}{\text{\ding{55}}}% ✗ (U+2717: Ballot X)
-\NewDocumentCommand{\hcmark}{}{\text{\ding{52}}}% ✔ (U+2714: Heavy Check Mark)
-\NewDocumentCommand{\hqmark}{}{\textbf{?}}% bold question mark
-\NewDocumentCommand{\hxmark}{}{\text{\ding{56}}}% ✘ (U+2718: Heavy Ballot X)
-\NewDocumentCommand{\CMARK}{}{\textcolor{unicode@green}{\textbf{\ding{52}}}}% ✅ (U+2705: White Heavy Check Mark)
-\NewDocumentCommand{\XMARK}{}{\textcolor{unicode@crimson}{\textbf{\ding{56}}}}% ❌ (U+274C: Cross Mark)
-\NewDocumentCommand{\QMARK}{}{\textcolor{unicode@navy}{\textbf{?}}}% ❓ (U+2753: Black Question Mark Ornament)
-% endregion checkmarks -----------------------------------------------------------------
 
+% we provide the following commands:
+% [cxeq]mark: regular version
+% h[cxeq]mark: heavy (bold) version
+% [CXEQ]MARK: colored bold version
+
+\NewDocumentCommand{\cmark}{}{\text{\ding{51}}}% ✓ (U+2713: Check Mark)
+\NewDocumentCommand{\hcmark}{}{\text{\ding{52}}}% ✔ (U+2714: Heavy Check Mark)
+\NewDocumentCommand{\CMARK}{}{\textbf{\textcolor{unicode@green}{\ding{52}}}}% ✅ (U+2705: White Heavy Check Mark)
+
+\NewDocumentCommand{\xmark}{}{\text{\ding{55}}}% ✗ (U+2717: Ballot X)
+\NewDocumentCommand{\hxmark}{}{\text{\ding{56}}}% ✘ (U+2718: Heavy Ballot X)
+\NewDocumentCommand{\XMARK}{}{\textbf{\textcolor{unicode@crimson}{\ding{56}}}}% ❌ (U+274C: Cross Mark)
+
+\NewDocumentCommand{\qmark}{}{?}% normal question mark
+\NewDocumentCommand{\hqmark}{}{\textbf{?}}% bold question mark
+\NewDocumentCommand{\QMARK}{}{\textbf{\textcolor{unicode@navy}{?}}}% ❓ (U+2753: Black Question Mark Ornament)
+
+\NewDocumentCommand{\emark}{}{!}% normal exclamation mark
+\NewDocumentCommand{\hemark}{}{\textbf{!}}% bold exclamation mark
+\NewDocumentCommand{\EMARK}{}{\textbf{\textcolor{unicode@navy}{!}}}% ❗ (U+2757: Heavy Exclamation Mark Symbol)
+% endregion checkmarks -----------------------------------------------------------------
 
 
 % region aliases/fallbacks -------------------------------------------------------------
@@ -630,8 +721,6 @@
 \ProvideDocumentCommand{\napprox}{}{\unicode@napprox}
 \ProvideDocumentCommand{\unaryplus}{}{\unicode@unaryplus}
 \ProvideDocumentCommand{\unaryminus}{}{\unicode@unaryminus}
-\ProvideDocumentCommand{\smallplus}{}{\autosmallplus}
-\ProvideDocumentCommand{\smallminus}{}{\autosmallminus}
 \ProvideDocumentCommand{\increment}{}{\unicode@increment}
 \ProvideDocumentCommand{\bagmember}{}{\unicode@bagmember}
 \ProvideDocumentCommand{\doubleplus}{}{\unicode@doubleplus}
@@ -660,11 +749,14 @@
 \ProvideDocumentCommand{\mapsup}{}{\unicode@mapsup}
 \ProvideDocumentCommand{\smalltriangleup}{}{\unicode@smalltriangleup}
 \ProvideDocumentCommand{\minus}{}{\unicode@minus}
+\ProvideDocumentCommand{\micro}{}{\unicode@micro}% micro sign
+\ProvideDocumentCommand{\degree}{}{\unicode@degree}% degree sign
+\ProvideDocumentCommand{\unaryplus}{}{\unicode@unaryplus}
+\ProvideDocumentCommand{\unaryminus}{}{\unicode@unaryminus}
+% other aliases/fallbacks
 \ProvideDocumentCommand{\QED}{}{\qedsymbol}% Use stix's \QED if loaded, else use amsthm's \qedsymbol
 \ProvideDocumentCommand{\Question}{}{??}
 \ProvideDocumentCommand{\Exclam}{}{!!}
-\ProvideDocumentCommand{\micro}{}{\ifmmode\text{\textmu}\else\textmu\fi}% micro sign
-\ProvideDocumentCommand{\degree}{}{\ifmmode\text{\textdegree}\else\textdegree\fi}% degree sign
 \ProvideDocumentCommand{\degreeC}{}{\degree\autorm{C}}% degree Celsius
 \ProvideDocumentCommand{\degreeF}{}{\degree\autorm{F}}% degree Fahrenheit
 }
@@ -691,25 +783,23 @@
 % \NewDocumentCommand{\omicron}{}{o}
 % \NewDocumentCommand{\heta}   {}{\eta}
 
-
-\DeclareMathSymbol{\Alpha}{\mathalpha}{operators}{"41}
-\DeclareMathSymbol{\Beta}{\mathalpha}{operators}{"42}
-\DeclareMathSymbol{\Epsilon}{\mathalpha}{operators}{"45}
-\DeclareMathSymbol{\Zeta}{\mathalpha}{operators}{"5A}
-\DeclareMathSymbol{\Eta}{\mathalpha}{operators}{"48}
-\DeclareMathSymbol{\Heta}{\mathalpha}{operators}{"48}
-\DeclareMathSymbol{\Iota}{\mathalpha}{operators}{"49}
-\DeclareMathSymbol{\Kappa}{\mathalpha}{operators}{"4B}
-\DeclareMathSymbol{\Mu}{\mathalpha}{operators}{"4D}
-\DeclareMathSymbol{\Nu}{\mathalpha}{operators}{"4E}
-\DeclareMathSymbol{\Omicron}{\mathalpha}{operators}{"4F}
-\DeclareMathSymbol{\Rho}{\mathalpha}{operators}{"50}
-\DeclareMathSymbol{\Tau}{\mathalpha}{operators}{"54}
-\DeclareMathSymbol{\Chi}{\mathalpha}{operators}{"58}
-
-\DeclareMathSymbol{\omicron}{\mathord}{letters}{"6F}
-\DeclareMathSymbol{\heta}{\mathord}{letters}{"11}
-
+% Note: Heta is an alternative spelling of Eta
+\DeclareMathSymbol{\Alpha}   {\mathalpha} {operators} {"41}
+\DeclareMathSymbol{\Beta}    {\mathalpha} {operators} {"42}
+\DeclareMathSymbol{\Epsilon} {\mathalpha} {operators} {"45}
+\DeclareMathSymbol{\Zeta}    {\mathalpha} {operators} {"5A}
+\DeclareMathSymbol{\Eta}     {\mathalpha} {operators} {"48}
+\DeclareMathSymbol{\Heta}    {\mathalpha} {operators} {"48}
+\DeclareMathSymbol{\Iota}    {\mathalpha} {operators} {"49}
+\DeclareMathSymbol{\Kappa}   {\mathalpha} {operators} {"4B}
+\DeclareMathSymbol{\Mu}      {\mathalpha} {operators} {"4D}
+\DeclareMathSymbol{\Nu}      {\mathalpha} {operators} {"4E}
+\DeclareMathSymbol{\Omicron} {\mathalpha} {operators} {"4F}
+\DeclareMathSymbol{\Rho}     {\mathalpha} {operators} {"50}
+\DeclareMathSymbol{\Tau}     {\mathalpha} {operators} {"54}
+\DeclareMathSymbol{\Chi}     {\mathalpha} {operators} {"58}
+\DeclareMathSymbol{\omicron} {\mathord}   {letters}   {"6F}
+\DeclareMathSymbol{\heta}    {\mathord}   {letters}   {"11}
 % endregion greek lowercase macros -----------------------------------------------------
 
 % region greek shorthand macros --------------------------------------------------------
@@ -730,6 +820,8 @@
 % endregion greek shorthand macros -----------------------------------------------------
 % endregion greek macros ---------------------------------------------------------------
 % endregion public interface ===========================================================
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Below this line, only \newunicodechar commands are allowed
@@ -776,10 +868,12 @@
 \expandafter\let\csname u8:\detokenize{↓}\endcsname\relax% use \autodownarrow
 \expandafter\let\csname u8:\detokenize{⟨}\endcsname\relax% use \autolangle
 \expandafter\let\csname u8:\detokenize{⟩}\endcsname\relax% use \autorangle
-\expandafter\let\csname u8:\detokenize{ı}\endcsname\relax% use \autoi
-\expandafter\let\csname u8:\detokenize{ȷ}\endcsname\relax% use \autoj
+\expandafter\let\csname u8:\detokenize{ı}\endcsname\relax% use \autoimath
+\expandafter\let\csname u8:\detokenize{ȷ}\endcsname\relax% use \autojmath
 \expandafter\let\csname u8:\detokenize{℧}\endcsname\relax% use \automho
 \expandafter\let\csname u8:\detokenize{µ}\endcsname\relax% use \micro
+\expandafter\let\csname u8:\detokenize{°}\endcsname\relax% use \degree
+\expandafter\let\csname u8:\detokenize{℃}\endcsname\relax% use \degree
 % endregion free previously defined unicode chars --------------------------------------
 
 
@@ -818,10 +912,11 @@
 \newunicodechar{✘}{\hxmark}
 \newunicodechar{❌}{\XMARK}
 \newunicodechar{❓}{\QMARK}
+\newunicodechar{❗}{\EMARK}
 \newunicodechar{⁇}{\Question}% U+2047 (Double Question Mark)
 \newunicodechar{‼}{\Exclam}% U+203C (Double Exclamation Mark)
-\newunicodechar{ı}{\autoi}
-\newunicodechar{ȷ}{\autoj}
+\newunicodechar{ı}{\autoimath}
+\newunicodechar{ȷ}{\autojmath}
 \newunicodechar{℘}{\wp}
 \newunicodechar{′}{\prime}
 \newunicodechar{□}{\Box}% also: \square
@@ -1385,8 +1480,8 @@
 % endregion subscript digits -----------------------------------------------------------
 
 % region subscript symbols -------------------------------------------------------------
-\newunicodechar{₊}{\subscript{\smallplus}}
-\newunicodechar{₋}{\subscript{\smallminus}}
+\newunicodechar{₊}{\subscript{\unaryplus}}
+\newunicodechar{₋}{\subscript{\unaryminus}}
 \newunicodechar{₌}{\subscript{=}}
 \newunicodechar{₍}{\subscript{(}}% chktex 9 chktex 10
 \newunicodechar{₎}{\subscript{)}}% chktex 9 chktex 10
@@ -1481,8 +1576,8 @@
 % endregion superscript digits ---------------------------------------------------------
 
 % region superscript symbols -----------------------------------------------------------
-\newunicodechar{⁺}{\superscript{\smallplus}}
-\newunicodechar{⁻}{\superscript{\smallminus}}
+\newunicodechar{⁺}{\superscript{\unaryplus}}
+\newunicodechar{⁻}{\superscript{\unaryminus}}
 \newunicodechar{⁼}{\superscript{=}}
 \newunicodechar{⁽}{\superscript{(}}% chktex 9
 \newunicodechar{⁾}{\superscript{)}}% chktex 9

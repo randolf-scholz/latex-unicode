@@ -248,6 +248,11 @@
 \RequirePackage{bm}
 % endregion requirements ---------------------------------------------------------------
 
+\ProvideDocumentCommand{\DeclareUnicodeCharacter}{m m}{%
+	% https://tex.stackexchange.com/a/195460
+	\begingroup\lccode`|=\string"#1\relax
+	\lowercase{\endgroup\newunicodechar{|}}{#2}%
+}
 
 % region apply patches -----------------------------------------------------------------
 % FIXME: Patch centernot to support \not as macro with argument.
@@ -469,16 +474,16 @@
 \NewDocumentCommand{\mathcentoldstyle}   {} {\mathord{\text{\textcentoldstyle}}}   % 
 \NewDocumentCommand{\mathcolonmonetary}  {} {\mathord{\text{\textcolonmonetary}}}  % ₡
 \NewDocumentCommand{\mathcurrency}       {} {\mathord{\text{\textcurrency}}}       % ¤
-\NewDocumentCommand{\mathdollar}         {} {\mathord{\text{\textdollar}}}         % $ (use \$)
-\NewDocumentCommand{\mathdollaroldstyle} {} {\mathord{\text{\textdollaroldstyle}}} %  
-\NewDocumentCommand{\mathdong}           {} {\mathord{\text{\textdong}}}           % ₫ 
-\NewDocumentCommand{\matheuro}           {} {\mathord{\text{\texteuro}}}           % € 
-\NewDocumentCommand{\mathflorin}         {} {\mathord{\text{\textflorin}}}         % ƒ 
-\NewDocumentCommand{\mathguarani}        {} {\mathord{\text{\textguarani}}}        %  
-\NewDocumentCommand{\mathlira}           {} {\mathord{\text{\textlira}}}           % ₤ 
-\NewDocumentCommand{\mathnaira}          {} {\mathord{\text{\textnaira}}}          % ₦ 
-\NewDocumentCommand{\mathpeso}           {} {\mathord{\text{\textpeso}}}           %  
-\NewDocumentCommand{\mathsterling}       {} {\mathord{\text{\textsterling}}}       % £ (use \pounds)
+% \NewDocumentCommand{\mathdollar}         {} {\mathord{\text{\textdollar}}}         % $ (use \$)
+\NewDocumentCommand{\mathdollaroldstyle} {} {\mathord{\text{\textdollaroldstyle}}} % 
+\NewDocumentCommand{\mathdong}           {} {\mathord{\text{\textdong}}}           % ₫
+\NewDocumentCommand{\matheuro}           {} {\mathord{\text{\texteuro}}}           % €
+\NewDocumentCommand{\mathflorin}         {} {\mathord{\text{\textflorin}}}         % ƒ
+\NewDocumentCommand{\mathguarani}        {} {\mathord{\text{\textguarani}}}        % 
+\NewDocumentCommand{\mathlira}           {} {\mathord{\text{\textlira}}}           % ₤
+\NewDocumentCommand{\mathnaira}          {} {\mathord{\text{\textnaira}}}          % ₦
+\NewDocumentCommand{\mathpeso}           {} {\mathord{\text{\textpeso}}}           % 
+% \NewDocumentCommand{\mathsterling}       {} {\mathord{\text{\textsterling}}}       % £ (use \pounds)
 \NewDocumentCommand{\mathwon}            {} {\mathord{\text{\textwon}}}            % ₩
 \NewDocumentCommand{\mathyen}            {} {\mathord{\text{\textyen}}}            % ¥
 % legal symbols
@@ -513,7 +518,6 @@
 \NewDocumentCommand{\autounaryplus}{}{\ifmmode\mathunaryplus\else\textunaryplus\fi}%
 
 \NewDocumentCommand{\textfahrenheit}{}{\textrm{\textdegree{}F}}% ℉ (U+2109) degree Fahrenheit sign
-\NewDocumentCommand{\mathfahrenheit}{}{\mathord{\textrm{\textdegree{}F}}}% degree Fahrenheit sign in math mode
 \NewDocumentCommand{\mathfahrenheit}{}{\mathord{\textrm{\textdegree{}F}}}% degree Fahrenheit sign in math mode
 
 \ProvideDocumentCommand{\degreeC}{}{\degree\autorm{C}}% degree Celsius
@@ -551,8 +555,6 @@
 % SEE: https://tex.stackexchange.com/a/655980
 \DeclareMathSymbol\unicode@increment{\mathord}{operators}{\Delta}
 % \NewDocumentCommand{\unicode@increment}{}{\mathord{\Delta}}% U+2206
-\NewDocumentCommand{\unicode@unaryminus}{}{\ifmmode\mathord{\texttt{-}}\else\texttt{-}\fi}
-\NewDocumentCommand{\unicode@unaryplus}{}{\ifmmode\mathord{\texttt{+}}\else\texttt{+}\fi}
 % binary operators
 \NewDocumentCommand{\unicode@minus}{}{\mathbin{-}}% force binary
 \NewDocumentCommand{\unicode@doubleplus}{}{\mathbin{+\!\!\!+}}% ⧺ (U+29FA) % chktex 21
@@ -890,13 +892,32 @@
 \newunicodechar{°}{\degree}% U+00B0 (Degree Sign)
 % endregion builtin auto-mode commands -------------------------------------------------
 
+% region meta characters ---------------------------------------------------------------
+% Disable variation selectors
+\DeclareUnicodeCharacter{FE00}{}% U+FE00 (Variation Selector-1)
+\DeclareUnicodeCharacter{FE01}{}% U+FE01 (Variation Selector-2)
+\DeclareUnicodeCharacter{FE02}{}% U+FE02 (Variation Selector-3)
+\DeclareUnicodeCharacter{FE03}{}% U+FE03 (Variation Selector-4)
+\DeclareUnicodeCharacter{FE04}{}% U+FE04 (Variation Selector-5)
+\DeclareUnicodeCharacter{FE05}{}% U+FE05 (Variation Selector-6)
+\DeclareUnicodeCharacter{FE06}{}% U+FE06 (Variation Selector-7)
+\DeclareUnicodeCharacter{FE07}{}% U+FE07 (Variation Selector-8)
+\DeclareUnicodeCharacter{FE08}{}% U+FE08 (Variation Selector-9)
+\DeclareUnicodeCharacter{FE09}{}% U+FE09 (Variation Selector-10)
+\DeclareUnicodeCharacter{FE0A}{}% U+FE0A (Variation Selector-11)
+\DeclareUnicodeCharacter{FE0B}{}% U+FE0B (Variation Selector-12)
+\DeclareUnicodeCharacter{FE0C}{}% U+FE0C (Variation Selector-13)
+\DeclareUnicodeCharacter{FE0D}{}% U+FE0D (Variation Selector-14)
+\DeclareUnicodeCharacter{FE0E}{}% U+FE0E (Variation Selector-15), used to force text presentation
+\DeclareUnicodeCharacter{FE0F}{}% U+FE0F (Variation Selector-16), used to force emoji presentation
+% endregion meta characters ------------------------------------------------------------
+
 % region misc --------------------------------------------------------------------------
 % \newunicodechar{–}{\textendash}
 % \newunicodechar{—}{\textemdash}
 % \newunicodechar{“}{\textquotedblleft}
 % \newunicodechar{”}{\textquotedblright}
 % \newunicodechar{™}{\texttrademark}
-
 \newunicodechar{ħ}{\hbar}
 \newunicodechar{ℓ}{\ell}
 \newunicodechar{ℵ}{\aleph}
@@ -907,12 +928,12 @@
 \newunicodechar{⊺}{\intercal}
 \newunicodechar{✓}{\cmark}
 \newunicodechar{✔}{\hcmark}
-\newunicodechar{✅}{\CMARK}
+\newunicodechar{✅}{\CMARK}  % NOTE: map to VS16 version ✅️
 \newunicodechar{✗}{\xmark}
 \newunicodechar{✘}{\hxmark}
-\newunicodechar{❌}{\XMARK}
-\newunicodechar{❓}{\QMARK}
-\newunicodechar{❗}{\EMARK}
+\newunicodechar{❌}{\XMARK}  % NOTE: map to VS16 version ❌️
+\newunicodechar{❓}{\QMARK}  % NOTE: map to VS16 version ❓️
+\newunicodechar{❗}{\EMARK}  % NOTE: map to VS16 version ❗️
 \newunicodechar{⁇}{\Question}% U+2047 (Double Question Mark)
 \newunicodechar{‼}{\Exclam}% U+203C (Double Exclamation Mark)
 \newunicodechar{ı}{\autoimath}

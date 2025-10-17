@@ -1,12 +1,12 @@
 exclude: '\.idea/|\.vscode/|dev/'
 minimum_pre_commit_version: 3.6.0
 default_language_version:
-  python: '3.12'
-  node: '22.14.0'
+  python: '3.13'
+  node: '22.20.0'
 repos:
   # https://pre-commit.com/hooks.html
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -23,7 +23,7 @@ repos:
         exclude_types: [tsv]
   # markdownlint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.44.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
         args: [
@@ -34,7 +34,7 @@ repos:
           ]
   # shellcheck
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.10.0.1
+    rev: v0.11.0.1
     hooks:
       - id: shellcheck
         args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]

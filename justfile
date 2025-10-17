@@ -53,7 +53,7 @@ test_compile $file $compiler:
     #!/usr/bin/env bash
     # Tries to compile a LaTeX file with a given compiler
     # Exit code: 0 if successful, 1 if failed
-    # stdout: "✅" if successful, "⚠️" if successful with warnings, "❌" if failed
+    # stdout: "✅" if successful, "⚠️" if successful with warnings, "❌️" if failed
     name="$(basename "$file" '.tex')"
     path="$(dirname "$file")"
     OUTPUT_DIR="$BUILD_DIR/$compiler/$path/$name"
@@ -69,7 +69,7 @@ test_compile $file $compiler:
 
     # try to compile with -Werror
     if latexmk -Werror "${options[@]}" "$file" > /dev/null 2>&1; then
-        echo -e "✅"
+        echo -e "✅️"
         cp "$OUTPUT_DIR/$name.pdf" "$TARGET_DIR/$name.pdf"
         exit 0
     # compile without -Werror
@@ -78,7 +78,7 @@ test_compile $file $compiler:
         cp "$OUTPUT_DIR/$name.pdf" "$TARGET_DIR/$name.pdf"
         exit 0
     else
-        echo -e "❌"
+        echo -e "❌️"
         exit 1
     fi
 
@@ -113,6 +113,11 @@ test_one $file:  # compile a single test file
 [working-directory: 'tests']  # FIXME: doesn't seem to support {{TEST_DIR}}
 test $case="*":  # run all tests
     #!/usr/bin/env bash
+
+    # # If the parent gets SIGINT/SIGTERM, terminate all children in our process group.
+    # trap 'echo; echo "Aborting…"; kill -- -$$' INT TERM
+    # # Also make sure children don’t linger if the script exits for any reason.
+    # trap 'kill -- -$$' EXIT
 
     # run the setup task
     just test_setup

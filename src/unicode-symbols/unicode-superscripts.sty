@@ -112,13 +112,13 @@
 %
 \usuperscript@log{Terminating with current list '\meaning\usuperscript@list'}%
 %
-\ifmmode%
-	\usuperscript@log{ >>> Inserting '^{\meaning\usuperscript@list}{}'}%
-	\sp\bgroup\usuperscript@list\egroup%
-\else%
+\TextOrMath{%
 	\usuperscript@log{ >>> Inserting '\textsuperscript{\meaning\usuperscript@list}'}%
 	\textsuperscript{\usuperscript@list}%
-\fi%
+}{%
+	\usuperscript@log{ >>> Inserting '^{\meaning\usuperscript@list}{}'}%
+	\sp\bgroup\usuperscript@list\egroup%
+}%
 %
 \usuperscript@list@reset%
 }

@@ -1,0 +1,63 @@
+\documentclass{unittest}
+\tracinglostchars=3%
+\usepackage{textalpha}
+
+% % Use it for the MICRO SIGN character::
+% \DeclareTextSymbol{\textmicro}{TS1}{181} % micro sign
+% \DeclareTextSymbolDefault{\textmicro}{TS1}
+% \ifdefined\DeclareUnicodeCharacter
+%   \DeclareUnicodeCharacter{00B5}{\textmicro} % micro sign
+% \fi
+
+% \makeatletter
+% \ifdefined\UnicodeEncodingName % set by LaTeX for Unicode-aware engines
+%   \input{tuenc-greek.def}
+% %   \textalpha@define@breathings{\UnicodeEncodingName}
+% \else
+%   \@ifl@aded{def}{lgrenc}
+%     {}
+%     {\input{lgrenc.def}
+%   }
+% \fi
+
+% % \@ifl@aded{def}{lgrenc}{
+% \DeclareTextSymbolDefault{\textalpha}{LGR}
+% \DeclareTextSymbolDefault{\textbeta}{LGR}
+% % }{}
+% \makeatother
+
+\ProvideDocumentCommand{\textomikron}{}{o}
+
+\NewDocumentCommand{\makerow}{m}{%
+#1 & \textbf{#1} & \textit{#1} & \textbf{\textit{#1}} \\
+}
+
+\begin{document}
+\begin{tabular}{lllll}
+\makerow{\textalpha}
+\makerow{\textbeta}
+\makerow{\textgamma}
+\makerow{\textdelta}
+\makerow{\textepsilon}
+\makerow{\textzeta}
+\makerow{\texteta}
+\makerow{\texttheta}
+\makerow{\textiota}
+\makerow{\textkappa}
+\makerow{\textlambda}
+\makerow{\textmugreek}
+\makerow{\textmu}
+\makerow{\textnu}
+\makerow{\textxi}
+\makerow{\textomikron}
+\makerow{\textpi}
+\makerow{\textrho}
+\makerow{\textsigma}
+\makerow{\texttau}
+\makerow{\textupsilon}
+\makerow{\textphi}
+\makerow{\textchi}
+\makerow{\textpsi}
+\makerow{\textomega}
+\end{tabular}
+\end{document}

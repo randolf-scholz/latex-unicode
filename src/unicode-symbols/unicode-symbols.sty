@@ -116,11 +116,44 @@
 }{% apply bm patch
 	% SEE: https://tex.stackexchange.com/q/3676
 	\ProvideDocumentCommand{\hmmax}{}{0}% prevents "too many alphabets" error
-	\ProvideDocumentCommand{\bmmax}{}{0}% prevents "too many alphabets" error
+	% NOTE: we pick 3, since stix only leaves 4 free slots
+	%   and it seems we need to pick bmmax≥2 to get italic correction.
+	\ProvideDocumentCommand{\bmmax}{}{3}% prevents "too many alphabets" error
 }
 
 \RequirePackage{iftex}
 \ifPDFTeX%
+	% NOTE: Font specfication is documented in 'fntguide' and 'enguide'
+	%	(call `texdoc fntguide` in a shell)
+	% \DeclareMathAlphabet{<name>}{<encoding>}{<family>}{<series>}{<shape>}
+
+	% Encoding: (see also 'encguide')
+	%   OT1:	7-bit text encoding (Knuth)
+	%   OT2-6:	7-bit text encoding for cyrillic and other alphabets
+	%   T1: 	8-bit text encoding (Cork)
+	%   T2-T7:  8-bit text encoding for cyrillic and other alphabets
+	%   TS1:	8-bit text encoding (Jörg Knappen)
+	%   OML:	7-bit math italic encoding (Knuth)
+	%   OMS:	7-bit math symbol encoding (Knuth)
+	%   OMX:	7-bit math extension encoding (Knuth)
+	%   LGR:	8-bit greek font encoding
+
+	% Series values:
+	%   m:   Medium weight and width
+	%   b:   Bold weight and medium width
+	%   bx:  Bold extended (wider characters)
+	%   sb:  Semi-bold and medium width
+	%   sbx: Semi-bold extended
+	%   c:   medium weight, condensed width
+
+	% Shapes:
+	%   n:   	Normal
+	%   it:  	Italic
+	%   sl:  	Slanted (fake italics via oblique transform)
+	%   sc:  	Small caps
+	%   scit:	Small caps italic
+	%   scsl:	Small caps slanted
+	%   sw:  	swash
 	\RequirePackage[T1]{fontenc}      % use 8-bit T1 fonts
 	\RequirePackage[utf8]{inputenc}   % allow utf-8 input
 \else
@@ -153,35 +186,7 @@
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
 	% SEE: https://tex.stackexchange.com/a/82747
 
-	% NOTE: Font specfication is documented in 'fntguide'.
-	%   \DeclareMathAlphabet{<name>}{<encoding>}{<family>}{<series>}{<shape>}
 
-	% Encoding: (see also 'encguide')
-	%   OT1:	7-bit text encoding (Knuth)
-	%   OT2-6:	7-bit text encoding for cyrillic and other alphabets
-	%   T1: 	8-bit text encoding (Cork)
-	%   T2-T7:  8-bit text encoding for cyrillic and other alphabets
-	%   TS1:	8-bit text encoding (Jörg Knappen)
-	%   OML:	7-bit math italic encoding (Knuth)
-	%   OMS:	7-bit math symbol encoding (Knuth)
-	%   OMX:	7-bit math extension encoding (Knuth)
-
-	% Series values:
-	%   m:   Medium weight and width
-	%   b:   Bold weight and medium width
-	%   bx:  Bold extended (wider characters)
-	%   sb:  Semi-bold and medium width
-	%   sbx: Semi-bold extended
-	%   c:   medium weight, condensed width
-
-	% Shapes:
-	%   n:   	Normal
-	%   it:  	Italic
-	%   sl:  	Slanted (fake italics via oblique transform)
-	%   sc:  	Small caps
-	%   scit:	Small caps italic
-	%   scsl:	Small caps slanted
-	%   sw:  	swash
 
 	% Question: \DeclareSymbolFont vs \DeclareMathAlphabet?
 	%  - \DeclareSymbolFont
@@ -372,33 +377,35 @@
 % region internal commands -------------------------------------------------------------
 
 % region aliases -----------------------------------------------------------------------
+% NOTE: these commands will be used to define individual unicode characters later on.
 % Serifs: rm, bf, it, bfit
-\NewDocumentCommand{\autorm}  {m}{\ifmmode{\mathrm{#1}}\else{\textrm{#1}}\fi}
-\NewDocumentCommand{\autobf}  {m}{\ifmmode{\mathbm{#1}}\else{\textbf{#1}}\fi}
-\NewDocumentCommand{\autoit}  {m}{\ifmmode{\mathit{#1}}\else{\textit{#1}}\fi}
-\NewDocumentCommand{\autobfit}{m}{\ifmmode{\mathbfit{#1}}\else{\textbfit{#1}}\fi}
+\NewDocumentCommand{\autorm}  {m}{\TextOrMath{{\textrm{#1}}}{{\mathrm{#1}}}}
+\NewDocumentCommand{\autobf}  {m}{\TextOrMath{{\textbf{#1}}}{{\mathbm{#1}}}}
+\NewDocumentCommand{\autoit}  {m}{\TextOrMath{{\textit{#1}}}{{\mathit{#1}}}}
+\NewDocumentCommand{\autobfit}{m}{\TextOrMath{{\textbfit{#1}}}{{\mathbfit{#1}}}}
 % sf, bfsf, sfit, bfsfit
-\NewDocumentCommand{\autosf}    {m}{\ifmmode{\mathsf{#1}}\else{\textsf{#1}}\fi}
-\NewDocumentCommand{\autobfsf}  {m}{\ifmmode{\mathsfit{#1}}\else{\textsfit{#1}}\fi}
-\NewDocumentCommand{\autosfit}  {m}{\ifmmode{\mathbfsf{#1}}\else{\textbfsf{#1}}\fi}
-\NewDocumentCommand{\autobfsfit}{m}{\ifmmode{\mathbfsfit{#1}}\else{\textbfsfit{#1}}\fi}
+\NewDocumentCommand{\autosf}    {m}{\TextOrMath{{\textsf{#1}}}{{\mathsf{#1}}}}
+\NewDocumentCommand{\autobfsf}  {m}{\TextOrMath{{\textsfit{#1}}}{{\mathsfit{#1}}}}
+\NewDocumentCommand{\autosfit}  {m}{\TextOrMath{{\textbfsf{#1}}}{{\mathbfsf{#1}}}}
+\NewDocumentCommand{\autobfsfit}{m}{\TextOrMath{{\textbfsfit{#1}}}{{\mathbfsfit{#1}}}}
 % Miscellaneous
-\NewDocumentCommand{\autonormal} {m}{\ifmmode{\mathnormal{#1}}\else{\textnormal{#1}}\fi}
-\NewDocumentCommand{\autott}     {m}{\ifmmode{\mathtt{#1}}\else{\texttt{#1}}\fi}
-\NewDocumentCommand{\autocircled}{m}{\ifmmode{\mathcircled{#1}}\else{\textcircled{#1}}\fi}
-
-\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
-\NewDocumentCommand{\circled}{m}{\ifmmode{\mathcircled{\mathsf{\scriptstyle#1}}}\else\textcircled{\textsf{\scriptsize#1}}\fi}
-
+\NewDocumentCommand{\autonormal} {m}{\TextOrMath{{\textnormal{#1}}}{{\mathnormal{#1}}}}
+\NewDocumentCommand{\autott}     {m}{\TextOrMath{{\texttt{#1}}}{{\mathtt{#1}}}}
+\NewDocumentCommand{\autocircled}{m}{\TextOrMath{{\textcircled{#1}}}{{\mathcircled{#1}}}}
+\NewDocumentCommand{\circled}{m}{\TextOrMath{{\textcircled{\textsf{\scriptsize#1}}}}{{\mathcircled{\mathsf{\scriptstyle#1}}}}}
 
 \NewDocumentCommand{\romannumber}{m}{%
-	\ifmmode\mathrm{\romannumeral#1\relax}%
-	\else{\rmfamily\romannumeral#1\relax}\fi%
+	\TextOrMath%
+		{\rmfamily\romannumeral#1\relax}%
+		{\mathrm{\romannumeral#1\relax}}%
 }
 \NewDocumentCommand{\RomanNumber}{m}{%
-	\ifmmode\mathrm{\expandafter\@slowromancap\romannumeral#1@}% chktex 21
-	\else{\rmfamily\expandafter\@slowromancap\romannumeral#1@}\fi% chktex 21
+	\TextOrMath%
+		{\rmfamily\expandafter\@slowromancap\romannumeral#1@}%
+		{\mathrm{\expandafter\@slowromancap\romannumeral#1@}}%
 }
+
+\NewDocumentCommand{\inftyabove}{m}{\overset{\infty}{#1}}
 % endregion aliases --------------------------------------------------------------------
 
 
@@ -441,29 +448,30 @@
 % region aliases -----------------------------------------------------------------------
 % Allow math-only commands to be used in text mode by using their text-mode equivalents.
 % NOTE: based on Table 2 and Table 3 of symbols-a4.pdf
-\NewDocumentCommand{\autodagger}{}{\ifmmode\dagger\else\textdagger\fi}% † also: \dag
-\NewDocumentCommand{\autoddagger}{}{\ifmmode\ddagger\else\textdaggerdbl\fi}% ‡ also: \ddag
-\NewDocumentCommand{\autotimes}{}{\ifmmode\times\else\texttimes\fi}% ×
-\NewDocumentCommand{\autoleftarrow}{}{\ifmmode\leftarrow\else\textleftarrow\fi}% ←
-\NewDocumentCommand{\autorightarrow}{}{\ifmmode\rightarrow\else\textrightarrow\fi}% →
-\NewDocumentCommand{\autodownarrow}{}{\ifmmode\downarrow\else\textdownarrow\fi}% ↓
-\NewDocumentCommand{\autouparrow}{}{\ifmmode\uparrow\else\textuparrow\fi}% ↑
-\NewDocumentCommand{\autorangle}{}{\ifmmode\rangle\else\textrangle\fi}% ⟩
-\NewDocumentCommand{\autolangle}{}{\ifmmode\langle\else\textlangle\fi}% ⟨
-\NewDocumentCommand{\autoneg}{}{\ifmmode\neg\else\textlnot\fi}% ¬
-\NewDocumentCommand{\autodiv}{}{\ifmmode\div\else\textdiv\fi}% ÷
-\NewDocumentCommand{\autopm}{}{\ifmmode\pm\else\textpm\fi}% ±
-\NewDocumentCommand{\autoVert}{}{\ifmmode\Vert\else\textbardbl\fi}% ‖
-\NewDocumentCommand{\autoast}{}{\ifmmode\ast\else\textasteriskcentered\fi}% ∗
-\NewDocumentCommand{\autosurd}{}{\ifmmode\surd\else\textsurd\fi}% √
-\NewDocumentCommand{\autovert}{}{\ifmmode\vert\else\textbar\fi}% |
-% \NewDocumentCommand{\autobigcirc}{}{\ifmmode\bigcirc\else\textbigcircle\fi}% ◯ (U+25CB) not the same as ◯ (U+25EF)
-% \NewDocumentCommand{\autobullet}{}{\ifmmode\bullet\else\textbullet\fi}% • (U+2022) not the same as ∙ (U+2219)
-% \NewDocumentCommand{\autocdotp}{}{\ifmmode\cdot\else\textperiodcentered\fi}% · (U+00B7) not the same as ⋅ (U+22C5)
+\NewDocumentCommand{\autodagger}{}{\TextOrMath{\textdagger}{\dagger}}% † also: \dag
+\NewDocumentCommand{\autoddagger}{}{\TextOrMath{\textdaggerdbl}{\ddagger}}% ‡ also: \ddag
+\NewDocumentCommand{\autotimes}{}{\TextOrMath{\texttimes}{\times}}% ×
+\NewDocumentCommand{\autoleftarrow}{}{\TextOrMath{\textleftarrow}{\leftarrow}}% ←
+\NewDocumentCommand{\autorightarrow}{}{\TextOrMath{\textrightarrow}{\rightarrow}}% →
+\NewDocumentCommand{\autodownarrow}{}{\TextOrMath{\textdownarrow}{\downarrow}}% ↓
+\NewDocumentCommand{\autouparrow}{}{\TextOrMath{\textuparrow}{\uparrow}}% ↑
+\NewDocumentCommand{\autorangle}{}{\TextOrMath{\textrangle}{\rangle}}% ⟩
+\NewDocumentCommand{\autolangle}{}{\TextOrMath{\textlangle}{\langle}}% ⟨
+\NewDocumentCommand{\autoneg}{}{\TextOrMath{\textlnot}{\neg}}% ¬
+\NewDocumentCommand{\autodiv}{}{\TextOrMath{\textdiv}{\div}}% ÷
+\NewDocumentCommand{\autopm}{}{\TextOrMath{\textpm}{\pm}}% ±
+\NewDocumentCommand{\autoVert}{}{\TextOrMath{\textbardbl}{\Vert}}% ‖
+\NewDocumentCommand{\autoast}{}{\TextOrMath{\textasteriskcentered}{\ast}}% ∗
+\NewDocumentCommand{\autosurd}{}{\TextOrMath{\textsurd}{\surd}}% √
+\NewDocumentCommand{\autovert}{}{\TextOrMath{\textbar}{\vert}}% |
+% \NewDocumentCommand{\autobigcirc}{}{\TextOrMath{\textbigcircle}{\bigcirc}}% ◯ (U+25CB) not the same as ◯ (U+25EF)
+% \NewDocumentCommand{\autobullet}{}{\TextOrMath{\textbullet}{\bullet}}% • (U+2022) not the same as ∙ (U+2219)
+% \NewDocumentCommand{\autocdotp}{}{\TextOrMath{\textperiodcentered}{\cdot}}% · (U+00B7) not the same as ⋅ (U+22C5)
 
 
 % allow text-only commands to be used in math mode by wrapping them in \text{}
-\NewDocumentCommand{\mathmu}             {} {\mathord{\text{\textmu}}}             % micro sign in math mode
+\NewCommandCopy{\textmicro}{\textmu}% micro sign
+\NewDocumentCommand{\mathmicro}          {} {\mathord{\text{\textmicro}}}          % micro sign in math mode
 \NewDocumentCommand{\mathdegree}         {} {\mathord{\text{\textdegree}}}         % degree sign in math mode
 \NewDocumentCommand{\mathcelsius}        {} {\mathord{\text{\textcelsius}}}        % degree Celsius sign in math mode
 \NewDocumentCommand{\mathmho}            {} {\mathord{\text{\textmho}}}            % mho sign in math mode
@@ -493,16 +501,16 @@
 \NewDocumentCommand{\mathtrademark}      {} {\mathord{\text{\texttrademark}}}      % ™
 \NewDocumentCommand{\mathservicemark}    {} {\mathord{\text{\textservicemark}}}    % ℠
 
-\NewDocumentCommand{\automu}{}{\ifmmode\mathmu\else\textmu\fi}% micro sign
-\NewDocumentCommand{\autodegree}{}{\ifmmode\mathdegree\else\textdegree\fi}% degree sign
-\NewDocumentCommand{\automho}{}{\ifmmode\mathmho\else\textmho\fi}% ℧
-\NewDocumentCommand{\autoohm}{}{\ifmmode\mathohm\else\textohm\fi}% Ω
+\NewDocumentCommand{\automicro}{}{\TextOrMath{{\textmicro}}{{\mathmicro}}}% micro sign
+\NewDocumentCommand{\autodegree}{}{\TextOrMath{{\textdegree}}{{\mathdegree}}}% degree sign
+\NewDocumentCommand{\automho}{}{\TextOrMath{{\textmho}}{{\mathmho}}}% ℧
+\NewDocumentCommand{\autoohm}{}{\TextOrMath{{\textohm}}{{\mathohm}}}% Ω
 
 % allow math-only commands to be used in text mode by wrapping them in \ensuremath{}
 \NewDocumentCommand{\textimath}{}{\ensuremath{\imath}}% ı
-\NewDocumentCommand{\autoimath}{}{\ifmmode\imath\else\textimath\fi}% ı
+\NewDocumentCommand{\autoimath}{}{\TextOrMath{\textimath}{\imath}}% ı
 \NewDocumentCommand{\textjmath}{}{\ensuremath{\jmath}}% ȷ
-\NewDocumentCommand{\autojmath}{}{\ifmmode\jmath\else\textjmath\fi}% ȷ
+\NewDocumentCommand{\autojmath}{}{\TextOrMath{\textjmath}{\jmath}}% ȷ
 
 
 % NOTE: https://github.com/latex3/hyperref/issues/379
@@ -510,16 +518,16 @@
 % Essentially the hyperref package fudges with commands prefixed by text.
 \DeclareTextCommandDefault{\textleftrightarrow}{\ensuremath{{}\leftrightarrow{}}}
 \DeclareTextCommandDefault{\textupdownarrow}{\ensuremath{{}\updownarrow{}}}
-\NewDocumentCommand{\autoleftrightarrow}{}{\ifmmode\leftrightarrow\else\textleftrightarrow\fi}% ↔
-\NewDocumentCommand{\autoupdownarrow}{}{\ifmmode\updownarrow\else\textupdownarrow\fi}% ↕
+\NewDocumentCommand{\autoleftrightarrow}{}{\TextOrMath{\textleftrightarrow}{\leftrightarrow}}% ↔
+\NewDocumentCommand{\autoupdownarrow}{}{\TextOrMath{\textupdownarrow}{\updownarrow}}% ↕
 
 % NOTE: addtional custom symbols
-\NewDocumentCommand{\textunaryminus}{}{\texttt{+}}% ﹢ (U+FE62)
-\NewDocumentCommand{\textunaryplus}{}{\texttt{-}}% ﹣ (U+FE63)
-\NewDocumentCommand{\mathunaryminus}{}{\mathord{\textunaryminus}}%
+\NewDocumentCommand{\textunaryplus}{}{\texttt{+}}% ﹢ (U+FE62)
+\NewDocumentCommand{\textunaryminus}{}{\texttt{-}}% ﹣ (U+FE63)
 \NewDocumentCommand{\mathunaryplus}{}{\mathord{\textunaryplus}}%
-\NewDocumentCommand{\autounaryminus}{}{\ifmmode\mathunaryminus\else\textunaryminus\fi}%
-\NewDocumentCommand{\autounaryplus}{}{\ifmmode\mathunaryplus\else\textunaryplus\fi}%
+\NewDocumentCommand{\mathunaryminus}{}{\mathord{\textunaryminus}}%
+\NewDocumentCommand{\autounaryminus}{}{\TextOrMath{\textunaryminus}{\mathunaryminus}}%
+\NewDocumentCommand{\autounaryplus}{}{\TextOrMath{\textunaryplus}{\mathunaryplus}}%
 
 \NewDocumentCommand{\textfahrenheit}{}{\textrm{\textdegree{}F}}% ℉ (U+2109) degree Fahrenheit sign
 \NewDocumentCommand{\mathfahrenheit}{}{\mathord{\textrm{\textdegree{}F}}}% degree Fahrenheit sign in math mode
@@ -549,17 +557,19 @@
 \let\unicode@unaryplus=\autounaryplus%
 \let\unicode@unaryminus=\autounaryminus%
 
-
-
-\NewDocumentCommand{\unicode@smalltriangleup}{}{}%▵
-\NewDocumentCommand{\unicode@transpose}{}{\ifmmode\mkern-1.5mu\mathsf{T}\mkern-1.5mu\else\kern-0.1em\textsf{T}\kern-0.1em\fi}
-\NewDocumentCommand{\unicode@hermitian}{}{\ifmmode\mkern-1.5mu\mathsf{H}\mkern-1.5mu\else\kern-0.1em\textsf{H}\kern-0.1em\fi}
+\NewDocumentCommand{\unicode@texttranspose}{}{\kern-0.1em\textsf{T}\kern-0.1em}
+\NewDocumentCommand{\unicode@texthermitian}{}{\kern-0.1em\textsf{H}\kern-0.1em}
+\NewDocumentCommand{\unicode@mathtranspose}{}{\mkern-1.5mu\mathsf{T}\mkern-1.5mu}
+\NewDocumentCommand{\unicode@mathhermitian}{}{\mkern-1.5mu\mathsf{H}\mkern-1.5mu}
+\NewDocumentCommand{\unicode@transpose}{}{\TextOrMath{\unicode@texttranspose}{\unicode@mathtranspose}}%
+\NewDocumentCommand{\unicode@hermitian}{}{\TextOrMath{\unicode@texthermitian}{\unicode@mathhermitian}}%
 % unary operators
 \NewDocumentCommand{\unicode@contradiction}{}{\mathord{\downzigzagarrow}}
 % SEE: https://tex.stackexchange.com/a/655980
 \DeclareMathSymbol\unicode@increment{\mathord}{operators}{\Delta}
 % \NewDocumentCommand{\unicode@increment}{}{\mathord{\Delta}}% U+2206
 % binary operators
+\NewDocumentCommand{\unicode@smalltriangleup}{}{\mathbin{\scriptsize\Delta}}% ▵
 \NewDocumentCommand{\unicode@minus}{}{\mathbin{-}}% force binary
 \NewDocumentCommand{\unicode@doubleplus}{}{\mathbin{+\!\!\!+}}% ⧺ (U+29FA) % chktex 21
 \NewDocumentCommand{\unicode@cupdot}{}{\mathbin{\mathaccent\cdot\cup}}% SEE: https://tex.stackexchange.com/a/91059

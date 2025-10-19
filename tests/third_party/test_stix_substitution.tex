@@ -3,11 +3,11 @@
 \usepackage{newunicodechar}
 
 \newunicodechar{Γ}{\ensuremath{\Gamma}}
-\newunicodechar{𝚪}{\ifmmode\mathbf{Γ}\else\textbf{Γ}\fi}
-\newunicodechar{𝛤}{\ifmmode\mathit{Γ}\else\textbf{Γ}\fi}
-\newunicodechar{𝜞}{\ifmmode\mathbfit{Γ}\else\textbf{Γ}\fi}
-\newunicodechar{𝝘}{\ifmmode\mathbfsf{Γ}\else\textbf{Γ}\fi}
-\newunicodechar{𝞒}{\ifmmode\mathbfsfit{Γ}\else\textbf{Γ}\fi}
+\newunicodechar{𝚪}{\TextOrMath{\textbf{Γ}}{\mathbf{Γ}}}
+\newunicodechar{𝛤}{\TextOrMath{\textbf{Γ}}{\mathit{Γ}}}
+\newunicodechar{𝜞}{\TextOrMath{\textbf{Γ}}{\mathbfit{Γ}}}
+\newunicodechar{𝝘}{\TextOrMath{\textbf{Γ}}{\mathbfsf{Γ}}}
+\newunicodechar{𝞒}{\TextOrMath{\textbf{Γ}}{\mathbfsfit{Γ}}}
 
 \begin{document}
 \begin{tabular}{cc|cccc|cccc}% chktex 44

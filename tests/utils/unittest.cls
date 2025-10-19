@@ -13,15 +13,17 @@
 
 \DeclareKeys[\ClassName]{
 	debug.if    = @unittest@debug,
-	debug.usage = preamble,
+	debug.usage = load,
 }
+\PackageInfo{unitest}{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa}
 \DeclareUnknownKeyHandler[\ClassName]{%
+	\PackageInfo{\ClassName}{Unknown key '\CurrentOption', passing to 'standalone' class.}%
 	\PassOptionsToClass{\CurrentOption}{standalone}
 }
 \SetKeys[\ClassName]{debug=false}
 \ProcessKeyOptions[\ClassName]\relax%
 
-\LoadClassWithOptions{standalone}
+\LoadClass{standalone}
 \RequirePackage[verbose]{newunicodechar}
 \RequirePackage{booktabs,multicol,arydshln}
 

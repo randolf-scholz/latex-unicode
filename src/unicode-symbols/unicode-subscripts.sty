@@ -112,13 +112,13 @@
 %
 \usubscript@log{Terminating with current list '\meaning\usubscript@list'}%
 %
-\ifmmode%
-	\usubscript@log{ >>> Inserting '_{\meaning\usubscript@list}{}'}%
-	\sb\bgroup\usubscript@list\egroup%
-\else%
+\TextOrMath{%
 	\usubscript@log{ >>> Inserting '\textsubscript{\meaning\usubscript@list}'}%
 	\textsubscript{\usubscript@list}%
-\fi%
+}{%
+	\usubscript@log{ >>> Inserting '_{\meaning\usubscript@list}{}'}%
+	\sb\bgroup\usubscript@list\egroup%
+}
 %
 \usubscript@list@reset%
 }

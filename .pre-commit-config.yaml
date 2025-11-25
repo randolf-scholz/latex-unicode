@@ -1,8 +1,8 @@
 exclude: '\.idea/|\.vscode/|dev/'
-minimum_pre_commit_version: 3.6.0
+minimum_pre_commit_version: 4.5.0
 default_language_version:
   python: '3.13'
-  node: '22.20.0'
+  node: '24.11.1'
 repos:
   # https://pre-commit.com/hooks.html
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -23,7 +23,7 @@ repos:
         exclude_types: [tsv]
   # markdownlint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.45.0
+    rev: v0.46.0
     hooks:
       - id: markdownlint
         args: [
@@ -39,7 +39,7 @@ repos:
       - id: shellcheck
         args: ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
   - repo: https://github.com/randolf-scholz/latex-hooks.git
-    rev: v0.0.12
+    rev: v0.0.15
     hooks:
       - id: check-separator-length-88
       - id: latex-avoid-def

@@ -13,19 +13,21 @@ export LC_NUMERIC := "C"
 default:
   @just --list
 
-
-install:  # install the LaTeX package
+# install the LaTeX package
+install:
     cp -r src/* "$(kpsewhich -var-value TEXMFHOME)/tex/latex/"
 
 
-clean:  # remove all .build directories
+# remove all build directories
+clean:
     find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {} \;
     find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {} \;
     find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
     find "{{DEV_DIR}}" -type f -name "*.pdf" -delete
 
 
-test_setup:  # create the build and result directories
+# create the build and result directories
+test_setup:
     # cleanup the test directories
     rm -rf "{{TEST_DIR}}/{{BUILD_DIR}}"
     rm -rf "{{TEST_DIR}}/{{RESULT_DIR}}"
@@ -53,7 +55,7 @@ test_compile $file $compiler:
     #!/usr/bin/env bash
     # Tries to compile a LaTeX file with a given compiler
     # Exit code: 0 if successful, 1 if failed
-    # stdout: "✅" if successful, "⚠️" if successful with warnings, "❌️" if failed
+    # stdout: "✅️" if successful, "⚠️" if successful with warnings, "❌️" if failed
     name="$(basename "$file" '.tex')"
     path="$(dirname "$file")"
     OUTPUT_DIR="$BUILD_DIR/$compiler/$path/$name"

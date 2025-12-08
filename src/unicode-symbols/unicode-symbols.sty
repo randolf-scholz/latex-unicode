@@ -82,8 +82,8 @@
 
 % chktex-file 18
 % chktex-file 41
-\NeedsTeXFormat{LaTeX2e}[2024-06-01]% chktex 8
-\ProvidesPackage{unicode-symbols}[2024-11-15]% chktex 8
+\NeedsTeXFormat{LaTeX2e}[2025-11-01]% chktex 8
+\ProvidesPackage{unicode-symbols}[2025-12-08]% chktex 8
 % region options -----------------------------------------------------------------------
 \DeclareKeys[unicode-symbols]{
 	stix.if = unicode@stix,
@@ -701,7 +701,7 @@
 
 
 % region aliases/fallbacks -------------------------------------------------------------
-\AtBeginDocument{% Delay definition of aliases until begin document
+\AddToHook{begindocument}{% Delay definition of aliases until begin document
 % Example: we want ≙ to be substituted by \hateq. stix has \wedgeq, fdsymbol has \hateq.
 %
 % So, in this case we want aliases to be resolved as follows:

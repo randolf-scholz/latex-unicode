@@ -3,6 +3,7 @@ export NAME := "unicode-symbols"
 export BUILD_DIR := ".build"
 export RESULT_DIR := ".results"
 export ROOT_DIR := `git rev-parse --show-toplevel`
+export SOURCE_DIR := ROOT_DIR + "/src"
 export TEST_DIR := ROOT_DIR + "/tests"
 export TEXMF_DIR := "texmf"
 export DEV_DIR := ROOT_DIR + "/dev"
@@ -18,35 +19,27 @@ install:
     cp -r src/* "$(kpsewhich -var-value TEXMFHOME)/tex/latex/"
 
 
-# remove all build directories
-clean:
-    find . -type d -name '{{BUILD_DIR}}' -prune -exec rm -rf {} \;
-    find . -type d -name '{{RESULT_DIR}}' -prune -exec rm -rf {} \;
-    find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
-    find "{{DEV_DIR}}" -type f -name "*.pdf" -delete
+# setup for local usage
+setup target=".":
+    mkdir -p "{{target}}/{{TEXMF_DIR}}/tex/latex"
+    ln -sr "{{SOURCE_DIR}}/"* "{{target}}/{{TEXMF_DIR}}/tex/latex/"
+    ln -sr "{{TEST_DIR}}/utils" "{{target}}/{{TEXMF_DIR}}/tex/latex/utils"
+
+
+# remove all build and result directories
+clean target=".":
+    find "{{target}}" -type d -name "{{TEXMF_DIR}}" -prune -exec rm -rf {} \;
+    find "{{target}}" -type d -name "{{BUILD_DIR}}" -prune -exec rm -rf {} \;
+    find "{{target}}" -type d -name "{{RESULT_DIR}}" -prune -exec rm -rf {} \;
+    find "{{target}}" -type f -name "*.pdf" -delete
 
 
 # create the build and result directories
 test_setup:
-    # cleanup the test directories
-    rm -rf "{{TEST_DIR}}/{{BUILD_DIR}}"
-    rm -rf "{{TEST_DIR}}/{{RESULT_DIR}}"
-    rm -rf "{{TEST_DIR}}/{{TEXMF_DIR}}"
-    rm -rf "{{ROOT_DIR}}/{{TEXMF_DIR}}"
-    # remove pdf files from the test and dev directory
-    find "{{TEST_DIR}}" -type f -name "*.pdf" -delete
-    find "{{DEV_DIR}}" -type f -name "*.pdf" -delete
-    # create the test directories
-    mkdir -p "{{TEST_DIR}}/{{BUILD_DIR}}"
-    mkdir -p "{{TEST_DIR}}/{{RESULT_DIR}}"
-    mkdir -p "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex"
-    mkdir -p "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex"
-    # simlink all files from src/ to texmf/
-    ln -sr "{{ROOT_DIR}}/src/"* "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    ln -sr "{{ROOT_DIR}}/src/"* "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    # simlink tests/utils to texmf/
-    ln -sr "{{ROOT_DIR}}/tests/utils" "{{TEST_DIR}}/{{TEXMF_DIR}}/tex/latex/"
-    ln -sr "{{ROOT_DIR}}/tests/utils" "{{ROOT_DIR}}/{{TEXMF_DIR}}/tex/latex/"
+    just clean {{ROOT_DIR}}
+    just clean {{TEST_DIR}}
+    just setup {{ROOT_DIR}}
+    just setup {{TEST_DIR}}
 
 
 [no-exit-message]
@@ -115,41 +108,77 @@ test_one $file:  # compile a single test file
 [working-directory: 'tests']  # FIXME: doesn't seem to support {{TEST_DIR}}
 test $case="*":  # run all tests
     #!/usr/bin/env bash
-
-    # # If the parent gets SIGINT/SIGTERM, terminate all children in our process group.
-    # trap 'echo; echo "Aborting…"; kill -- -$$' INT TERM
-    # # Also make sure children don’t linger if the script exits for any reason.
-    # trap 'kill -- -$$' EXIT
+    set -euo pipefail
+    shopt -s globstar
 
     # run the setup task
     just test_setup
 
     # detect all test files
-    shopt -s globstar
-    files=(**/test_$case.tex)
+    files=(**/test_${case}.tex)
     echo "Found ${#files[@]} test files."
+
+    # setup PIDs and statuses arrays
+    pids=()
+    statuses=()
+
+    interrupt_handler() {
+        # Kill all children we started; already-finished ones will just error and be ignored
+        for pid in "${pids[@]}"; do
+            kill "$pid" 2>/dev/null || true
+        done
+        # IMPORTANT: do *not* exit here – we still want to print a summary
+        echo
+        echo
+        echo -e "\033[1;33m⚠️ ⚠️ ⚠️  tests interrupted ⚠️ ⚠️ ⚠️\033[0m"
+        echo
+    }
+
+    # On Ctrl+C (INT) or SIGTERM, mark interrupted and kill children
+    trap interrupt_handler INT TERM
 
     # run the tests in parallel
     start_time=$(date +%s.%N)
-    pids=()
     for file in "${files[@]}"; do
-        just test_one "$file" &
+        just test_one "$file" 2>/dev/null &
         pids+=($!)
+        statuses+=()   # placeholder for this test's status
     done
 
     # collect the exit codes of all child processes
-    fail_count=0
-    for pid in "${pids[@]}"; do
-        wait "$pid" || ((fail_count++))
+    for i in "${!pids[@]}"; do
+        pid="${pids[i]}"
+        set +e
+        wait "$pid"
+        statuses[i]=$?     # raw exit status
+        set -e
     done
     end_time=$(date +%s.%N)
     runtime=$(echo "$end_time - $start_time" | bc)
 
-    # print the summary
-    total=${#pids[@]}
-    pass_count=$(( total - fail_count ))
-    echo "$pass_count/$total passed"
-    printf "Total runtime: %.1f seconds\n" "$runtime"
+    # print horizontal line
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 
-    # Exit with non-zero if any test failed
-    exit "$fail_count"
+    total=${#pids[@]}
+    pass_count=0
+    fail_count=0
+    kill_count=0
+
+    for status in "${statuses[@]}"; do
+        case "$status" in
+            0) pass_count=$((pass_count + 1));;
+            [1-3]) fail_count=$((fail_count + 1));;
+            *) kill_count=$((kill_count + 1));;
+        esac
+    done
+
+    # print the summary
+    printf "\033[1;33m%d/%d killed\033[0m  " "$kill_count" "$total"
+    printf "\033[1;31m%d/%d failed\033[0m  " "$fail_count" "$total"
+    printf "\033[1;32m%d/%d passed\033[0m  " "$pass_count" "$total"
+    printf "\033[1mTotal runtime: %.1f seconds\033[0m\n" "$runtime"
+
+    # Exit 1 if any test failed/killed
+    if [ "$fail_count" -gt 0 ] || [ "$kill_count" -gt 0 ]; then
+        exit 1
+    fi

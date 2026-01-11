@@ -575,6 +575,14 @@
 \NewDocumentCommand{\unicode@cupdot}{}{\mathbin{\mathaccent\cdot\cup}}% SEE: https://tex.stackexchange.com/a/91059
 % operators
 \NewDocumentCommand{\unicode@bigcupdot}{}{\mathop{\mathaccent\cdot{\bigcup\limits}}}% SEE: https://tex.stackexchange.com/a/91059
+\DeclareMathOperator*{\unicode@sumint}{%
+% SEE: https://tex.stackexchange.com/a/68357
+\mathchoice%
+  {\ooalign{$\displaystyle\sum$\cr\hidewidth$\displaystyle\int$\hidewidth\cr}}
+  {\ooalign{\raisebox{.14\height}{\scalebox{.7}{$\textstyle\sum$}}\cr\hidewidth$\textstyle\int$\hidewidth\cr}}
+  {\ooalign{\raisebox{.2\height}{\scalebox{.6}{$\scriptstyle\sum$}}\cr$\scriptstyle\int$\cr}}
+  {\ooalign{\raisebox{.2\height}{\scalebox{.6}{$\scriptstyle\sum$}}\cr$\scriptstyle\int$\cr}}
+}
 % relations
 \NewDocumentCommand{\unicode@bagmember}{}{\mathrel{\mathsf{E}}}
 \NewDocumentCommand{\unicode@indep}{}{\mathrel{\perp\!\!\!\perp}}% chktex 21
@@ -775,6 +783,7 @@
 \ProvideDocumentCommand{\Exclam}{}{!!}
 \ProvideDocumentCommand{\degreeC}{}{\degree\autorm{C}}% degree Celsius
 \ProvideDocumentCommand{\degreeF}{}{\degree\autorm{F}}% degree Fahrenheit
+\ProvideDocumentCommand{\sumint}{}{\unicode@sumint}% sum-integral symbol ⨋
 }
 % endregion aliases/fallbacks ----------------------------------------------------------
 
@@ -959,6 +968,7 @@
 \newunicodechar{∎}{\QED}% U+220E (End of Proof)
 \newunicodechar{℃}{\degreeC}% U+2103 (Degree Celsius)
 \newunicodechar{℉}{\degreeF}% U+2109 (Degree Fahrenheit
+\newunicodechar{⨋}{\sumint}% U+2A0B (Sum-Integral)
 % endregion misc -----------------------------------------------------------------------
 
 % region combining characters ----------------------------------------------------------

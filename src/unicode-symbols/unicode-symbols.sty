@@ -107,11 +107,11 @@
 
 % region requirements ------------------------------------------------------------------
 % === preconditions ===
-\@ifpackageloaded{amsmath}{%
+\IfPackageLoadedT{amsmath}{%
 	\PackageError{unicode-symbols}{Should be loaded before amsmath}{}
-}{}
+}
 
-\@ifpackageloaded{bm}{%
+\IfPackageLoadedTF{bm}{%
 	\PackageError{unicode-symbols}{Should be loaded before bm}{}
 }{% apply bm patch
 	% SEE: https://tex.stackexchange.com/q/3676
@@ -254,9 +254,9 @@
 % endregion requirements ---------------------------------------------------------------
 
 \ProvideDocumentCommand{\DeclareUnicodeCharacter}{m m}{%
-	% https://tex.stackexchange.com/a/195460
+	% HACK: https://tex.stackexchange.com/a/195460
 	\begingroup\lccode`|=\string"#1\relax
-	\lowercase{\endgroup\newunicodechar{|}}{#2}%
+	\lowercase{\endgroup\newunicodechar{|}}{#2}% tex: ignore
 }
 
 % region apply patches -----------------------------------------------------------------

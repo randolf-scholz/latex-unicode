@@ -77,9 +77,6 @@
 % \mathbfsf  (sans-serif+bold)
 % \mathbfsfit (sans-serif+bold+italic)
 
-
-
-
 % chktex-file 18
 % chktex-file 41
 \NeedsTeXFormat{LaTeX2e}[2025-11-01]% chktex 8
@@ -87,17 +84,11 @@
 % region options -----------------------------------------------------------------------
 \DeclareKeys[unicode-symbols]{
 	stix.if = unicode@stix,
-	nostix.ifnot = unicode@stix,
 	fdsymbol.if = unicode@fdsymbol,
-	nofdsymbol.ifnot = unicode@fdsymbol,
 	mnsymbol.if = unicode@mnsymbol,
-	nomnsymbol.ifnot = unicode@mnsymbol,
 	stix.usage = load,
-	nostix.usage = load,
 	fdsymbol.usage = load,
-	nofdsymbol.usage = load,
 	mnsymbol.usage = load,
-	nomnsymbol.usage = load,
 }
 \SetKeys[unicode-symbols]{stix=false, fdsymbol=false, mnsymbol=false}
 \ProcessKeyOptions[unicode-symbols]%
@@ -119,7 +110,22 @@
 	% NOTE: we pick 3, since stix only leaves 4 free slots
 	%   and it seems we need to pick bmmax≥2 to get italic correction.
 	\ProvideDocumentCommand{\bmmax}{}{3}% prevents "too many alphabets" error
+	\RequirePackage{bm}
 }
+
+\RequirePackage{mathtools}% provides \mathclap
+
+
+\IfPackageLoadedTF{centernot}{%
+	\PackageError{unicode-symbols}{unicode-symbols provides its own centered not}{}
+}{
+	% SEE: https://tex.stackexchange.com/a/424007
+	% adapted from fdsymbols.sty
+	\def\c@ncel#1#2{\m@th\ooalign{$\hfil#1/\hfil$\crcr$#1#2$}}
+	\DeclareDocumentCommand{\not}{m}{\mathrel{\m@th\mathpalette\c@ncel{#1}}}
+	\NewCommandCopy{\centernot}{\not}
+}
+
 
 \RequirePackage{iftex}
 \ifPDFTeX%
@@ -174,7 +180,7 @@
 		% bb=libus, slightly worse than dsfont, and no digits either.
 	]{mathalpha}
 
-	\RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
+	% \RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 	\RequirePackage{amssymb}% not needed with stix2
 	\RequirePackage{amsfonts}% not needed with stix2
 	% NOTE: dsfont lacks lowercase letters and digits other than 𝟙.
@@ -245,12 +251,8 @@
 \RequirePackage{unicode-superscripts}
 
 \RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
-\RequirePackage{mathtools}% provides \mathclap
 \RequirePackage{pifont}% used for checkmark and xmark
-\RequirePackage{etoolbox}
-\RequirePackage{centernot}
 \RequirePackage{xcolor}
-\RequirePackage{bm}
 % endregion requirements ---------------------------------------------------------------
 
 \ProvideDocumentCommand{\DeclareUnicodeCharacter}{m m}{%
@@ -260,10 +262,6 @@
 }
 
 % region apply patches -----------------------------------------------------------------
-% FIXME: Patch centernot to support \not as macro with argument.
-% SEE: https://tex.stackexchange.com/a/424007
-\patchcmd\@centernot{\not}{\not{\hphantom{=}}}{}{\errmessage{Patching \noexpand\@centernot failed.}}
-
 
 % FIXME Get some missing symbols
 % NOTE: Stix has many symbols, so we use it as a fallback for missing symbols.

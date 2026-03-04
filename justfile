@@ -32,6 +32,8 @@ clean target=".":
     find "{{target}}" -type d -name "{{BUILD_DIR}}" -prune -exec rm -rf {} \;
     find "{{target}}" -type d -name "{{RESULT_DIR}}" -prune -exec rm -rf {} \;
     find "{{target}}" -type f -name "*.pdf" -delete
+    just setup {{ROOT_DIR}}
+    just setup {{TEST_DIR}}
 
 
 # create the build and result directories
@@ -112,7 +114,7 @@ test $case="*":  # run all tests
     shopt -s globstar
 
     # run the setup task
-    just test_setup
+    just clean
 
     # detect all test files
     files=(**/test_${case}.tex)

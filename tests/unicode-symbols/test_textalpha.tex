@@ -2,30 +2,6 @@
 \tracinglostchars=3%
 \usepackage{textalpha}
 
-% % Use it for the MICRO SIGN character::
-% \DeclareTextSymbol{\textmicro}{TS1}{181} % micro sign
-% \DeclareTextSymbolDefault{\textmicro}{TS1}
-% \ifdefined\DeclareUnicodeCharacter
-%   \DeclareUnicodeCharacter{00B5}{\textmicro} % micro sign
-% \fi
-
-% \makeatletter
-% \ifdefined\UnicodeEncodingName % set by LaTeX for Unicode-aware engines
-%   \input{tuenc-greek.def}
-% %   \textalpha@define@breathings{\UnicodeEncodingName}
-% \else
-%   \@ifl@aded{def}{lgrenc}
-%     {}
-%     {\input{lgrenc.def}
-%   }
-% \fi
-
-% % \@ifl@aded{def}{lgrenc}{
-% \DeclareTextSymbolDefault{\textalpha}{LGR}
-% \DeclareTextSymbolDefault{\textbeta}{LGR}
-% % }{}
-% \makeatother
-
 \ProvideDocumentCommand{\textomikron}{}{o}
 
 \NewDocumentCommand{\makerow}{m}{%
@@ -33,6 +9,11 @@
 }
 
 \begin{document}
+\ifPDFTeX\else
+    % skip this test
+    \end{document}
+\fi
+
 \begin{tabular}{lllll}
 \makerow{\textalpha}
 \makerow{\textbeta}

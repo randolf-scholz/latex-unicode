@@ -46,6 +46,15 @@
 % SEE: https://tex.stackexchange.com/a/60494
 \NewDocumentCommand\Meaning{m}{\safe@strip@prefix{\meaning#1}}
 \NewDocumentCommand\ShowFont{}{\fontname\font}
+\NewDocumentCommand\AssertDefined{m}{%
+	\ifdefined#1%
+		\Meaning{#1}
+	\else
+		\PackageError{\ClassName}{Command '\textbackslash#1' is not defined!}{}%
+	\fi
+}
+
+
 
 % TODO: Add reproducible build settings
 % SEE: https://tex.stackexchange.com/questions/229605

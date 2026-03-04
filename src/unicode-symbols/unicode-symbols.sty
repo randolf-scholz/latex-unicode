@@ -84,24 +84,15 @@
 % region options -----------------------------------------------------------------------
 \DeclareKeys[unicode-symbols]{
 	stix.if = unicode@stix,
-	fdsymbol.if = unicode@fdsymbol,
-	mnsymbol.if = unicode@mnsymbol,
 	stix.usage = load,
-	fdsymbol.usage = load,
-	mnsymbol.usage = load,
 }
-\SetKeys[unicode-symbols]{stix=false, fdsymbol=false, mnsymbol=false}
+\SetKeys[unicode-symbols]{stix=false}
 \ProcessKeyOptions[unicode-symbols]%
 
 % endregion options --------------------------------------------------------------------
 
 
 % region requirements ------------------------------------------------------------------
-% === preconditions ===
-\IfPackageLoadedT{amsmath}{%
-	\PackageError{unicode-symbols}{Should be loaded before amsmath}{}
-}
-
 \IfPackageLoadedTF{bm}{%
 	\PackageError{unicode-symbols}{Should be loaded before bm}{}
 }{% apply bm patch
@@ -112,9 +103,6 @@
 	\ProvideDocumentCommand{\bmmax}{}{3}% prevents "too many alphabets" error
 	\RequirePackage{bm}
 }
-
-\RequirePackage{mathtools}% provides \mathclap
-
 
 \IfPackageLoadedTF{centernot}{%
 	\PackageError{unicode-symbols}{unicode-symbols provides its own centered not}{}
@@ -128,6 +116,14 @@
 
 
 \RequirePackage{iftex}
+\RequirePackage{mathtools}% provides \mathclap
+\RequirePackage{newunicodechar}
+\RequirePackage{unicode-subscripts}
+\RequirePackage{unicode-superscripts}
+\RequirePackage{pifont}% used for checkmark and xmark
+\RequirePackage{xcolor}
+
+
 \ifPDFTeX%
 	% NOTE: Font specfication is documented in 'fntguide' and 'enguide'
 	%	(call `texdoc fntguide` in a shell)
@@ -177,7 +173,8 @@
 	\RequirePackage[
 		frak=euler,
 		scr=boondoxo,
-		% bb=libus, slightly worse than dsfont, and no digits either.
+		bb=boondox,
+		% bb=libus, % slightly worse than dsfont, and no digits either.
 	]{mathalpha}
 
 	% \RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
@@ -185,7 +182,7 @@
 	\RequirePackage{amsfonts}% not needed with stix2
 	% NOTE: dsfont lacks lowercase letters and digits other than 𝟙.
 	\RequirePackage{dsfont}% THE BEST double-struck font.
-	\RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
+	% \RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
 	% \RequirePackage{mathrsfs}% provides \mathscr (worse than rsfso, boondoxo)
 	% \RequirePackage[mathscr]{eucal}% provides \bm
 
@@ -235,24 +232,6 @@
 	%  bffrak
 	% \DeclareMathAlphabet{\mathbffrak}{OT1}{euf}{b}{n}
 \fi
-
-\ifunicode@fdsymbol%
-	% NOTE: not recommended, some symbols like 'Σ' are really ugly.
-	\RequirePackage{fdsmbol}
-\fi
-
-\ifunicode@mnsymbol%
-	\RequirePackage{MnSymbol}
-\fi
-
-
-\RequirePackage{newunicodechar}
-\RequirePackage{unicode-subscripts}
-\RequirePackage{unicode-superscripts}
-
-\RequirePackage{amsmath}% provides math and greek symbols and \boldsymbol
-\RequirePackage{pifont}% used for checkmark and xmark
-\RequirePackage{xcolor}
 % endregion requirements ---------------------------------------------------------------
 
 \ProvideDocumentCommand{\DeclareUnicodeCharacter}{m m}{%

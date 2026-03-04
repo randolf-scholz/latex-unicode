@@ -9,36 +9,33 @@
 }
 
 \begin{document}
-\ifPDFTeX\else
-    % skip this test
-    \end{document}
+\ifPDFTeX
+    \begin{tabular}{lllll}
+    \makerow{\textalpha}
+    \makerow{\textbeta}
+    \makerow{\textgamma}
+    \makerow{\textdelta}
+    \makerow{\textepsilon}
+    \makerow{\textzeta}
+    \makerow{\texteta}
+    \makerow{\texttheta}
+    \makerow{\textiota}
+    \makerow{\textkappa}
+    \makerow{\textlambda}
+    \makerow{\textmugreek}
+    \makerow{\textmu}
+    \makerow{\textnu}
+    \makerow{\textxi}
+    \makerow{\textomikron}
+    \makerow{\textpi}
+    \makerow{\textrho}
+    \makerow{\textsigma}
+    \makerow{\texttau}
+    \makerow{\textupsilon}
+    \makerow{\textphi}
+    \makerow{\textchi}
+    \makerow{\textpsi}
+    \makerow{\textomega}
+    \end{tabular}
 \fi
-
-\begin{tabular}{lllll}
-\makerow{\textalpha}
-\makerow{\textbeta}
-\makerow{\textgamma}
-\makerow{\textdelta}
-\makerow{\textepsilon}
-\makerow{\textzeta}
-\makerow{\texteta}
-\makerow{\texttheta}
-\makerow{\textiota}
-\makerow{\textkappa}
-\makerow{\textlambda}
-\makerow{\textmugreek}
-\makerow{\textmu}
-\makerow{\textnu}
-\makerow{\textxi}
-\makerow{\textomikron}
-\makerow{\textpi}
-\makerow{\textrho}
-\makerow{\textsigma}
-\makerow{\texttau}
-\makerow{\textupsilon}
-\makerow{\textphi}
-\makerow{\textchi}
-\makerow{\textpsi}
-\makerow{\textomega}
-\end{tabular}
 \end{document}

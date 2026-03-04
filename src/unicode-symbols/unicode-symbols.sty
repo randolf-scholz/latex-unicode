@@ -83,10 +83,12 @@
 \ProvidesPackage{unicode-symbols}[2025-12-08]% chktex 8
 % region options -----------------------------------------------------------------------
 \DeclareKeys[unicode-symbols]{
-	stix.if = unicode@stix,
+	stix.if = @unicode@stix,
 	stix.usage = load,
+	dsfont.if = @unicode@dsfont,
+	dsfont.usage = load,
 }
-\SetKeys[unicode-symbols]{stix=false}
+\SetKeys[unicode-symbols]{stix=false, dsfont=true}
 \ProcessKeyOptions[unicode-symbols]%
 
 % endregion options --------------------------------------------------------------------
@@ -123,6 +125,22 @@
 \RequirePackage{pifont}% used for checkmark and xmark
 \RequirePackage{xcolor}
 
+\if@unicode@dsfont
+	\RequirePackage{dsfont}% THE BEST double-struck font.
+	% Blackboard Bold
+	\NewDocumentCommand{\unicode@bb}{m}{%
+		% We use mathds as primary, and fallback to mathbb.
+		\ifnum`#1=\uccode`#1\relax % Check if the character is uppercase
+			\ensuremath{\mathds{#1}}% Use dsfont
+		\else\if#11% Check if the character is literal `1'
+			\ensuremath{\mathds{#1}}%
+		\else% Use fallback
+			\ensuremath{\mathbb{#1}}%
+		\fi\fi%
+	}
+\else
+	\NewDocumentCommand{\unicode@bb}{m}{\ensuremath{\mathbb{#1}}}
+\fi
 
 \ifPDFTeX%
 	% NOTE: Font specfication is documented in 'fntguide' and 'enguide'
@@ -165,7 +183,7 @@
 \fi
 
 % === Load requiremnts ===
-\ifunicode@stix%
+\if@unicode@stix%
 	\RequirePackage{stix2}
 	% Used to get rid of dont shape warning
 	\RequirePackage{anyfontsize}% SEE: https://tex.stackexchange.com/questions/58087
@@ -173,18 +191,12 @@
 	\RequirePackage[
 		frak=euler,
 		scr=boondoxo,
-		bb=boondox,
-		% bb=libus, % slightly worse than dsfont, and no digits either.
+		bb=ncmbbk,
 	]{mathalpha}
 
 	% \RequirePackage{lmodern}% SEE: https://tex.stackexchange.com/questions/58087
 	\RequirePackage{amssymb}% not needed with stix2
 	\RequirePackage{amsfonts}% not needed with stix2
-	% NOTE: dsfont lacks lowercase letters and digits other than 𝟙.
-	\RequirePackage{dsfont}% THE BEST double-struck font.
-	% \RequirePackage{mathbbol}% provides \mathbb for digits and lower case letters.
-	% \RequirePackage{mathrsfs}% provides \mathscr (worse than rsfso, boondoxo)
-	% \RequirePackage[mathscr]{eucal}% provides \bm
 
 	% NOTE: We add missing bold+italic, sf+it, sf+bf and sf+bf+it variants.
 	% SEE: https://tex.stackexchange.com/a/82747
@@ -244,7 +256,7 @@
 
 % FIXME Get some missing symbols
 % NOTE: Stix has many symbols, so we use it as a fallback for missing symbols.
-\ifunicode@stix%
+\if@unicode@stix%
 	% region stix2-patch ---------------------------------------------------------------
 	% SEE: https://tex.stackexchange.com/q/542795
 	% \DeclareFontFamily{LS1}{stix2bb}{\skewchar\font127 }
@@ -406,17 +418,6 @@
 % Script
 \NewDocumentCommand{\unicode@cal}{m}{\ensuremath{\mathcal{#1}}}
 \NewDocumentCommand{\unicode@scr}{m}{\ensuremath{\mathscr{#1}}}
-% Blackboard Bold
-\NewDocumentCommand{\unicode@bb}{m}{%
-	% We use mathds as primary, and fallback to mathbb.
-	\ifnum`#1=\uccode`#1\relax % Check if the character is uppercase
-		\ensuremath{\mathds{#1}}% Use dsfont
-	\else\if#11% Check if the character is literal `1'
-		\ensuremath{\mathds{#1}}%
-	\else% Use fallback
-		\ensuremath{\mathbb{#1}}%
-	\fi\fi%
-}
 \NewDocumentCommand{\unicode@bbi}{m}{\mathbb{\mathit{#1}}}
 % endregion internal commands ----------------------------------------------------------
 % endregion font families --------------------------------------------------------------

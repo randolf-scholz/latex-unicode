@@ -1,0 +1,68 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+exclude = '\.idea/|\.vscode/|dev/'
+minimum_prek_version = "0.4.4"
+default_language_version = { python = "3.14", node = "26.3.0" }
+
+[[repos]]
+repo = "builtin"
+hooks = [
+  { id = "trailing-whitespace", exclude_types = ["tsv"] },
+  { id = "check-added-large-files" },
+  { id = "check-case-conflict" },
+  { id = "check-illegal-windows-names" },
+  { id = "end-of-file-fixer" },
+  { id = "file-contents-sorter" },
+  { id = "fix-byte-order-marker" },
+  { id = "check-json" },
+  { id = "check-json5" },
+  # { id = "pretty-format-json" },
+  { id = "check-toml" },
+  { id = "check-vcs-permalinks" },
+  { id = "check-yaml" },
+  { id = "check-xml" },
+  { id = "mixed-line-ending" },
+  { id = "check-symlinks" },
+  { id = "destroyed-symlinks" },
+  { id = "check-merge-conflict" },
+  { id = "detect-private-key" },
+  # { id = "no-commit-to-branch" },
+  { id = "check-shebang-scripts-are-executable" },
+  { id = "check-executables-have-shebangs" }
+]
+
+[[repos]]
+repo = "https://github.com/igorshubovych/markdownlint-cli"
+rev = "v0.48.0"
+hooks = [{ id = "markdownlint", args = ["--disable", "MD013", "MD033", "--"] }]
+
+[[repos]]
+repo = "https://github.com/shellcheck-py/shellcheck-py"
+rev = "v0.11.0.1"
+hooks = [
+  {
+    id = "shellcheck",
+    args = ["-x", "--shell=bash", "--color=always", "--format=gcc", "--"]
+  }
+]
+
+[[repos]]
+repo = "https://github.com/randolf-scholz/latex-hooks.git"
+rev = "v0.1.24"
+hooks = [
+  { id = "check-separator-length-88" },
+  { id = "latex-avoid-def" },
+  { id = "latex-avoid-newcommand" },
+  { id = "latex-avoid-double-dollar" },
+  { id = "latex-avoid-legacy-options" },
+  { id = "latex-avoid-legacy-packages" },
+  { id = "latex-avoid-legacy-commands" },
+  { id = "latex-avoid-legacy-environments" },
+  { id = "latex-avoid-legacy-hooks" },
+  { id = "latex-avoid-makeatletter" },
+  { id = "latex-avoid-ifmmode" },
+  { id = "chktex" },
+  { id = "lacheck", exclude = 'test_single_char_commands\.tex' }
+]

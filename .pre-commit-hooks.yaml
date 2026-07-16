@@ -4,7 +4,13 @@
   description: "Checks that `𞁀` (modifier letter cyrillic small te (U+1E040)) is used for transpose."
   language: pygrep
   types: [tex]
-  entry: 'ᵀ|\^(\{(\\(text|math)sf\{[tT]\}|\\top|\\intercal|t|T|⊺|⊤|𝗍|𝖳)\}|(\\(text|math)sf\{[tT]\}|\\top|\\intercal|t|T|⊺|⊤|𝗍|𝖳))'
+  entry: '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          ᵀ|\^(
+            \{(\\(text|math)sf\{[tT]\}|\\top|\\intercal|t|T|⊺|⊤|𝗍|𝖳)\}
+            | (\\(text|math)sf\{[tT]\}|\\top|\\intercal|t|T|⊺|⊤|𝗍|𝖳)
+          )
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
   # entry: '(\u1D40|\^\{?(?:(?:\\textsf\{|\\mathsf\{)?[tT]\}?|\\top|\u22BA|\\intercal|\u22A4|\U0001D5CD|\U0001D5B3)\}?)'
   # NOTE: re.compile gives bad escape \U at position 0, we use direct unicode since pygrep performs encode.
 - id: latex-unicode-hermitian
@@ -12,7 +18,13 @@
   description: "Checks that `ᵸ` (modifier letter cyrillic en (U+1D78)) is used for hermitian."
   language: pygrep
   types: [tex]
-  entry: 'ᴴ|\^((H|\\(text|math)sf\{H\})|\{(H|\\(text|math)sf\{H\})\})'
+  entry: '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          ᴴ|\^(
+            \{(H|\\(text|math)sf\{H\})\}
+            | (H|\\(text|math)sf\{H\})
+          )
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
   # entry: '(\u1D40|\^\{?(?:(?:\\textsf\{|\\mathsf\{)?[tT]\}?|\\top|\u22BA|\\intercal|\u22A4|\U0001D5CD|\U0001D5B3)\}?)'
   # NOTE: re.compile gives bad escape \U at position 0, we use direct unicode since pygrep performs encode.
 - id: latex-unicode-superscripts
@@ -20,19 +32,28 @@
   description: "Checks that Unicode superscripts are used."
   language: pygrep
   types: [tex]
-  entry: '\^([0-9a-pr-z\+\-\(\)\=]|\{[0-9a-pr-z\+\-\(\)\=]+\})\b'
+  entry: '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          \^([0-9a-pr-z\+\-\(\)\=]|\{[0-9a-pr-z\+\-\(\)\=]+\})\b
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
 - id: latex-unicode-subscripts
   name: '[tex] Use Unicode subscripts.'
   description: "Checks that Unicode subscripts are used."
   language: pygrep
   types: [tex]
-  entry: '\_([0-9aeh-pr-vx\+\-\(\)\=\*]|\{[0-9\+\-\(\)\=\*]+\})\b'
+  entry: '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          \_([0-9aeh-pr-vx\+\-\(\)\=\*]|\{[0-9\+\-\(\)\=\*]+\})\b
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
 - id: latex-unicode-quotes
   name: '[tex] Use Unicode quotes.'
   description: 'Use “ (\ldq) and ” (\rdq) instead of ``...'''' in text.'
   language: pygrep
   types: [tex]
-  entry: '(\`\`|\''\'')'
+  entry: '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          (\`\`|\''\'')
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
 
 # Hooks for both tex and markdown
 - id: latex-unicode-greek
@@ -40,7 +61,9 @@
   description: "Checks that Unicode greek letters are used."
   language: pygrep
   types: [tex, markdown]
-  entry:  '(?x:\\(var)?(
+  entry:  '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          (?x:\\(var)?(
             [Aa]lpha
             |[Bb]eta
             |[Gg]amma
@@ -66,13 +89,16 @@
             |[Cc]hi
             |[Pp]si
             |[Oo]mega
-          )\b)'
+          )\b)
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
 - id: latex-unicode-base
   name: '[tex] Use Unicode symbols.'
   description: "Checks that basic Unicode symbols are used."
   language: pygrep
   types: [tex, markdown]
-  entry:  '(?x:\\(text|math)?(
+  entry:  '(?x)
+          (?P<commented>^[\t ]*+|^[\t ]*+[^%\n][^\n]*?)
+          \\(text|math)?(
             aleph
             |amalg
             |angle
@@ -204,5 +230,6 @@
             |wedge
             |wp
             |wr
-          )\b)'
+          )\b
+          (?![^\n]*?%\x20+tex:\x20+ignore)'
 # endregion latex-unicode --------------------------------------------------------------
